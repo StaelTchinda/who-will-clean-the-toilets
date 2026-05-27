@@ -21,10 +21,10 @@ export function makeQuestion(partial: Partial<Question> = {}): Question {
     angle_id: partial.angle_id ?? ("value" as AngleId),
     priority: partial.priority ?? "important",
     answers: partial.answers ?? [
-      { id: "opt_a", label: "Option A" },
-      { id: "opt_b", label: "Option B" },
-      { id: "both_fine", label: "Both fine" },
-      { id: "neither_fine", label: "Neither" },
+      { id: "opt_a", label: "Option A", icon: "ArrowRight", position: "up" },
+      { id: "opt_b", label: "Option B", icon: "ArrowRight", position: "down" },
+      { id: "both_fine", label: "Both fine", icon: "CheckCheck", position: "right" },
+      { id: "neither_fine", label: "Neither", icon: "CircleSlash", position: "left" },
     ],
   };
 }

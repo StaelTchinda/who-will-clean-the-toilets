@@ -15,10 +15,10 @@ describe("compareAnswers", () => {
   const q = makeQuestion({
     id: "q1",
     answers: [
-      { id: "mother", label: "Ma mère" },
-      { id: "father", label: "Mon père" },
-      { id: "both_fine", label: "Les deux" },
-      { id: "neither_fine", label: "Aucun" },
+      { id: "mother", label: "Ma mère", icon: "Venus", position: "up" },
+      { id: "father", label: "Mon père", icon: "Mars", position: "down" },
+      { id: "both_fine", label: "Les deux", icon: "CheckCheck", position: "right" },
+      { id: "neither_fine", label: "Aucun", icon: "CircleSlash", position: "left" },
     ],
   });
 

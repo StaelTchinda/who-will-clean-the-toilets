@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { ANGLES, DOMAINS } from "@/lib/dataset";
-import { DOMAIN_ICON } from "@/lib/icon-map";
+import { iconByName } from "@/lib/icon-map";
 import { Compass, Eye, Hand, Heart, BookOpen, ArrowLeft, ArrowRight } from "lucide-react";
 import i18n, { type Locale } from "@/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -107,7 +107,7 @@ export function FoundationsPage() {
           </p>
           <ul className="mt-6 grid grid-cols-2 gap-3">
             {DOMAINS.map((d) => {
-              const Icon = DOMAIN_ICON[d.id];
+              const Icon = iconByName(d.icon);
               return (
                 <li
                   key={d.id}
