@@ -98,7 +98,7 @@ jobs:
         run: bunx tsc --noEmit
 
   test:
-    name: Tests
+    name: Tests + Coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -106,8 +106,20 @@ jobs:
         with:
           bun-version: latest
       - run: bun install --frozen-lockfile
-      - name: Run Vitest
-        run: bun run test
+
+      # The `storybook` Vitest project renders every story in a real Chromium
+      # via Playwright. CI runners don't ship the browser binaries, so we
+      # install just chromium (~150 MB) — full browser set is unnecessary.
+      - name: Install Playwright Chromium
+        run: bunx playwright install --with-deps chromium
+
+      # One Vitest run covers both projects (unit + storybook) and emits the
+      # merged coverage report. Text output is teed for the PR comment table.
+      - name: Run Vitest with coverage
+        run: |
+          set -o pipefail
+          bun run coverage 2>&1 | tee coverage-text.txt
+
       - name: Report test results
         uses: dorny/test-reporter@v2
         if: always()
@@ -116,6 +128,28 @@ jobs:
           path: test-results/junit.xml
           reporter: jest-junit
           fail-on-error: true
+
+      # Sticky PR comment with the merged coverage summary. Updates in place on
+      # subsequent pushes thanks to the `header` key.
+      - name: Post coverage summary
+        if: github.event_name == 'pull_request'
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          json-summary-path: coverage/coverage-summary.json
+          json-final-path: coverage/coverage-final.json
+          comment-on: pr
+          name: coverage
+
+      # Always upload the full report so it can be downloaded from the run
+      # page (lcov-report/index.html browsable, lcov.info for codecov-style
+      # tools downstream).
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 14
 
   build:
     name: Build

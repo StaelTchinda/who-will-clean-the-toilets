@@ -16,6 +16,9 @@ dist-ssr
 .nitro
 *.local
 test-results/
+coverage/
+.nyc_output/
+storybook-static/
 
 # Wrangler / Cloudflare
 .wrangler/
