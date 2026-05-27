@@ -100,11 +100,25 @@ function SessionPage() {
         { event: "*", schema: "public", table: "answers", filter: `session_id=eq.${sessionId}` },
         () => fetchAnswers(sessionId).then(setAnswers),
       )
-      .subscribe();
+      .subscribe((status) => {
+        // Once we're actually listening, refetch everything. This closes the
+        // race window between the initial fetch (done in the other useEffect
+        // above) and the channel being ready: an UPDATE that landed in that
+        // gap would otherwise be lost, leaving Partner A stuck on
+        // WaitingForJoin forever even after Partner B has joined. The e2e
+        // suite tripped on this — the route now self-heals.
+        if (status === "SUBSCRIBED") {
+          fetchSession(code).then((s) => {
+            if (s) setSession(s);
+          });
+          fetchProgress(sessionId).then(setProgress);
+          fetchAnswers(sessionId).then(setAnswers);
+        }
+      });
     return () => {
       supabase.removeChannel(ch);
     };
-  }, [sessionId]);
+  }, [sessionId, code]);
 
   if (loading) {
     return (
