@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { handleCloudflareApi, type CloudflareEnv } from "./integrations/cloudflare/api";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -69,6 +70,15 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      // Intercept /api/cf/* before TanStack so D1-backed routes don't go
+      // through the SSR pipeline. Only active when the worker has a `DB`
+      // binding (configured in wrangler.jsonc when running on Cloudflare).
+      const url = new URL(request.url);
+      if (url.pathname.startsWith("/api/cf/")) {
+        const cfResponse = await handleCloudflareApi(request, env as CloudflareEnv);
+        if (cfResponse) return cfResponse;
+      }
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);

@@ -4,4 +4,16 @@
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
+
+  // D1 binding used by src/integrations/cloudflare/api.ts when VITE_BACKEND=cloudflare.
+  // For Supabase deployments, this block is harmless — handlers only run on /api/cf/*.
+  // Replace `database_id` with the ID from `wrangler d1 create nos-roles`, or let
+  // the deploy workflow inject it via the CLOUDFLARE_D1_DATABASE_ID secret.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nos-roles",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+    },
+  ],
 }
