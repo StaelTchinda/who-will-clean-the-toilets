@@ -26,29 +26,23 @@ type Story = StoryObj<typeof meta>;
 /** Stage 1 — first paint, before the user picks a path. */
 export const Intro_: Story = {
   name: "Intro",
-  render: () => (
-    <HomeShell>
-      <Intro onChoose={fn()} />
-    </HomeShell>
-  ),
+  args: {
+    children: <Intro onChoose={fn()} />,
+  },
 };
 
 /** Stage 2a — user tapped "Démarrer un questionnaire". Empty creation form. */
 export const CreateFormStage: Story = {
   name: "CreateForm",
-  render: () => (
-    <HomeShell>
-      <CreateForm onBack={fn()} />
-    </HomeShell>
-  ),
+  args: {
+    children: <CreateForm onBack={fn()} />,
+  },
 };
 
 /** Stage 2b — user tapped "Rejoindre avec un code". Code-entry form. */
 export const JoinFormStage: Story = {
   name: "JoinForm",
-  render: () => (
-    <HomeShell>
-      <JoinForm onBack={fn()} />
-    </HomeShell>
-  ),
+  args: {
+    children: <JoinForm onBack={fn()} />,
+  },
 };
