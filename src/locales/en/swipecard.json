@@ -1,0 +1,9 @@
+{
+  "modified": "modified",
+  "swipe": {
+    "hint": "tap an answer · or swipe from the centre",
+    "placeholder": "Choose an answer",
+    "previewAria": "Preview: {{label}}",
+    "previewEmptyAria": "Preview of your answer"
+  }
+}

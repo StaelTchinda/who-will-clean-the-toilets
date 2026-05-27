@@ -1,0 +1,22 @@
+[
+  {
+    "id": "environment",
+    "label": "Environnement",
+    "description": "Révèle le contexte familial dans lequel la personne a grandi — qui faisait quoi chez ses parents — et les modèles inconscients qu'elle a intégrés."
+  },
+  {
+    "id": "talent",
+    "label": "Talent",
+    "description": "Évalue ce que la personne sait réellement faire, ses compétences pratiques acquises. Deux tâches sont comparées pour identifier laquelle elle maîtrise le mieux."
+  },
+  {
+    "id": "preference",
+    "label": "Préférence",
+    "description": "Explore ce que la personne aime ou tolère faire. Deux tâches sont comparées pour identifier laquelle elle supporterait le mieux d'assumer régulièrement."
+  },
+  {
+    "id": "value",
+    "label": "Valeur",
+    "description": "Met en lumière les convictions profondes de la personne sur ce qui est juste, normal ou souhaitable dans la gestion d'un foyer — souvent influencées par l'éducation ou les croyances."
+  }
+]

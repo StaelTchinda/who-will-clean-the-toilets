@@ -1,0 +1,118 @@
+name: Deploy (Cloudflare Workers)
+
+# Deploys the worker (src/server.ts) and applies D1 migrations.
+#
+# Triggers:
+#   - push to master  → automatic deploy
+#   - workflow_dispatch → manual deploy from the Actions tab
+#
+# Required GitHub Actions secrets:
+#   CLOUDFLARE_API_TOKEN          — token with Workers + D1 edit perms
+#   CLOUDFLARE_ACCOUNT_ID         — your CF account ID
+#   CLOUDFLARE_D1_DATABASE_ID     — ID from `wrangler d1 create nos-roles`
+#
+# Optional secrets/vars (used only when VITE_BACKEND=supabase or for SSR):
+#   VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY,
+#   SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, SUPABASE_SERVICE_ROLE_KEY
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      apply_migrations:
+        description: "Apply D1 migrations before deploy"
+        type: boolean
+        default: true
+
+concurrency:
+  group: deploy-cloudflare-${{ github.ref }}
+  cancel-in-progress: false # serialize deploys to one env
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build & deploy to Cloudflare
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.deployment-url }}
+
+    env:
+      # Selects the Cloudflare backend at build time. The Supabase branch
+      # of the abstraction is tree-shaken out of the worker bundle.
+      VITE_BACKEND: cloudflare
+      # Same-origin API base; explicit so it's visible in CI logs.
+      VITE_CF_API_BASE: /api/cf
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      # Render wrangler.jsonc with the real D1 database_id pulled from secrets,
+      # only if the placeholder is still present. wrangler.jsonc is JSONC
+      # (comments + trailing commas), which jq won't parse — so we substitute
+      # the placeholder UUID with a single sed pass. The placeholder is unique
+      # in the file, so there's no risk of clobbering anything else.
+      #
+      # If the repo already commits a real database_id, this step is a no-op
+      # (and the CLOUDFLARE_D1_DATABASE_ID secret becomes optional).
+      - name: Inject D1 database_id into wrangler.jsonc
+        run: |
+          if ! grep -q "00000000-0000-0000-0000-000000000000" wrangler.jsonc; then
+            echo "::notice::wrangler.jsonc already has a real database_id committed — skipping injection."
+          elif [ -z "$CLOUDFLARE_D1_DATABASE_ID" ]; then
+            echo "::error::wrangler.jsonc still has the placeholder UUID and the CLOUDFLARE_D1_DATABASE_ID secret is empty. Run 'wrangler d1 create nos-roles' and add the printed database_id as a GitHub Actions secret (or commit it directly to wrangler.jsonc)."
+            exit 1
+          else
+            sed -i "s|00000000-0000-0000-0000-000000000000|$CLOUDFLARE_D1_DATABASE_ID|" wrangler.jsonc
+            echo "Injected database_id from secret."
+          fi
+          echo "::group::Effective wrangler.jsonc"
+          cat wrangler.jsonc
+          echo "::endgroup::"
+        env:
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+
+      - name: Apply D1 schema
+        if: github.event_name != 'workflow_dispatch' || inputs.apply_migrations
+        # `--remote` targets the production D1 instance (default would be local).
+        # The schema uses CREATE TABLE IF NOT EXISTS, so re-applying is a no-op.
+        run: bunx wrangler d1 execute nos-roles --remote --file=./src/integrations/cloudflare/schema.sql
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Build
+        run: bun run build
+
+      # cloudflare/wrangler-action handles auth via the token env var and
+      # uploads the build output produced by @cloudflare/vite-plugin.
+      - name: Deploy
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
+
+      - name: Deployment summary
+        if: always()
+        run: |
+          {
+            echo "## Cloudflare deploy"
+            echo
+            echo "- Worker: \`tanstack-start-app\`"
+            echo "- D1: \`nos-roles\` (migrations applied: ${{ github.event_name != 'workflow_dispatch' || inputs.apply_migrations }})"
+            if [ -n "${{ steps.deploy.outputs.deployment-url }}" ]; then
+              echo "- URL: ${{ steps.deploy.outputs.deployment-url }}"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

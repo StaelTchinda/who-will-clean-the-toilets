@@ -1,0 +1,26 @@
+[
+  {
+    "id": "housekeeping",
+    "label": "Ménage"
+  },
+  {
+    "id": "cooking",
+    "label": "Cuisine & Repas"
+  },
+  {
+    "id": "finances",
+    "label": "Finances & Administration"
+  },
+  {
+    "id": "logistics",
+    "label": "Logistique & Maison"
+  },
+  {
+    "id": "children",
+    "label": "Enfants"
+  },
+  {
+    "id": "values",
+    "label": "Vision & Valeurs"
+  }
+]

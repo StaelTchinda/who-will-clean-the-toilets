@@ -1,0 +1,337 @@
+name: CI
+
+on:
+  push:
+    branches: [master, dev]
+  pull_request:
+    branches: [master, dev]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  checks: write # for dorny/test-reporter
+  pull-requests: write # for dorny/test-reporter PR comment
+
+jobs:
+  lint:
+    name: Lint & format check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+
+      # Lint/format issues are surfaced as a sticky PR comment further down,
+      # never failing the job (continue-on-error keeps it green on non-zero
+      # exits). We deliberately avoid `eslint-formatter-github`: it calls
+      # the GitHub API to post check annotations and 404s on every run,
+      # leaving a stray "Process completed with exit code 2" in the logs.
+      - name: ESLint (report)
+        continue-on-error: true
+        run: bunx eslint . --format stylish 2>&1 | tee eslint-report.txt
+
+      - name: Prettier --check
+        continue-on-error: true
+        run: |
+          set +e
+          bunx prettier --check . 2>&1 | tee prettier-report.txt
+          # Emit a ::warning annotation for each unformatted file.
+          grep -E '^\[warn\] ' prettier-report.txt | sed -E 's/^\[warn\] //' \
+            | while read -r f; do
+                echo "::warning file=$f::File is not formatted (run \`bun run format\`)"
+              done
+          exit 0
+
+      - name: Build lint/format report
+        if: github.event_name == 'pull_request'
+        run: |
+          {
+            echo "## Lint & format check"
+            echo
+            echo "> These are warnings only and do **not** block merge."
+            echo
+
+            echo "### ESLint"
+            echo '```'
+            if [ -s eslint-report.txt ]; then
+              cat eslint-report.txt
+            else
+              echo "No issues."
+            fi
+            echo '```'
+            echo
+
+            echo "### Prettier"
+            unformatted=$(grep -E '^\[warn\] ' prettier-report.txt | sed -E 's/^\[warn\] //' || true)
+            if [ -n "$unformatted" ]; then
+              echo "Files needing formatting (run \`bun run format\`):"
+              echo
+              echo "$unformatted" | sed 's/^/- /'
+            else
+              echo "All files formatted."
+            fi
+          } > lint-report.md
+
+      - name: Post lint/format comment
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v3
+        with:
+          header: lint-format
+          path: lint-report.md
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - name: tsc --noEmit
+        run: bunx tsc --noEmit
+
+  unit-test:
+    name: Unit + Storybook (Vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+
+      # The `storybook` Vitest project renders every story in a real Chromium
+      # via Playwright. CI runners don't ship the browser binaries, so we
+      # install just chromium (~150 MB) — full browser set is unnecessary.
+      - name: Install Playwright Chromium
+        run: bunx playwright install --with-deps chromium
+
+      # One Vitest run covers both projects (unit + storybook). Coverage and
+      # junit results are uploaded as artifacts for the `report` job to
+      # merge with the e2e equivalents.
+      - name: Run Vitest with coverage
+        run: bun run coverage
+
+      - name: Upload unit coverage
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage-unit
+          path: coverage/
+          retention-days: 14
+
+      - name: Upload Vitest junit
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: junit-unit
+          path: test-results/junit.xml
+          retention-days: 14
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - name: vite build
+        run: bun run build
+
+  e2e-test:
+    name: E2E (Playwright + local Supabase)
+    runs-on: ubuntu-latest
+    # ubuntu-latest ships Docker preinstalled, which is all `supabase start`
+    # needs. The whole stack boots in ~25-35s; the 3 tests run in ~1 min.
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+
+      # --with-deps installs the apt packages chromium needs on the runner;
+      # we only need chromium (the suite has one project), not the full set.
+      - name: Install Playwright Chromium
+        run: bunx playwright install --with-deps chromium
+
+      # Cache Supabase Docker images to avoid hitting AWS ECR public-registry
+      # rate limits ("toomanyrequests") on every run.  The key includes the
+      # supabase CLI version (from package.json) so the cache is invalidated
+      # whenever the CLI — and therefore the image tags it pulls — changes.
+      #
+      # ScribeMD/docker-cache@0.5.0 only accepts `key` and `read-only` (no
+      # `restore-keys`). Cache misses fall through to `supabase start`
+      # pulling fresh — that's fine, just slower. The `continue-on-error`
+      # guards against the action's known 400s against the new GitHub cache
+      # service, which would otherwise leave a red warning on every run.
+      - name: Cache Supabase Docker images
+        continue-on-error: true
+        uses: ScribeMD/docker-cache@0.5.0
+        with:
+          key: docker-${{ runner.os }}-supabase-${{ hashFiles('package.json') }}
+
+      # Boots Postgres, REST, Realtime, Auth, etc. in Docker containers and
+      # applies supabase/migrations/ automatically. Blocking — exits when the
+      # stack is healthy, which is what tests/e2e/global-setup.ts expects.
+      - name: Start local Supabase
+        run: bunx supabase start
+
+      # Playwright spawns `vite dev --mode e2e` itself via webServer; the
+      # `dev:e2e` script sets VITE_E2E_COVERAGE=1 so vite-plugin-istanbul
+      # instruments src/**. After each test, the coverage fixture in
+      # tests/e2e/helpers/coverage.ts dumps window.__coverage__ from each
+      # browser context to coverage-e2e/raw/.
+      - name: Run Playwright
+        run: bun run test:e2e
+
+      - name: Upload e2e coverage raw dumps
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage-e2e-raw
+          path: coverage-e2e/raw/
+          retention-days: 14
+
+      - name: Upload Playwright junit
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: junit-e2e
+          path: test-results/playwright-junit.xml
+          retention-days: 14
+
+      # On failure only: full Playwright report + traces + videos
+      # (trace/video are `retain-on-failure` in playwright.config.ts, so
+      # successful runs upload nothing of size here).
+      - name: Upload Playwright failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v6
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+
+      # Best-effort cleanup. Runner is ephemeral so not strictly needed, but
+      # `if: always()` ensures a hung container can't block the runner cache.
+      - name: Stop local Supabase
+        if: always()
+        run: bunx supabase stop --no-backup || true
+
+  test-report:
+    name: Combined test eport
+    runs-on: ubuntu-latest
+    needs: [unit-test, e2e-test]
+    # `if: always()` so we still publish (and surface failures) when either
+    # the unit or e2e job failed — partial coverage + the junit reports are
+    # the most useful debug surface in that case.
+    if: always()
+    permissions:
+      contents: read
+      checks: write # dorny/test-reporter writes check runs
+      pull-requests: write # sticky coverage PR comment
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+
+      # Pull both jobs' outputs into the working tree at the same relative
+      # paths that scripts/merge-coverage.mjs expects.
+      - name: Download unit coverage
+        uses: actions/download-artifact@v6
+        with:
+          name: coverage-unit
+          path: coverage/
+        continue-on-error: true
+
+      - name: Download e2e coverage raw dumps
+        uses: actions/download-artifact@v6
+        with:
+          name: coverage-e2e-raw
+          path: coverage-e2e/raw/
+        continue-on-error: true
+
+      - name: Download Vitest junit
+        uses: actions/download-artifact@v6
+        with:
+          name: junit-unit
+          path: junit/unit/
+        continue-on-error: true
+
+      - name: Download Playwright junit
+        uses: actions/download-artifact@v6
+        with:
+          name: junit-e2e
+          path: junit/e2e/
+        continue-on-error: true
+
+      # Merge unit + e2e coverage into coverage-merged/. The script tolerates
+      # either source being missing — useful when one job failed but we still
+      # want the report from whichever side succeeded.
+      - name: Merge coverage
+        run: bun run coverage:merge
+
+      # Two separate check runs (Vitest and Playwright) so each shows up in
+      # the PR status list with the matching name. fail-on-error so a red
+      # check actually fails this job.
+      - name: Report Vitest results
+        if: always() && hashFiles('junit/unit/junit.xml') != ''
+        uses: dorny/test-reporter@v3
+        with:
+          name: Vitest results
+          path: junit/unit/junit.xml
+          reporter: jest-junit
+          fail-on-error: true
+
+      - name: Report Playwright results
+        if: always() && hashFiles('junit/e2e/playwright-junit.xml') != ''
+        uses: dorny/test-reporter@v3
+        with:
+          name: Playwright results
+          path: junit/e2e/playwright-junit.xml
+          reporter: java-junit # Playwright's junit format is JUnit-XML
+          fail-on-error: true
+
+      # Sticky PR comment with the *merged* coverage (unit + e2e). Updates
+      # in place on every push thanks to the `name` key.
+      - name: Post combined coverage comment
+        if: github.event_name == 'pull_request'
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          json-summary-path: coverage-merged/coverage-summary.json
+          json-final-path: coverage-merged/coverage-final.json
+          comment-on: pr
+          name: coverage
+
+      - name: Upload merged coverage
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage-merged
+          path: coverage-merged/
+          retention-days: 14
+
+  storybook:
+    name: Build Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - name: storybook build
+        run: bun run build-storybook

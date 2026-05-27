@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "title": "Fragebogen — Unsere Rollen"
+  },
+  "loading": "Laden…",
+  "sending": "speichern…",
+  "mode": {
+    "aria": "Anzeigemodus",
+    "swipe": "Wischen",
+    "form": "Formular"
+  },
+  "notFound": {
+    "title": "Sitzung nicht gefunden",
+    "body": "Der Code «{{code}}» entspricht keiner aktiven Sitzung.",
+    "back": "Zur Startseite"
+  },
+  "pickPartner": {
+    "title": "Wer bist du?",
+    "subtitle": "Wähle deinen Namen auf diesem Gerät."
+  },
+  "waiting": {
+    "greeting": "Hallo {{name}} —",
+    "title": "Teile diesen Code mit deinem Partner.",
+    "copied": "kopiert ✓",
+    "tapToCopy": "tippen zum Kopieren",
+    "instructions": "Auf seinem Telefon öffnet dein Partner die App, tippt auf «Mit Code beitreten», gibt {{code}} ein und seinen Vornamen.",
+    "waiting": "warten…"
+  },
+  "waitingFinish": {
+    "done": "Du bist fertig —",
+    "title": "Warten darauf, dass {{name}} fertig wird.",
+    "progress": "{{name}} ist bei {{pct}}%",
+    "autoReveal": "Die Ergebnisseite erscheint automatisch, wenn ihr beide fertig seid."
+  },
+  "errors": {
+    "cannotGenerateCode": "Sitzungscode konnte nicht generiert werden",
+    "sessionNotFound": "Sitzungscode nicht gefunden",
+    "generic": "Ein Fehler ist aufgetreten"
+  }
+}

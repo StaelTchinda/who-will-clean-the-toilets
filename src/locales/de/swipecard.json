@@ -1,0 +1,9 @@
+{
+  "modified": "geändert",
+  "swipe": {
+    "hint": "Antwort antippen · oder aus der Mitte wischen",
+    "placeholder": "Wähle eine Antwort",
+    "previewAria": "Vorschau: {{label}}",
+    "previewEmptyAria": "Vorschau deiner Antwort"
+  }
+}

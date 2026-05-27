@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "title": "Questionnaire — Our Roles"
+  },
+  "loading": "Loading…",
+  "sending": "saving…",
+  "mode": {
+    "aria": "View mode",
+    "swipe": "Swipe",
+    "form": "Form"
+  },
+  "notFound": {
+    "title": "Session not found",
+    "body": "The code \"{{code}}\" doesn't match any active session.",
+    "back": "Back home"
+  },
+  "pickPartner": {
+    "title": "Who are you?",
+    "subtitle": "Select your name on this device."
+  },
+  "waiting": {
+    "greeting": "Hi {{name}} —",
+    "title": "Share this code with your partner.",
+    "copied": "copied ✓",
+    "tapToCopy": "tap to copy",
+    "instructions": "On their phone, your partner opens the app, taps \"Join with a code\", enters {{code}}, and their name.",
+    "waiting": "waiting…"
+  },
+  "waitingFinish": {
+    "done": "You're done —",
+    "title": "Waiting for {{name}} to finish.",
+    "progress": "{{name}} is at {{pct}}%",
+    "autoReveal": "The results page will appear automatically once you've both finished."
+  },
+  "errors": {
+    "cannotGenerateCode": "Unable to generate a session code",
+    "sessionNotFound": "Session code not found",
+    "generic": "An error occurred"
+  }
+}

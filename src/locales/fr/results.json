@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "eyebrow": "Nos Rôles · résultats"
+  },
+  "convergence": "{{pct}}% de vos réponses convergent. Voici ce que ça raconte.",
+  "tabs": {
+    "analysis": "Analyse",
+    "table": "Comparatif",
+    "tasks": "Répartition"
+  },
+  "analysis": {
+    "alignedTitle": "Là où vous vous accordez",
+    "alignedSub": "Vos forces communes — à célébrer.",
+    "alignedEmpty": "Peu de convergences nettes — c'est en soi une information.",
+    "divergedTitle": "À discuter ensemble",
+    "divergedSub": "Pas des problèmes — des conversations à avoir.",
+    "divergedEmpty": "Aucune divergence majeure repérée.",
+    "overviewTitle": "Vue d'ensemble par domaine",
+    "overviewSub": "% de questions où {{nameA}} et {{nameB}} sont alignés.",
+    "alignedDetail": "Vous répondez la même chose : « {{answer}} »",
+    "divergedDetail": "Vos réponses divergent — un sujet à explorer ensemble."
+  },
+  "tasks": {
+    "intro": "Basé sur vos réponses Talent + Préférence. À voir comme une proposition de départ — la conversation est plus importante que la suggestion.",
+    "share": "À partager",
+    "rationaleNoData": "Aucune préférence claire — à décider ensemble.",
+    "rationaleTie": "Vous êtes à égalité — partagez ou alternez.",
+    "rationaleA": "{{name}} y est plus à l'aise ou s'y projette mieux.",
+    "rationaleB": "{{name}} y est plus à l'aise ou s'y projette mieux."
+  },
+  "footer": {
+    "disclaimer": "Ces suggestions sont un point de départ pour discuter — pas une décision finale. Imprime ou capture l'écran pour garder une trace.",
+    "newQuestionnaire": "Nouveau questionnaire"
+  }
+}
