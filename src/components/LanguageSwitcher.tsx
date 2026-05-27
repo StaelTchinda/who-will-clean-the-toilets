@@ -1,4 +1,5 @@
 import { useRouterState, useRouter } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { ChevronDown } from "lucide-react";
 import { LOCALES, DEFAULT_LOCALE, type Locale } from "@/i18n";
 import {
@@ -30,9 +31,18 @@ export function LanguageSwitcher() {
   const router = useRouter();
   const currentPath = routerState.location.pathname;
 
-  // Extract the locale segment: matches /<locale> or /<locale>/<rest>
+  // Subscribe to i18n language changes so the component re-renders when
+  // LocaleDecorator (Storybook) or the route loader (production) calls
+  // i18n.changeLanguage(). In the real app the URL always contains a
+  // locale segment (/fr/…, /en/…) so pathLocale wins; in Storybook the
+  // minimal router path is "/" and we fall back to the live i18n.language.
+  const { i18n } = useTranslation();
   const localeMatch = currentPath.match(/^\/([^/]+)(\/.*)?$/);
-  const currentLocale = (localeMatch?.[1] as Locale) ?? DEFAULT_LOCALE;
+  const pathLocale = localeMatch?.[1] as Locale | undefined;
+  const currentLocale =
+    pathLocale && LOCALES.includes(pathLocale)
+      ? pathLocale
+      : (i18n.language as Locale) ?? DEFAULT_LOCALE;
 
   const handleSelect = (locale: Locale) => {
     if (locale === currentLocale) return;
