@@ -18,6 +18,8 @@ dist-ssr
 test-results/
 playwright-report/
 coverage/
+coverage-e2e/
+coverage-merged/
 .nyc_output/
 storybook-static/
 

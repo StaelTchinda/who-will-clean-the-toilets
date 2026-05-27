@@ -13,12 +13,18 @@ export default defineConfig({
   workers: 1,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  // In CI: github annotations for inline PR feedback, list for log readability,
-  // and the html report so the uploaded artifact is a self-contained
-  // click-through (open: "never" suppresses the local browser auto-open that
-  // would otherwise hang the CI step).
+  // In CI: github annotations for inline PR feedback, list for log
+  // readability, junit so dorny/test-reporter can fold results into the PR
+  // status checks, and html so the uploaded artifact is a self-contained
+  // click-through (open: "never" suppresses the local browser auto-open
+  // that would otherwise hang the CI step).
   reporter: process.env.CI
-    ? [["github"], ["list"], ["html", { open: "never" }]]
+    ? [
+        ["github"],
+        ["list"],
+        ["junit", { outputFile: "test-results/playwright-junit.xml" }],
+        ["html", { open: "never" }],
+      ]
     : "list",
   timeout: 60_000,
   expect: {
