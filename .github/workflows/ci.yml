@@ -97,8 +97,8 @@ jobs:
       - name: tsc --noEmit
         run: bunx tsc --noEmit
 
-  test:
-    name: Tests + Coverage
+  unit-test:
+    name: Unit + Storybook (Vitest)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -113,42 +113,26 @@ jobs:
       - name: Install Playwright Chromium
         run: bunx playwright install --with-deps chromium
 
-      # One Vitest run covers both projects (unit + storybook) and emits the
-      # merged coverage report. Text output is teed for the PR comment table.
+      # One Vitest run covers both projects (unit + storybook). Coverage and
+      # junit results are uploaded as artifacts for the `report` job to
+      # merge with the e2e equivalents.
       - name: Run Vitest with coverage
-        run: |
-          set -o pipefail
-          bun run coverage 2>&1 | tee coverage-text.txt
+        run: bun run coverage
 
-      - name: Report test results
-        uses: dorny/test-reporter@v3
-        if: always()
-        with:
-          name: Vitest results
-          path: test-results/junit.xml
-          reporter: jest-junit
-          fail-on-error: true
-
-      # Sticky PR comment with the merged coverage summary. Updates in place on
-      # subsequent pushes thanks to the `header` key.
-      - name: Post coverage summary
-        if: github.event_name == 'pull_request'
-        uses: davelosert/vitest-coverage-report-action@v2
-        with:
-          json-summary-path: coverage/coverage-summary.json
-          json-final-path: coverage/coverage-final.json
-          comment-on: pr
-          name: coverage
-
-      # Always upload the full report so it can be downloaded from the run
-      # page (lcov-report/index.html browsable, lcov.info for codecov-style
-      # tools downstream).
-      - name: Upload coverage artifact
+      - name: Upload unit coverage
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: coverage-report
+          name: coverage-unit
           path: coverage/
+          retention-days: 14
+
+      - name: Upload Vitest junit
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: junit-unit
+          path: test-results/junit.xml
           retention-days: 14
 
   build:
@@ -163,7 +147,7 @@ jobs:
       - name: vite build
         run: bun run build
 
-  e2e:
+  e2e-test:
     name: E2E (Playwright + local Supabase)
     runs-on: ubuntu-latest
     # ubuntu-latest ships Docker preinstalled, which is all `supabase start`
@@ -187,15 +171,34 @@ jobs:
       - name: Start local Supabase
         run: bunx supabase start
 
-      # Playwright spawns `vite dev --mode e2e` itself via webServer; .env.e2e
-      # supplies the deterministic local anon key + 127.0.0.1:54321 URL.
+      # Playwright spawns `vite dev --mode e2e` itself via webServer; the
+      # `dev:e2e` script sets VITE_E2E_COVERAGE=1 so vite-plugin-istanbul
+      # instruments src/**. After each test, the coverage fixture in
+      # tests/e2e/helpers/coverage.ts dumps window.__coverage__ from each
+      # browser context to coverage-e2e/raw/.
       - name: Run Playwright
         run: bun run test:e2e
 
-      # On failure: html report + traces + videos (trace/video are set to
-      # retain-on-failure in playwright.config.ts, so successful runs upload
-      # nothing of size). On success the step is skipped entirely.
-      - name: Upload Playwright artifacts
+      - name: Upload e2e coverage raw dumps
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage-e2e-raw
+          path: coverage-e2e/raw/
+          retention-days: 14
+
+      - name: Upload Playwright junit
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: junit-e2e
+          path: test-results/playwright-junit.xml
+          retention-days: 14
+
+      # On failure only: full Playwright report + traces + videos
+      # (trace/video are `retain-on-failure` in playwright.config.ts, so
+      # successful runs upload nothing of size here).
+      - name: Upload Playwright failure artifacts
         if: failure()
         uses: actions/upload-artifact@v6
         with:
@@ -210,6 +213,101 @@ jobs:
       - name: Stop local Supabase
         if: always()
         run: bunx supabase stop --no-backup || true
+
+  test-report:
+    name: Combined test eport
+    runs-on: ubuntu-latest
+    needs: [unit-test, e2e-test]
+    # `if: always()` so we still publish (and surface failures) when either
+    # the unit or e2e job failed — partial coverage + the junit reports are
+    # the most useful debug surface in that case.
+    if: always()
+    permissions:
+      contents: read
+      checks: write          # dorny/test-reporter writes check runs
+      pull-requests: write   # sticky coverage PR comment
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+
+      # Pull both jobs' outputs into the working tree at the same relative
+      # paths that scripts/merge-coverage.mjs expects.
+      - name: Download unit coverage
+        uses: actions/download-artifact@v6
+        with:
+          name: coverage-unit
+          path: coverage/
+        continue-on-error: true
+
+      - name: Download e2e coverage raw dumps
+        uses: actions/download-artifact@v6
+        with:
+          name: coverage-e2e-raw
+          path: coverage-e2e/raw/
+        continue-on-error: true
+
+      - name: Download Vitest junit
+        uses: actions/download-artifact@v6
+        with:
+          name: junit-unit
+          path: junit/unit/
+        continue-on-error: true
+
+      - name: Download Playwright junit
+        uses: actions/download-artifact@v6
+        with:
+          name: junit-e2e
+          path: junit/e2e/
+        continue-on-error: true
+
+      # Merge unit + e2e coverage into coverage-merged/. The script tolerates
+      # either source being missing — useful when one job failed but we still
+      # want the report from whichever side succeeded.
+      - name: Merge coverage
+        run: bun run coverage:merge
+
+      # Two separate check runs (Vitest and Playwright) so each shows up in
+      # the PR status list with the matching name. fail-on-error so a red
+      # check actually fails this job.
+      - name: Report Vitest results
+        if: always() && hashFiles('junit/unit/junit.xml') != ''
+        uses: dorny/test-reporter@v3
+        with:
+          name: Vitest results
+          path: junit/unit/junit.xml
+          reporter: jest-junit
+          fail-on-error: true
+
+      - name: Report Playwright results
+        if: always() && hashFiles('junit/e2e/playwright-junit.xml') != ''
+        uses: dorny/test-reporter@v3
+        with:
+          name: Playwright results
+          path: junit/e2e/playwright-junit.xml
+          reporter: java-junit   # Playwright's junit format is JUnit-XML
+          fail-on-error: true
+
+      # Sticky PR comment with the *merged* coverage (unit + e2e). Updates
+      # in place on every push thanks to the `name` key.
+      - name: Post combined coverage comment
+        if: github.event_name == 'pull_request'
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          json-summary-path: coverage-merged/coverage-summary.json
+          json-final-path: coverage-merged/coverage-final.json
+          comment-on: pr
+          name: coverage
+
+      - name: Upload merged coverage
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage-merged
+          path: coverage-merged/
+          retention-days: 14
 
   storybook:
     name: Build Storybook

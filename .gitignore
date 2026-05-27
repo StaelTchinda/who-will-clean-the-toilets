@@ -16,9 +16,16 @@ dist-ssr
 .nitro
 *.local
 test-results/
+playwright-report/
 coverage/
+coverage-e2e/
+coverage-merged/
 .nyc_output/
 storybook-static/
+
+# Supabase CLI per-machine state (auto-created by `supabase start`)
+supabase/.branches/
+supabase/.temp/
 
 # Wrangler / Cloudflare
 .wrangler/
