@@ -1,7 +1,8 @@
 // Shared mock data for BOTH Vitest tests and Storybook stories — single source
 // of truth so the two never drift. Imports only types + pure helpers (no React,
 // no Supabase access), so it is safe in the node test env and the browser SB env.
-import type { Answer, Question, AngleId, DomainId } from "@/lib/dataset";
+import type { Question, AngleId, DomainId } from "@/lib/dataset";
+import { buildQuestionList } from "@/lib/dataset";
 import type { AnswerRow, ChildrenAnswer, SessionRow } from "@/lib/session";
 import type { Locale } from "@/i18n";
 
@@ -12,20 +13,19 @@ let qSeq = 0;
 /** A minimal Question with sane defaults; override any field via `partial`. */
 export function makeQuestion(partial: Partial<Question> = {}): Question {
   qSeq += 1;
-  const answers: Answer[] = partial.answers ?? [
-    { id: "opt_a", label: "Option A" },
-    { id: "opt_b", label: "Option B" },
-    { id: "both_fine", label: "Les deux me vont" },
-    { id: "neither_fine", label: "Ni l'un ni l'autre" },
-  ];
   return {
     id: partial.id ?? `q_${qSeq}`,
     label: partial.label ?? `Question ${qSeq} ?`,
-    domain_id: partial.domain_id ?? "housekeeping",
+    domain_id: partial.domain_id ?? ("housekeeping" as DomainId),
     task_ids: partial.task_ids ?? [],
     angle_id: partial.angle_id ?? ("value" as AngleId),
     priority: partial.priority ?? "important",
-    answers,
+    answers: partial.answers ?? [
+      { id: "opt_a", label: "Option A" },
+      { id: "opt_b", label: "Option B" },
+      { id: "both_fine", label: "Both fine" },
+      { id: "neither_fine", label: "Neither" },
+    ],
   };
 }
 
@@ -64,59 +64,22 @@ export interface Scenario {
   locale: Locale;
 }
 
-// A handful of questions spanning a few domains/angles, used to drive the
-// presentational scenarios below. `domainId` lets stories cover several rows.
+// Real dataset questions span four domains so ResultsView can show a meaningful
+// analysis tab (domain-level convergence bars), a filled table tab, and task
+// suggestions. Using real IDs means tData("questions.{id}.label") finds actual
+// translations in data.json — no French fallbacks.
+const ALL_Q = buildQuestionList(true);
+const pick = (id: string): Question => {
+  const q = ALL_Q.find((q) => q.id === id);
+  if (!q) throw new Error(`Fixture: question "${id}" not found in dataset`);
+  return q;
+};
+
 const SCENARIO_QUESTIONS: Question[] = [
-  makeQuestion({
-    id: "sc_clean",
-    label: "Qui nettoie le plus volontiers ?",
-    domain_id: "housekeeping" as DomainId,
-    angle_id: "preference" as AngleId,
-    task_ids: ["general_cleaning"],
-    answers: [
-      { id: "me", label: "Moi" },
-      { id: "partner", label: "Mon/ma partenaire" },
-      { id: "both_fine", label: "Les deux, ça va" },
-      { id: "neither_fine", label: "Aucun·e des deux" },
-    ],
-  }),
-  makeQuestion({
-    id: "sc_cook",
-    label: "Cuisiner au quotidien, c'est…",
-    domain_id: "cooking" as DomainId,
-    angle_id: "talent" as AngleId,
-    task_ids: ["cooking_daily"],
-    answers: [
-      { id: "easy", label: "Facile pour moi" },
-      { id: "hard", label: "Difficile" },
-      { id: "both_fine", label: "Les deux, ça va" },
-      { id: "neither_fine", label: "Aucun·e des deux" },
-    ],
-  }),
-  makeQuestion({
-    id: "sc_money",
-    label: "Gérer le budget commun ?",
-    domain_id: "finances" as DomainId,
-    angle_id: "value" as AngleId,
-    answers: [
-      { id: "shared", label: "Ensemble" },
-      { id: "one_person", label: "Une seule personne" },
-      { id: "both_fine", label: "Peu importe" },
-      { id: "neither_fine", label: "À éviter" },
-    ],
-  }),
-  makeQuestion({
-    id: "sc_kids",
-    label: "Coucher les enfants le soir ?",
-    domain_id: "children" as DomainId,
-    angle_id: "preference" as AngleId,
-    answers: [
-      { id: "me", label: "Moi" },
-      { id: "partner", label: "Mon/ma partenaire" },
-      { id: "both_fine", label: "Les deux, ça va" },
-      { id: "neither_fine", label: "Aucun·e des deux" },
-    ],
-  }),
+  pick("q_housekeeping_val_cleanliness"), // housekeeping / value
+  pick("q_cooking_talent_daily"),          // cooking / talent
+  pick("q_finances_talent_budget"),        // finances / talent
+  pick("q_children_env_daily"),            // children / environment
 ];
 
 const session = makeSession();
@@ -168,94 +131,29 @@ export const partialDivergence: Scenario = {
   locale: "fr",
   answers: SCENARIO_QUESTIONS.flatMap((q, i) => {
     const converge = i < 2;
-    return [answer("a", q.id, q.answers[0].id), answer("b", q.id, q.answers[converge ? 0 : 1].id)];
+    return [
+      answer("a", q.id, q.answers[0].id),
+      answer("b", q.id, q.answers[converge ? 0 : 1].id),
+    ];
   }),
 };
 
 // ── Questionnaire stage fixtures ────────────────────────────────────────────
-// A larger, ordered question list for the questionnaire stories so Start,
-// MidFlow, and NearEnd land on visibly different states (progress bar,
-// counter, meta line). Distinct from SCENARIO_QUESTIONS (which is tiny on
-// purpose for ResultsView aggregation tests).
-
-const STANDARD_ANSWERS: Answer[] = [
-  { id: "me", label: "Moi" },
-  { id: "partner", label: "Mon/ma partenaire" },
-  { id: "both_fine", label: "Les deux me vont" },
-  { id: "neither_fine", label: "Aucun·e des deux" },
-];
+// Ten real dataset questions spanning all six domains. Using real IDs means
+// tData() can translate question labels, answer labels, domain names, and
+// angle names — locale toolbar changes propagate through everything.
 
 export const QUESTIONNAIRE_QUESTIONS: Question[] = [
-  makeQuestion({
-    id: "qf_1",
-    label: "Qui fait le ménage hebdomadaire ?",
-    domain_id: "housekeeping" as DomainId,
-    angle_id: "preference" as AngleId,
-    answers: STANDARD_ANSWERS,
-  }),
-  makeQuestion({
-    id: "qf_2",
-    label: "Les sanitaires, c'est l'affaire de qui ?",
-    domain_id: "housekeeping" as DomainId,
-    angle_id: "value" as AngleId,
-    answers: STANDARD_ANSWERS,
-  }),
-  makeQuestion({
-    id: "qf_3",
-    label: "Qui cuisine en semaine ?",
-    domain_id: "cooking" as DomainId,
-    angle_id: "talent" as AngleId,
-    answers: STANDARD_ANSWERS,
-  }),
-  makeQuestion({
-    id: "qf_4",
-    label: "Planifier les menus de la semaine ?",
-    domain_id: "cooking" as DomainId,
-    angle_id: "preference" as AngleId,
-    answers: STANDARD_ANSWERS,
-  }),
-  makeQuestion({
-    id: "qf_5",
-    label: "Qui suit les comptes du foyer ?",
-    domain_id: "finances" as DomainId,
-    angle_id: "talent" as AngleId,
-    answers: STANDARD_ANSWERS,
-  }),
-  makeQuestion({
-    id: "qf_6",
-    label: "Les rendez-vous administratifs, c'est qui ?",
-    domain_id: "logistics" as DomainId,
-    angle_id: "preference" as AngleId,
-    answers: STANDARD_ANSWERS,
-  }),
-  makeQuestion({
-    id: "qf_7",
-    label: "Organiser un déménagement ou un voyage ?",
-    domain_id: "logistics" as DomainId,
-    angle_id: "talent" as AngleId,
-    answers: STANDARD_ANSWERS,
-  }),
-  makeQuestion({
-    id: "qf_8",
-    label: "Le coucher des enfants ?",
-    domain_id: "children" as DomainId,
-    angle_id: "preference" as AngleId,
-    answers: STANDARD_ANSWERS,
-  }),
-  makeQuestion({
-    id: "qf_9",
-    label: "Choisir la crèche ou l'école ?",
-    domain_id: "children" as DomainId,
-    angle_id: "value" as AngleId,
-    answers: STANDARD_ANSWERS,
-  }),
-  makeQuestion({
-    id: "qf_10",
-    label: "Décider des grandes lignes de vie commune ?",
-    domain_id: "values" as DomainId,
-    angle_id: "value" as AngleId,
-    answers: STANDARD_ANSWERS,
-  }),
+  pick("q_housekeeping_env_general"),           // housekeeping / environment
+  pick("q_housekeeping_val_cleanliness"),        // housekeeping / value
+  pick("q_cooking_env_general"),                 // cooking / environment
+  pick("q_cooking_talent_daily"),                // cooking / talent
+  pick("q_finances_env_general"),                // finances / environment
+  pick("q_finances_talent_budget"),              // finances / talent
+  pick("q_logistics_talent_diy_vs_contractors"), // logistics / talent
+  pick("q_logistics_pref_diy_vs_contractors"),   // logistics / preference
+  pick("q_children_env_daily"),                  // children / environment
+  pick("q_values_val_fairness"),                 // values / value
 ];
 
 /**
