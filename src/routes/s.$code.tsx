@@ -190,10 +190,17 @@ export function Questionnaire({
 
   const [index, setIndex] = useState(initialIndex);
   const [pending, setPending] = useState(false);
-  const q = questions[index];
-  const current = answers.find((a) => a.question_id === q.id)?.answer_id;
-
   const total = questions.length;
+
+  // `q` and `current` may be undefined for one render tick after the final
+  // pick — setIndex(total) puts us past the array until the parent flips to
+  // WaitingForFinish / ResultsView. Access them defensively below and
+  // early-return *after* every hook (Rules of Hooks).
+  const q = questions[index];
+  const current = q
+    ? answers.find((a) => a.question_id === q.id)?.answer_id
+    : undefined;
+
   const pct = Math.round(((index + (current ? 1 : 0)) / total) * 100);
 
   const persistProgress = useCallback(
@@ -210,6 +217,7 @@ export function Questionnaire({
   );
 
   const handlePick = async (answerId: string) => {
+    if (!q) return;
     setPending(true);
     try {
       await upsertAnswer({
@@ -235,7 +243,8 @@ export function Questionnaire({
     if (index > 0) setIndex(index - 1);
   };
 
-  if (index >= total) {
+  // All hooks have run by now — safe to bail out before dereferencing q.
+  if (!q) {
     return (
       <Centered>
         <p className="text-muted-foreground">Envoi de tes réponses…</p>
