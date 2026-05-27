@@ -17,10 +17,7 @@ name: Deploy (Cloudflare Workers)
 
 on:
   push:
-    # TODO: Remove dev after testing
-    branches: [master, dev]
-  pull_request:
-    branches: [master, dev]
+    branches: [master]
   workflow_dispatch:
     inputs:
       apply_migrations:
