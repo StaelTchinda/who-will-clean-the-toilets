@@ -1,0 +1,744 @@
+[
+  {
+    "id": "q_housekeeping_env_general",
+    "label": "Chez toi en grandissant, le ménage c'était plutôt qui ?",
+    "domain_id": "housekeeping",
+    "task_ids": ["general_cleaning"],
+    "angle_id": "environment",
+    "priority": "essential",
+    "answers": [
+      { "id": "mother", "label": "Ma mère, principalement" },
+      { "id": "father", "label": "Mon père, principalement" },
+      { "id": "both", "label": "Les deux également" },
+      { "id": "everyone", "label": "Tout le monde, enfants inclus" }
+    ]
+  },
+  {
+    "id": "q_housekeeping_val_cleanliness",
+    "label": "Un foyer propre et rangé, pour toi c'est…",
+    "domain_id": "housekeeping",
+    "task_ids": ["general_cleaning"],
+    "angle_id": "value",
+    "priority": "essential",
+    "answers": [
+      { "id": "non_negotiable", "label": "Non négociable" },
+      { "id": "important", "label": "Important mais flexible" },
+      { "id": "secondary", "label": "Secondaire" },
+      { "id": "depends", "label": "Ça dépend des périodes" }
+    ]
+  },
+  {
+    "id": "q_housekeeping_val_disorder",
+    "label": "Rentrer dans un appartement en désordre après une longue journée, c'est…",
+    "domain_id": "housekeeping",
+    "task_ids": ["tidying", "general_cleaning"],
+    "angle_id": "value",
+    "priority": "essential",
+    "answers": [
+      { "id": "unbearable", "label": "Insupportable" },
+      { "id": "annoying", "label": "Gênant" },
+      { "id": "fine", "label": "Ça ne m'affecte pas vraiment" },
+      { "id": "unnoticed", "label": "Je ne le remarque pas" }
+    ]
+  },
+  {
+    "id": "q_housekeeping_pref_sanitizing_vs_vacuuming",
+    "label": "Entre nettoyer les sanitaires et passer l'aspirateur, lequel te dérangerait le moins de faire chaque semaine ?",
+    "domain_id": "housekeeping",
+    "task_ids": ["sanitizing", "vacuuming"],
+    "angle_id": "preference",
+    "priority": "essential",
+    "answers": [
+      { "id": "sanitizing", "label": "Nettoyer les sanitaires" },
+      { "id": "vacuuming", "label": "Passer l'aspirateur" },
+      { "id": "both_bother", "label": "Les deux me dérangent pareil" },
+      { "id": "neither_bothers", "label": "Aucun ne me dérange vraiment" }
+    ]
+  },
+  {
+    "id": "q_housekeeping_talent_sanitizing_vs_floors",
+    "label": "Entre nettoyer les sanitaires et laver les sols, pour lequel tu te débrouilles le mieux ?",
+    "domain_id": "housekeeping",
+    "task_ids": ["sanitizing", "floor_washing"],
+    "angle_id": "talent",
+    "priority": "important",
+    "answers": [
+      { "id": "sanitizing", "label": "Nettoyer les sanitaires" },
+      { "id": "floors", "label": "Laver les sols" },
+      { "id": "both_fine", "label": "Je maîtrise les deux" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre vraiment" }
+    ]
+  },
+  {
+    "id": "q_housekeeping_val_sanitizing_gender",
+    "label": "Nettoyer les toilettes, c'est une tâche…",
+    "domain_id": "housekeeping",
+    "task_ids": ["sanitizing"],
+    "angle_id": "value",
+    "priority": "important",
+    "answers": [
+      { "id": "neutral", "label": "Neutre, n'importe qui peut le faire" },
+      { "id": "feminine", "label": "Plutôt féminine" },
+      { "id": "masculine", "label": "Plutôt masculine" },
+      { "id": "delegate", "label": "À déléguer si possible" }
+    ]
+  },
+  {
+    "id": "q_housekeeping_talent_tidying_vs_bedding",
+    "label": "Entre ranger/désencombrer et changer les draps, pour lequel tu te sens le plus compétent(e) ?",
+    "domain_id": "housekeeping",
+    "task_ids": ["tidying", "bedding"],
+    "angle_id": "talent",
+    "priority": "important",
+    "answers": [
+      { "id": "tidying", "label": "Ranger et désencombrer" },
+      { "id": "bedding", "label": "Changer les draps" },
+      { "id": "both_fine", "label": "Les deux sans problème" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre vraiment" }
+    ]
+  },
+  {
+    "id": "q_housekeeping_pref_tidying_vs_bins",
+    "label": "Entre ranger la maison et sortir les poubelles, lequel tu supporterais le mieux d'assumer seul(e) ?",
+    "domain_id": "housekeeping",
+    "task_ids": ["tidying", "bins"],
+    "angle_id": "preference",
+    "priority": "important",
+    "answers": [
+      { "id": "tidying", "label": "Ranger la maison" },
+      { "id": "bins", "label": "Sortir les poubelles" },
+      { "id": "both_fine", "label": "Les deux me conviennent" },
+      { "id": "both_bother", "label": "Les deux m'embêtent pareil" }
+    ]
+  },
+  {
+    "id": "q_housekeeping_env_bins",
+    "label": "Chez toi, les poubelles c'était automatiquement qui ?",
+    "domain_id": "housekeeping",
+    "task_ids": ["bins"],
+    "angle_id": "environment",
+    "priority": "nice_to_have",
+    "answers": [
+      { "id": "father", "label": "Mon père" },
+      { "id": "mother", "label": "Ma mère" },
+      { "id": "children", "label": "Les enfants" },
+      { "id": "rotation", "label": "Tout le monde à tour de rôle" }
+    ]
+  },
+  {
+    "id": "q_housekeeping_val_clutter",
+    "label": "Jeter ou donner des affaires qu'on n'utilise plus, c'est…",
+    "domain_id": "housekeeping",
+    "task_ids": ["tidying"],
+    "angle_id": "value",
+    "priority": "important",
+    "answers": [
+      { "id": "liberating", "label": "Libérateur, je le fais régulièrement" },
+      { "id": "good_theory", "label": "Bien en théorie mais difficile en pratique" },
+      { "id": "stressful", "label": "Stressant" },
+      { "id": "keep", "label": "Je préfère garder au cas où" }
+    ]
+  },
+  {
+    "id": "q_housekeeping_pref_bedmaking",
+    "label": "Faire le lit chaque matin, c'est…",
+    "domain_id": "housekeeping",
+    "task_ids": ["bedding"],
+    "angle_id": "preference",
+    "priority": "important",
+    "answers": [
+      { "id": "essential", "label": "Indispensable pour bien démarrer" },
+      { "id": "if_time", "label": "Bien si j'ai le temps" },
+      { "id": "useless", "label": "Inutile, on va s'y remettre le soir" },
+      { "id": "never", "label": "Je ne le fais jamais" }
+    ]
+  },
+  {
+    "id": "q_cooking_env_general",
+    "label": "Chez toi en grandissant, qui était derrière les fourneaux ?",
+    "domain_id": "cooking",
+    "task_ids": ["cooking_daily"],
+    "angle_id": "environment",
+    "priority": "essential",
+    "answers": [
+      { "id": "mother", "label": "Ma mère, presque toujours" },
+      { "id": "father", "label": "Mon père, presque toujours" },
+      { "id": "both", "label": "Les deux selon les jours" },
+      { "id": "everyone", "label": "Tout le monde cuisinait" }
+    ]
+  },
+  {
+    "id": "q_cooking_talent_daily",
+    "label": "Tu cuisines déjà régulièrement pour toi-même ?",
+    "domain_id": "cooking",
+    "task_ids": ["cooking_daily"],
+    "angle_id": "talent",
+    "priority": "essential",
+    "answers": [
+      { "id": "daily", "label": "Oui, tous les jours ou presque" },
+      { "id": "sometimes", "label": "Quelques fois par semaine" },
+      { "id": "rarely", "label": "Rarement" },
+      { "id": "never", "label": "Presque jamais" }
+    ]
+  },
+  {
+    "id": "q_cooking_pref_cooking_vs_dishes",
+    "label": "Entre cuisiner et faire la vaisselle, lequel tu préfères assumer ?",
+    "domain_id": "cooking",
+    "task_ids": ["cooking_daily", "dishes"],
+    "angle_id": "preference",
+    "priority": "essential",
+    "answers": [
+      { "id": "cooking", "label": "Cuisiner" },
+      { "id": "dishes", "label": "Faire la vaisselle" },
+      { "id": "both_fine", "label": "Les deux me plaisent" },
+      { "id": "both_bother", "label": "Ni l'un ni l'autre" }
+    ]
+  },
+  {
+    "id": "q_cooking_val_who_cooks",
+    "label": "Dans un couple, qui devrait cuisiner ?",
+    "domain_id": "cooking",
+    "task_ids": ["cooking_daily"],
+    "angle_id": "value",
+    "priority": "essential",
+    "answers": [
+      { "id": "who_likes", "label": "Celui qui aime ça" },
+      { "id": "who_arrives_first", "label": "Celui qui rentre le plus tôt" },
+      { "id": "share", "label": "On partage" },
+      { "id": "woman", "label": "La femme naturellement" }
+    ]
+  },
+  {
+    "id": "q_cooking_talent_level",
+    "label": "Ton niveau en cuisine, tu le décrirais comme…",
+    "domain_id": "cooking",
+    "task_ids": ["cooking_daily", "cooking_guests"],
+    "angle_id": "talent",
+    "priority": "essential",
+    "answers": [
+      { "id": "expert", "label": "Très bon(ne) cuisinier(ère)" },
+      { "id": "decent", "label": "Correct(e), je me débrouille" },
+      { "id": "basic", "label": "Basique" },
+      { "id": "none", "label": "Quasi inexistant" }
+    ]
+  },
+  {
+    "id": "q_cooking_val_dishes_fairness",
+    "label": "Celui qui cuisine devrait-il aussi faire la vaisselle ?",
+    "domain_id": "cooking",
+    "task_ids": ["dishes", "cooking_daily"],
+    "angle_id": "value",
+    "priority": "important",
+    "answers": [
+      { "id": "no_unfair", "label": "Non, c'est injuste" },
+      { "id": "yes_if_other_busy", "label": "Oui si l'autre est occupé" },
+      { "id": "alternate", "label": "Ça devrait s'alterner" },
+      { "id": "doesnt_matter", "label": "Peu importe tant que c'est fait" }
+    ]
+  },
+  {
+    "id": "q_cooking_talent_groceries_vs_meal_planning",
+    "label": "Entre optimiser un budget courses et planifier les menus de la semaine, pour lequel tu te sens le plus à l'aise ?",
+    "domain_id": "cooking",
+    "task_ids": ["groceries", "meal_planning"],
+    "angle_id": "talent",
+    "priority": "important",
+    "answers": [
+      { "id": "budget", "label": "Optimiser le budget courses" },
+      { "id": "planning", "label": "Planifier les menus" },
+      { "id": "both_fine", "label": "Les deux sans problème" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre vraiment" }
+    ]
+  },
+  {
+    "id": "q_cooking_pref_groceries_vs_meal_planning",
+    "label": "Entre faire les courses et décider ce qu'on mange cette semaine, lequel te dérangerait le moins d'assumer ?",
+    "domain_id": "cooking",
+    "task_ids": ["groceries", "meal_planning"],
+    "angle_id": "preference",
+    "priority": "important",
+    "answers": [
+      { "id": "groceries", "label": "Faire les courses" },
+      { "id": "planning", "label": "Planifier les menus" },
+      { "id": "both_fine", "label": "Les deux me conviennent" },
+      { "id": "both_bother", "label": "Les deux m'embêtent pareil" }
+    ]
+  },
+  {
+    "id": "q_cooking_pref_guests",
+    "label": "Cuisiner pour des invités, c'est…",
+    "domain_id": "cooking",
+    "task_ids": ["cooking_guests"],
+    "angle_id": "preference",
+    "priority": "important",
+    "answers": [
+      { "id": "love_it", "label": "Quelque chose que j'adore" },
+      { "id": "stressful_rewarding", "label": "Stressant mais satisfaisant" },
+      { "id": "prefer_restaurant", "label": "Je préfère commander ou aller au restaurant" },
+      { "id": "impossible_alone", "label": "Impensable seul(e)" }
+    ]
+  },
+  {
+    "id": "q_cooking_val_balanced_diet",
+    "label": "Manger équilibré au quotidien, c'est…",
+    "domain_id": "cooking",
+    "task_ids": ["cooking_daily", "meal_planning"],
+    "angle_id": "value",
+    "priority": "important",
+    "answers": [
+      { "id": "absolute_priority", "label": "Une priorité absolue" },
+      { "id": "important_flexible", "label": "Important mais flexible" },
+      { "id": "secondary", "label": "Secondaire" },
+      { "id": "dont_think", "label": "Je n'y pense pas vraiment" }
+    ]
+  },
+  {
+    "id": "q_cooking_env_groceries",
+    "label": "Chez toi en grandissant, qui faisait les courses ?",
+    "domain_id": "cooking",
+    "task_ids": ["groceries"],
+    "angle_id": "environment",
+    "priority": "nice_to_have",
+    "answers": [
+      { "id": "mother", "label": "Ma mère" },
+      { "id": "father", "label": "Mon père" },
+      { "id": "both", "label": "Les deux" },
+      { "id": "with_parent", "label": "J'y allais souvent avec un parent" }
+    ]
+  },
+  {
+    "id": "q_finances_env_general",
+    "label": "Chez toi en grandissant, qui gérait l'argent du foyer ?",
+    "domain_id": "finances",
+    "task_ids": ["budget"],
+    "angle_id": "environment",
+    "priority": "essential",
+    "answers": [
+      { "id": "father", "label": "Mon père" },
+      { "id": "mother", "label": "Ma mère" },
+      { "id": "both", "label": "Les deux ensemble" },
+      { "id": "unknown", "label": "Je ne sais pas, ce n'était pas visible" }
+    ]
+  },
+  {
+    "id": "q_finances_talent_budget",
+    "label": "Tu gères déjà un budget personnel aujourd'hui ?",
+    "domain_id": "finances",
+    "task_ids": ["budget"],
+    "angle_id": "talent",
+    "priority": "essential",
+    "answers": [
+      { "id": "rigorously", "label": "Oui, rigoureusement" },
+      { "id": "approximately", "label": "Approximativement" },
+      { "id": "not_really", "label": "Pas vraiment" },
+      { "id": "no", "label": "Non" }
+    ]
+  },
+  {
+    "id": "q_finances_pref_budget_vs_admin",
+    "label": "Entre suivre le budget mensuel et gérer la paperasse administrative, lequel tu préfères assumer ?",
+    "domain_id": "finances",
+    "task_ids": ["budget", "admin"],
+    "angle_id": "preference",
+    "priority": "essential",
+    "answers": [
+      { "id": "budget", "label": "Suivre le budget" },
+      { "id": "admin", "label": "La paperasse administrative" },
+      { "id": "both_fine", "label": "Les deux me conviennent" },
+      { "id": "both_bother", "label": "Les deux m'embêtent pareil" }
+    ]
+  },
+  {
+    "id": "q_finances_val_shared_finances",
+    "label": "Dans un couple, les finances ça devrait être…",
+    "domain_id": "finances",
+    "task_ids": ["budget"],
+    "angle_id": "value",
+    "priority": "essential",
+    "answers": [
+      { "id": "merged", "label": "Totalement fusionnées" },
+      { "id": "separate_contribution", "label": "Séparées avec une contribution commune" },
+      { "id": "by_competence", "label": "Gérées par celui qui s'y connaît le mieux" },
+      { "id": "case_by_case", "label": "À décider ensemble au cas par cas" }
+    ]
+  },
+  {
+    "id": "q_finances_val_big_expense",
+    "label": "Une grosse dépense imprévue, ça devrait se décider…",
+    "domain_id": "finances",
+    "task_ids": ["budget"],
+    "angle_id": "value",
+    "priority": "essential",
+    "answers": [
+      { "id": "together", "label": "Ensemble obligatoirement" },
+      { "id": "by_manager", "label": "Par celui qui gère le budget" },
+      { "id": "by_amount", "label": "En fonction du montant" },
+      { "id": "freely", "label": "Librement par chacun dans sa part" }
+    ]
+  },
+  {
+    "id": "q_finances_talent_taxes_vs_insurance",
+    "label": "Entre déclarer les impôts et négocier des contrats d'assurance, pour lequel tu t'en sors le mieux ?",
+    "domain_id": "finances",
+    "task_ids": ["admin", "bills"],
+    "angle_id": "talent",
+    "priority": "important",
+    "answers": [
+      { "id": "taxes", "label": "Déclarer les impôts" },
+      { "id": "insurance", "label": "Négocier les assurances" },
+      { "id": "both_fine", "label": "Les deux sans problème" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre vraiment" }
+    ]
+  },
+  {
+    "id": "q_finances_talent_savings",
+    "label": "Tu t'y connais en épargne et placements ?",
+    "domain_id": "finances",
+    "task_ids": ["savings"],
+    "angle_id": "talent",
+    "priority": "important",
+    "answers": [
+      { "id": "yes_invested", "label": "Oui, j'ai déjà des placements" },
+      { "id": "basics", "label": "Notions de base" },
+      { "id": "little", "label": "Peu" },
+      { "id": "none", "label": "Pas du tout" }
+    ]
+  },
+  {
+    "id": "q_finances_pref_savings_vs_bills",
+    "label": "Entre gérer les placements et suivre les factures/abonnements, lequel tu préfères assumer ?",
+    "domain_id": "finances",
+    "task_ids": ["savings", "bills"],
+    "angle_id": "preference",
+    "priority": "important",
+    "answers": [
+      { "id": "savings", "label": "Gérer les placements" },
+      { "id": "bills", "label": "Suivre les factures" },
+      { "id": "both_fine", "label": "Les deux me conviennent" },
+      { "id": "both_bother", "label": "Les deux m'embêtent pareil" }
+    ]
+  },
+  {
+    "id": "q_finances_env_admin",
+    "label": "Chez toi, qui s'occupait des démarches administratives ?",
+    "domain_id": "finances",
+    "task_ids": ["admin"],
+    "angle_id": "environment",
+    "priority": "nice_to_have",
+    "answers": [
+      { "id": "father", "label": "Mon père" },
+      { "id": "mother", "label": "Ma mère" },
+      { "id": "both", "label": "Les deux" },
+      { "id": "unknown", "label": "Je ne sais pas" }
+    ]
+  },
+  {
+    "id": "q_logistics_talent_diy_vs_contractors",
+    "label": "Entre réparer quelque chose à la maison et gérer des artisans/devis, pour lequel tu te sens le plus compétent(e) ?",
+    "domain_id": "logistics",
+    "task_ids": ["diy", "contractors"],
+    "angle_id": "talent",
+    "priority": "essential",
+    "answers": [
+      { "id": "diy", "label": "Réparer soi-même" },
+      { "id": "contractors", "label": "Gérer les artisans" },
+      { "id": "both_fine", "label": "Les deux sans problème" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre vraiment" }
+    ]
+  },
+  {
+    "id": "q_logistics_pref_diy_vs_contractors",
+    "label": "Entre bricoler à la maison et appeler/comparer des artisans, lequel tu préfères assumer ?",
+    "domain_id": "logistics",
+    "task_ids": ["diy", "contractors"],
+    "angle_id": "preference",
+    "priority": "important",
+    "answers": [
+      { "id": "diy", "label": "Bricoler moi-même" },
+      { "id": "contractors", "label": "Gérer les artisans" },
+      { "id": "both_fine", "label": "Les deux me conviennent" },
+      { "id": "both_bother", "label": "Les deux m'embêtent pareil" }
+    ]
+  },
+  {
+    "id": "q_logistics_env_diy",
+    "label": "Chez toi, les réparations et le bricolage c'était plutôt qui ?",
+    "domain_id": "logistics",
+    "task_ids": ["diy"],
+    "angle_id": "environment",
+    "priority": "important",
+    "answers": [
+      { "id": "father", "label": "Mon père" },
+      { "id": "mother", "label": "Ma mère" },
+      { "id": "professional", "label": "On appelait toujours un professionnel" },
+      { "id": "both", "label": "Les deux selon la tâche" }
+    ]
+  },
+  {
+    "id": "q_logistics_val_diy",
+    "label": "Faire appel à un artisan plutôt que de réparer soi-même, c'est…",
+    "domain_id": "logistics",
+    "task_ids": ["diy", "contractors"],
+    "angle_id": "value",
+    "priority": "nice_to_have",
+    "answers": [
+      { "id": "reasonable", "label": "Raisonnable si on n'a pas les compétences" },
+      { "id": "failure", "label": "Un aveu d'échec" },
+      { "id": "best_option", "label": "La meilleure option dans tous les cas" },
+      { "id": "only_urgent", "label": "Uniquement si c'est urgent" }
+    ]
+  },
+  {
+    "id": "q_logistics_talent_car_vs_planning",
+    "label": "Entre entretenir la voiture et organiser un voyage de A à Z, pour lequel tu te sens le plus à l'aise ?",
+    "domain_id": "logistics",
+    "task_ids": ["car", "planning"],
+    "angle_id": "talent",
+    "priority": "important",
+    "answers": [
+      { "id": "car", "label": "Entretenir la voiture" },
+      { "id": "planning", "label": "Organiser un voyage" },
+      { "id": "both_fine", "label": "Les deux sans problème" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre vraiment" }
+    ]
+  },
+  {
+    "id": "q_logistics_pref_planning_vs_calendar",
+    "label": "Entre planifier les vacances et gérer le calendrier familial au quotidien, lequel tu préfères assumer ?",
+    "domain_id": "logistics",
+    "task_ids": ["planning"],
+    "angle_id": "preference",
+    "priority": "important",
+    "answers": [
+      { "id": "travel", "label": "Planifier les vacances" },
+      { "id": "calendar", "label": "Gérer le calendrier familial" },
+      { "id": "both_fine", "label": "Les deux me conviennent" },
+      { "id": "both_bother", "label": "Les deux m'embêtent pareil" }
+    ]
+  },
+  {
+    "id": "q_logistics_val_mental_load",
+    "label": "La \"charge mentale\" — penser à tout ce qu'il faut faire — c'est…",
+    "domain_id": "logistics",
+    "task_ids": ["mental_load", "planning"],
+    "angle_id": "value",
+    "priority": "essential",
+    "answers": [
+      { "id": "real_topic", "label": "Un vrai sujet dont il faut parler" },
+      { "id": "understand_not_affected", "label": "Je comprends mais ça me touche peu" },
+      { "id": "dont_know", "label": "Un concept que je ne maîtrise pas bien" },
+      { "id": "not_a_problem", "label": "Pas un problème si on s'organise" }
+    ]
+  },
+  {
+    "id": "q_children_env_daily",
+    "label": "Chez toi en grandissant, qui s'occupait des enfants au quotidien ?",
+    "domain_id": "children",
+    "task_ids": ["childcare_daily"],
+    "angle_id": "environment",
+    "priority": "essential",
+    "answers": [
+      { "id": "mother", "label": "Ma mère principalement" },
+      { "id": "father", "label": "Mon père principalement" },
+      { "id": "both", "label": "Les deux également" },
+      { "id": "external", "label": "Une aide extérieure" }
+    ]
+  },
+  {
+    "id": "q_children_pref_daily_vs_school",
+    "label": "Entre les soins quotidiens (bain, repas, coucher) et le suivi scolaire, tu t'imagines plus naturellement assumer…",
+    "domain_id": "children",
+    "task_ids": ["childcare_daily", "childcare_school"],
+    "angle_id": "preference",
+    "priority": "essential",
+    "answers": [
+      { "id": "daily_care", "label": "Les soins quotidiens" },
+      { "id": "school", "label": "Le suivi scolaire" },
+      { "id": "both_fine", "label": "Les deux naturellement" },
+      { "id": "neither_sure", "label": "Je n'y ai pas encore vraiment pensé" }
+    ]
+  },
+  {
+    "id": "q_children_val_work_reduction",
+    "label": "Après la naissance d'un enfant, qui devrait réduire son temps de travail ?",
+    "domain_id": "children",
+    "task_ids": ["childcare_daily"],
+    "angle_id": "value",
+    "priority": "essential",
+    "answers": [
+      { "id": "mother", "label": "Plutôt la mère" },
+      { "id": "father", "label": "Plutôt le père" },
+      { "id": "lower_income", "label": "Celui qui gagne moins" },
+      { "id": "equal", "label": "On partage également" }
+    ]
+  },
+  {
+    "id": "q_children_talent_daily_vs_medical",
+    "label": "Entre gérer les soins quotidiens d'un enfant et ses rendez-vous médicaux, pour lequel tu te sens le plus à l'aise ?",
+    "domain_id": "children",
+    "task_ids": ["childcare_daily", "childcare_medical"],
+    "angle_id": "talent",
+    "priority": "important",
+    "answers": [
+      { "id": "daily", "label": "Les soins quotidiens" },
+      { "id": "medical", "label": "Les rendez-vous médicaux" },
+      { "id": "both_fine", "label": "Les deux sans problème" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre vraiment" }
+    ]
+  },
+  {
+    "id": "q_children_val_school",
+    "label": "Le suivi scolaire d'un enfant, c'est naturellement…",
+    "domain_id": "children",
+    "task_ids": ["childcare_school"],
+    "angle_id": "value",
+    "priority": "important",
+    "answers": [
+      { "id": "both", "label": "La responsabilité des deux parents" },
+      { "id": "mother", "label": "Plutôt celle de la mère" },
+      { "id": "father", "label": "Plutôt celle du père" },
+      { "id": "less_working", "label": "Du parent qui travaille le moins" }
+    ]
+  },
+  {
+    "id": "q_children_pref_medical_vs_activities",
+    "label": "Entre gérer les rendez-vous médicaux et accompagner aux activités, lequel tu préfères assumer ?",
+    "domain_id": "children",
+    "task_ids": ["childcare_medical", "childcare_activities"],
+    "angle_id": "preference",
+    "priority": "important",
+    "answers": [
+      { "id": "medical", "label": "Les rendez-vous médicaux" },
+      { "id": "activities", "label": "Les activités extrascolaires" },
+      { "id": "both_fine", "label": "Les deux me conviennent" },
+      { "id": "both_bother", "label": "Les deux m'embêtent pareil" }
+    ]
+  },
+  {
+    "id": "q_children_val_discipline",
+    "label": "La discipline et les règles à la maison, ça devrait être…",
+    "domain_id": "children",
+    "task_ids": ["childcare_discipline"],
+    "angle_id": "value",
+    "priority": "essential",
+    "answers": [
+      { "id": "defined_together", "label": "Défini ensemble et appliqué par les deux" },
+      { "id": "father", "label": "Principalement par le père" },
+      { "id": "mother", "label": "Principalement par la mère" },
+      { "id": "situational", "label": "Adapté selon les situations" }
+    ]
+  },
+  {
+    "id": "q_values_val_fairness",
+    "label": "Une répartition juste des tâches, c'est…",
+    "domain_id": "values",
+    "task_ids": ["fairness"],
+    "angle_id": "value",
+    "priority": "essential",
+    "answers": [
+      { "id": "fifty_fifty", "label": "50/50 en tout" },
+      { "id": "by_strength", "label": "Chacun fait ce qu'il fait bien" },
+      { "id": "by_availability", "label": "Selon les disponibilités du moment" },
+      { "id": "ideal_hard", "label": "Un idéal difficile à atteindre" }
+    ]
+  },
+  {
+    "id": "q_values_val_outsourcing",
+    "label": "Si le budget le permet, avoir une aide ménagère c'est…",
+    "domain_id": "values",
+    "task_ids": ["outsourcing"],
+    "angle_id": "value",
+    "priority": "important",
+    "answers": [
+      { "id": "great_idea", "label": "Une excellente idée" },
+      { "id": "for_big_tasks", "label": "Acceptable pour les grosses tâches" },
+      { "id": "superfluous", "label": "Un luxe superflu" },
+      { "id": "uncomfortable", "label": "Quelque chose qui me mettrait mal à l'aise" }
+    ]
+  },
+  {
+    "id": "q_values_pref_conflict",
+    "label": "Quand une tâche n'est faite ni par l'un ni par l'autre, tu réagis comment ?",
+    "domain_id": "values",
+    "task_ids": ["conflict"],
+    "angle_id": "preference",
+    "priority": "essential",
+    "answers": [
+      { "id": "talk", "label": "J'en parle directement" },
+      { "id": "do_sighing", "label": "Je le fais moi-même en soupirant" },
+      { "id": "wait", "label": "J'attends que l'autre le fasse" },
+      { "id": "depends", "label": "Ça dépend de ma fatigue du moment" }
+    ]
+  },
+  {
+    "id": "q_values_val_evolution",
+    "label": "La répartition des tâches dans un couple, ça devrait…",
+    "domain_id": "values",
+    "task_ids": ["role_evolution"],
+    "angle_id": "value",
+    "priority": "important",
+    "answers": [
+      { "id": "fixed_upfront", "label": "Être fixée clairement dès le départ" },
+      { "id": "evolve_naturally", "label": "Évoluer naturellement avec le temps" },
+      { "id": "renegotiated", "label": "Être renégociée régulièrement" },
+      { "id": "flexible", "label": "Rester flexible sans règles fixes" }
+    ]
+  },
+  {
+    "id": "q_values_val_standards",
+    "label": "Si ton/ta partenaire fait une tâche moins bien que toi, tu…",
+    "domain_id": "values",
+    "task_ids": ["standards"],
+    "angle_id": "value",
+    "priority": "essential",
+    "answers": [
+      { "id": "redo_quietly", "label": "Le refais discrètement" },
+      { "id": "say_diplomatically", "label": "Le dis avec diplomatie" },
+      { "id": "accept_standard", "label": "Acceptes son standard" },
+      { "id": "take_over", "label": "Prends cette tâche en charge toi-même à l'avenir" }
+    ]
+  },
+  {
+    "id": "q_values_pref_mental_load",
+    "label": "\"Penser à refaire les stocks, anticiper les rendez-vous, retenir les anniversaires\"… chez toi, c'est…",
+    "domain_id": "values",
+    "task_ids": ["mental_load"],
+    "angle_id": "preference",
+    "priority": "essential",
+    "answers": [
+      { "id": "naturally_me", "label": "Naturellement moi qui le fais" },
+      { "id": "other", "label": "Plutôt l'autre" },
+      { "id": "shared", "label": "On se partage bien" },
+      { "id": "nobody", "label": "Personne ne le fait vraiment" }
+    ]
+  },
+  {
+    "id": "q_values_pref_recognition",
+    "label": "Quand tu fais une tâche ménagère, tu attends…",
+    "domain_id": "values",
+    "task_ids": ["recognition"],
+    "angle_id": "preference",
+    "priority": "important",
+    "answers": [
+      { "id": "noticed", "label": "Que ce soit remarqué et apprécié" },
+      { "id": "nothing", "label": "Rien, c'est normal" },
+      { "id": "reciprocity", "label": "Que l'autre en fasse autant en retour" },
+      { "id": "long_term", "label": "De la réciprocité sur le long terme" }
+    ]
+  },
+  {
+    "id": "q_values_env_parental_model",
+    "label": "Le modèle de tes parents dans la gestion du foyer, tu veux…",
+    "domain_id": "values",
+    "task_ids": ["parental_model"],
+    "angle_id": "environment",
+    "priority": "essential",
+    "answers": [
+      { "id": "reproduce", "label": "Le reproduire globalement" },
+      { "id": "partially", "label": "Le reproduire partiellement" },
+      { "id": "distance", "label": "M'en éloigner" },
+      { "id": "opposite", "label": "Faire complètement différemment" }
+    ]
+  }
+]

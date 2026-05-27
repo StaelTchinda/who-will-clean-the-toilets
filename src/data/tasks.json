@@ -1,0 +1,167 @@
+[
+  {
+    "id": "general_cleaning",
+    "label": "Ménage général",
+    "domain_id": "housekeeping"
+  },
+  {
+    "id": "sanitizing",
+    "label": "Nettoyer les sanitaires (toilettes, douche)",
+    "domain_id": "housekeeping"
+  },
+  {
+    "id": "vacuuming",
+    "label": "Passer l'aspirateur",
+    "domain_id": "housekeeping"
+  },
+  {
+    "id": "floor_washing",
+    "label": "Laver les sols",
+    "domain_id": "housekeeping"
+  },
+  {
+    "id": "tidying",
+    "label": "Ranger et désencombrer",
+    "domain_id": "housekeeping"
+  },
+  {
+    "id": "bins",
+    "label": "Sortir les poubelles",
+    "domain_id": "housekeeping"
+  },
+  {
+    "id": "bedding",
+    "label": "Changer les draps et faire les lits",
+    "domain_id": "housekeeping"
+  },
+  {
+    "id": "cooking_daily",
+    "label": "Cuisiner au quotidien",
+    "domain_id": "cooking"
+  },
+  {
+    "id": "cooking_guests",
+    "label": "Cuisiner pour des invités",
+    "domain_id": "cooking"
+  },
+  {
+    "id": "dishes",
+    "label": "Faire la vaisselle",
+    "domain_id": "cooking"
+  },
+  {
+    "id": "groceries",
+    "label": "Faire les courses",
+    "domain_id": "cooking"
+  },
+  {
+    "id": "meal_planning",
+    "label": "Planifier les menus",
+    "domain_id": "cooking"
+  },
+  {
+    "id": "budget",
+    "label": "Gérer le budget du foyer",
+    "domain_id": "finances"
+  },
+  {
+    "id": "savings",
+    "label": "Épargne et investissements",
+    "domain_id": "finances"
+  },
+  {
+    "id": "bills",
+    "label": "Payer les factures et abonnements",
+    "domain_id": "finances"
+  },
+  {
+    "id": "admin",
+    "label": "Paperasse administrative (impôts, assurances)",
+    "domain_id": "finances"
+  },
+  {
+    "id": "diy",
+    "label": "Bricolage et réparations",
+    "domain_id": "logistics"
+  },
+  {
+    "id": "car",
+    "label": "Entretien de la voiture",
+    "domain_id": "logistics"
+  },
+  {
+    "id": "contractors",
+    "label": "Gérer les artisans et devis",
+    "domain_id": "logistics"
+  },
+  {
+    "id": "planning",
+    "label": "Organisation et planification (voyages, calendrier)",
+    "domain_id": "logistics"
+  },
+  {
+    "id": "childcare_daily",
+    "label": "Soins quotidiens des enfants (bain, repas, coucher)",
+    "domain_id": "children"
+  },
+  {
+    "id": "childcare_school",
+    "label": "Suivi scolaire",
+    "domain_id": "children"
+  },
+  {
+    "id": "childcare_medical",
+    "label": "Santé et rendez-vous médicaux",
+    "domain_id": "children"
+  },
+  {
+    "id": "childcare_activities",
+    "label": "Activités extrascolaires",
+    "domain_id": "children"
+  },
+  {
+    "id": "childcare_discipline",
+    "label": "Éducation et discipline",
+    "domain_id": "children"
+  },
+  {
+    "id": "fairness",
+    "label": "Équité dans la répartition",
+    "domain_id": "values"
+  },
+  {
+    "id": "outsourcing",
+    "label": "Externalisation des tâches",
+    "domain_id": "values"
+  },
+  {
+    "id": "conflict",
+    "label": "Gestion des conflits sur les tâches",
+    "domain_id": "values"
+  },
+  {
+    "id": "mental_load",
+    "label": "Charge mentale",
+    "domain_id": "values"
+  },
+  {
+    "id": "recognition",
+    "label": "Reconnaissance et réciprocité",
+    "domain_id": "values"
+  },
+  {
+    "id": "parental_model",
+    "label": "Modèle parental",
+    "domain_id": "values"
+  },
+  {
+    "id": "role_evolution",
+    "label": "Évolution des rôles dans le couple",
+    "domain_id": "values"
+  },
+  {
+    "id": "standards",
+    "label": "Standards et exigences",
+    "domain_id": "values"
+  }
+]
