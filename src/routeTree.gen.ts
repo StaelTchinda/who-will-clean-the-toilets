@@ -9,19 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as FoundationsRouteImport } from './routes/foundations'
 import { Route as LocaleRouteImport } from './routes/$locale'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
-import { Route as SCodeRouteImport } from './routes/s.$code'
 import { Route as LocaleFoundationsRouteImport } from './routes/$locale/foundations'
 import { Route as LocaleSCodeRouteImport } from './routes/$locale/s.$code'
 
-const FoundationsRoute = FoundationsRouteImport.update({
-  id: '/foundations',
-  path: '/foundations',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
   path: '/$locale',
@@ -37,11 +30,6 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRoute,
 } as any)
-const SCodeRoute = SCodeRouteImport.update({
-  id: '/s/$code',
-  path: '/s/$code',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LocaleFoundationsRoute = LocaleFoundationsRouteImport.update({
   id: '/foundations',
   path: '/foundations',
@@ -56,17 +44,13 @@ const LocaleSCodeRoute = LocaleSCodeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/foundations': typeof FoundationsRoute
   '/$locale/foundations': typeof LocaleFoundationsRoute
-  '/s/$code': typeof SCodeRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/s/$code': typeof LocaleSCodeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/foundations': typeof FoundationsRoute
   '/$locale/foundations': typeof LocaleFoundationsRoute
-  '/s/$code': typeof SCodeRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/s/$code': typeof LocaleSCodeRoute
 }
@@ -74,9 +58,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/foundations': typeof FoundationsRoute
   '/$locale/foundations': typeof LocaleFoundationsRoute
-  '/s/$code': typeof SCodeRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/s/$code': typeof LocaleSCodeRoute
 }
@@ -85,26 +67,16 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$locale'
-    | '/foundations'
     | '/$locale/foundations'
-    | '/s/$code'
     | '/$locale/'
     | '/$locale/s/$code'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/foundations'
-    | '/$locale/foundations'
-    | '/s/$code'
-    | '/$locale'
-    | '/$locale/s/$code'
+  to: '/' | '/$locale/foundations' | '/$locale' | '/$locale/s/$code'
   id:
     | '__root__'
     | '/'
     | '/$locale'
-    | '/foundations'
     | '/$locale/foundations'
-    | '/s/$code'
     | '/$locale/'
     | '/$locale/s/$code'
   fileRoutesById: FileRoutesById
@@ -112,19 +84,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocaleRoute: typeof LocaleRouteWithChildren
-  FoundationsRoute: typeof FoundationsRoute
-  SCodeRoute: typeof SCodeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/foundations': {
-      id: '/foundations'
-      path: '/foundations'
-      fullPath: '/foundations'
-      preLoaderRoute: typeof FoundationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/$locale': {
       id: '/$locale'
       path: '/$locale'
@@ -145,13 +108,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/'
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
-    }
-    '/s/$code': {
-      id: '/s/$code'
-      path: '/s/$code'
-      fullPath: '/s/$code'
-      preLoaderRoute: typeof SCodeRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/$locale/foundations': {
       id: '/$locale/foundations'
@@ -188,8 +144,6 @@ const LocaleRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocaleRoute: LocaleRouteWithChildren,
-  FoundationsRoute: FoundationsRoute,
-  SCodeRoute: SCodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
-import { CreateForm, HomeShell, Intro, JoinForm } from "@/routes/index";
+import { CreateForm, HomeShell, Intro, JoinForm } from "@/routes/$locale/index";
 
 // Stage-level stories for the home route. Each story renders the same chrome
 // the live `HomePage` uses (`HomeShell` — max-w-md centering, "Nos Rôles"

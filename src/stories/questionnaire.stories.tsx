@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Questionnaire } from "@/routes/s.$code";
+import { Questionnaire } from "@/routes/$locale/s.$code";
 import {
   QUESTIONNAIRE_QUESTIONS,
   answer,

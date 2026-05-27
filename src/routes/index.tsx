@@ -24,7 +24,3 @@ export const Route = createFileRoute("/")({
   component: () => null,
 });
 
-// Re-export the i18n-aware shell and stage components so stories can import
-// from this module and automatically pick up translations + LanguageSwitcher.
-export type { Mode } from "./$locale/index";
-export { HomeShell, Intro, CreateForm, JoinForm } from "./$locale/index";
