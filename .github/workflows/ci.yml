@@ -217,7 +217,7 @@ jobs:
   test-report:
     name: Combined test eport
     runs-on: ubuntu-latest
-    needs: [unit, e2e]
+    needs: [unit-test, e2e-test]
     # `if: always()` so we still publish (and surface failures) when either
     # the unit or e2e job failed — partial coverage + the junit reports are
     # the most useful debug surface in that case.
