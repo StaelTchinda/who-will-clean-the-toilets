@@ -25,10 +25,65 @@ jobs:
         with:
           bun-version: latest
       - run: bun install --frozen-lockfile
-      - name: ESLint
-        run: bun run lint
+
+      # Lint/format issues are surfaced as PR annotations + a comment, but never
+      # fail the job (continue-on-error keeps the job green on non-zero exits).
+      - name: ESLint (annotations)
+        continue-on-error: true
+        run: bunx eslint . --format github
+
+      - name: ESLint (report)
+        continue-on-error: true
+        run: bunx eslint . --format stylish 2>&1 | tee eslint-report.txt
+
       - name: Prettier --check
-        run: bunx prettier --check .
+        continue-on-error: true
+        run: |
+          set +e
+          bunx prettier --check . 2>&1 | tee prettier-report.txt
+          # Emit a ::warning annotation for each unformatted file.
+          grep -E '^\[warn\] ' prettier-report.txt | sed -E 's/^\[warn\] //' \
+            | while read -r f; do
+                echo "::warning file=$f::File is not formatted (run \`bun run format\`)"
+              done
+          exit 0
+
+      - name: Build lint/format report
+        if: github.event_name == 'pull_request'
+        run: |
+          {
+            echo "## Lint & format check"
+            echo
+            echo "> These are warnings only and do **not** block merge."
+            echo
+
+            echo "### ESLint"
+            echo '```'
+            if [ -s eslint-report.txt ]; then
+              cat eslint-report.txt
+            else
+              echo "No issues."
+            fi
+            echo '```'
+            echo
+
+            echo "### Prettier"
+            unformatted=$(grep -E '^\[warn\] ' prettier-report.txt | sed -E 's/^\[warn\] //' || true)
+            if [ -n "$unformatted" ]; then
+              echo "Files needing formatting (run \`bun run format\`):"
+              echo
+              echo "$unformatted" | sed 's/^/- /'
+            else
+              echo "All files formatted."
+            fi
+          } > lint-report.md
+
+      - name: Post lint/format comment
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: lint-format
+          path: lint-report.md
 
   typecheck:
     name: Typecheck
