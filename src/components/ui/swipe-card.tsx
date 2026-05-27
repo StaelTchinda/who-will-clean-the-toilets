@@ -111,14 +111,21 @@ export function SwipeStage({ domainId, answers, current, onPick }: StageProps) {
 
   const mapping = mapAnswers(answers);
 
-  const firstId = answers[0]?.id;
+  // Reset all transient state whenever the answer *set* changes — i.e. a new
+  // question arrived. We can't rely on `answers[0].id` alone: many questions
+  // share their first answer id (e.g. "mother" appears as answers[0] across
+  // 11 different questions in the dataset), and if `locked` doesn't reset on
+  // those transitions, the next swipe/tap on the new card is a silent no-op.
+  // Joining all four ids gives us a stable per-question fingerprint without
+  // requiring the parent to thread a question id through.
+  const answersKey = answers.map((a) => a.id).join("|");
   useEffect(() => {
     x.set(0);
     y.set(0);
     setHovered(null);
     setPreviewing(null);
     setLocked(false);
-  }, [firstId, x, y]);
+  }, [answersKey, x, y]);
 
   // Resolve which direction (if any) the center should mirror. Priority:
   // drag-hovered > tap-preview > previously-saved selection > none.

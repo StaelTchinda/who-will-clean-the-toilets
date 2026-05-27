@@ -291,7 +291,12 @@ export function Questionnaire({
 
         <div className="flex flex-1 items-start pt-2">
           {mode === "swipe" && (
+            // key={q.id} forces a fresh mount per question so SwipeStage's
+            // internal `locked`/drag state can never leak across questions —
+            // the symptom was a "dead" next card when consecutive questions
+            // happened to share their first answer id.
             <SwipeStage
+              key={q.id}
               domainId={q.domain_id}
               answers={translatedAnswers}
               current={current}
