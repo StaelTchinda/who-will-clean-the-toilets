@@ -16,8 +16,24 @@ type D1Database = {
   prepare: (sql: string) => D1PreparedStatement;
 };
 
-export interface CloudflareEnv {
-  DB: D1Database;
+// The D1 binding name is whatever was chosen in wrangler.jsonc — we resolve
+// it at runtime rather than hardcoding (the repo started with `DB`, current
+// config uses `nos_roles`). Any property exposing a `.prepare()` function is
+// treated as the D1 database.
+export type CloudflareEnv = Record<string, unknown>;
+
+function resolveD1(env: CloudflareEnv): D1Database | null {
+  if (!env || typeof env !== "object") return null;
+  for (const value of Object.values(env)) {
+    if (
+      value &&
+      typeof value === "object" &&
+      typeof (value as { prepare?: unknown }).prepare === "function"
+    ) {
+      return value as D1Database;
+    }
+  }
+  return null;
 }
 
 // Cheap UUID v4 — Cloudflare Workers expose crypto.randomUUID(), but we
@@ -105,13 +121,13 @@ export async function handleCloudflareApi(
     request,
   );
 
-  if (!env?.DB) {
+  const db = resolveD1(env);
+  if (!db) {
     return errorResponse(
-      "Cloudflare D1 binding `DB` is not configured. Add it to wrangler.jsonc.",
+      "No Cloudflare D1 binding found on env. Add a d1_databases entry to wrangler.jsonc.",
       500,
     );
   }
-  const db = env.DB;
 
   try {
     let m: string[] | null;

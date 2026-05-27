@@ -61,17 +61,24 @@ jobs:
       - run: bun install --frozen-lockfile
 
       # Render wrangler.jsonc with the real D1 database_id pulled from secrets,
-      # so we don't have to commit it.  Uses jq's `--arg` so quoting is safe.
+      # only if the placeholder is still present. wrangler.jsonc is JSONC
+      # (comments + trailing commas), which jq won't parse — so we substitute
+      # the placeholder UUID with a single sed pass. The placeholder is unique
+      # in the file, so there's no risk of clobbering anything else.
+      #
+      # If the repo already commits a real database_id, this step is a no-op
+      # (and the CLOUDFLARE_D1_DATABASE_ID secret becomes optional).
       - name: Inject D1 database_id into wrangler.jsonc
         run: |
-          # wrangler.jsonc allows comments; strip them for jq, then rewrite.
-          # `wrangler` itself tolerates the comment-stripped output.
-          sed -E 's|//[^"]*$||' wrangler.jsonc > wrangler.json
-          jq --arg id "$CLOUDFLARE_D1_DATABASE_ID" \
-             '.d1_databases[0].database_id = $id' \
-             wrangler.json > wrangler.tmp.json
-          mv wrangler.tmp.json wrangler.jsonc
-          rm -f wrangler.json
+          if ! grep -q "00000000-0000-0000-0000-000000000000" wrangler.jsonc; then
+            echo "::notice::wrangler.jsonc already has a real database_id committed — skipping injection."
+          elif [ -z "$CLOUDFLARE_D1_DATABASE_ID" ]; then
+            echo "::error::wrangler.jsonc still has the placeholder UUID and the CLOUDFLARE_D1_DATABASE_ID secret is empty. Run 'wrangler d1 create nos-roles' and add the printed database_id as a GitHub Actions secret (or commit it directly to wrangler.jsonc)."
+            exit 1
+          else
+            sed -i "s|00000000-0000-0000-0000-000000000000|$CLOUDFLARE_D1_DATABASE_ID|" wrangler.jsonc
+            echo "Injected database_id from secret."
+          fi
           echo "::group::Effective wrangler.jsonc"
           cat wrangler.jsonc
           echo "::endgroup::"
