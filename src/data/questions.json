@@ -7,10 +7,10 @@
     "angle_id": "environment",
     "priority": "essential",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "both", "label": "Les deux", "icon": "Users", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "everyone", "label": "Tous", "icon": "UsersRound", "position": "left" }
+      { "id": "both", "label": "Les deux", "icon": "Users", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "everyone", "label": "Tous", "icon": "UsersRound", "position": "down" }
     ]
   },
   {
@@ -22,9 +22,9 @@
     "priority": "essential",
     "answers": [
       { "id": "non_negotiable", "label": "Obligatoire", "icon": "ShieldCheck", "position": "up" },
-      { "id": "important", "label": "Important", "icon": "Bookmark", "position": "right" },
-      { "id": "secondary", "label": "Secondaire", "icon": "MinusCircle", "position": "down" },
-      { "id": "depends", "label": "Selon", "icon": "Scale", "position": "left" }
+      { "id": "important", "label": "Important", "icon": "Bookmark", "position": "left" },
+      { "id": "depends", "label": "Selon", "icon": "Scale", "position": "right" },
+      { "id": "secondary", "label": "Secondaire", "icon": "MinusCircle", "position": "down" }
     ]
   },
   {
@@ -36,9 +36,9 @@
     "priority": "essential",
     "answers": [
       { "id": "unbearable", "label": "Insupportable", "icon": "Annoyed", "position": "up" },
-      { "id": "annoying", "label": "Gênant", "icon": "Frown", "position": "right" },
-      { "id": "unnoticed", "label": "Je ne vois pas", "icon": "EyeOff", "position": "down" },
-      { "id": "fine", "label": "Ça va", "icon": "Meh", "position": "left" }
+      { "id": "annoying", "label": "Gênant", "icon": "Frown", "position": "left" },
+      { "id": "fine", "label": "Ça va", "icon": "Meh", "position": "right" },
+      { "id": "unnoticed", "label": "Je ne vois pas", "icon": "EyeOff", "position": "down" }
     ]
   },
   {
@@ -49,10 +49,10 @@
     "angle_id": "preference",
     "priority": "essential",
     "answers": [
-      { "id": "sanitizing", "label": "WC", "icon": "SprayCan", "position": "up" },
-      { "id": "neither_bothers", "label": "Les deux ✓", "icon": "SmilePlus", "position": "right" },
-      { "id": "vacuuming", "label": "Aspirateur", "icon": "Fan", "position": "down" },
-      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "left" }
+      { "id": "neither_bothers", "label": "Les deux ✓", "icon": "SmilePlus", "position": "up" },
+      { "id": "sanitizing", "label": "WC", "icon": "SprayCan", "position": "left" },
+      { "id": "vacuuming", "label": "Aspirateur", "icon": "Fan", "position": "right" },
+      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "down" }
     ]
   },
   {
@@ -63,10 +63,10 @@
     "angle_id": "talent",
     "priority": "essential",
     "answers": [
-      { "id": "sanitizing", "label": "WC", "icon": "SprayCan", "position": "up" },
-      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "right" },
-      { "id": "floors", "label": "Sols", "icon": "Footprints", "position": "down" },
-      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "left" }
+      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "up" },
+      { "id": "sanitizing", "label": "WC", "icon": "SprayCan", "position": "left" },
+      { "id": "floors", "label": "Sols", "icon": "Footprints", "position": "right" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "down" }
     ]
   },
   {
@@ -77,10 +77,10 @@
     "angle_id": "value",
     "priority": "important",
     "answers": [
-      { "id": "feminine", "label": "Féminin", "icon": "Venus", "position": "up" },
-      { "id": "neutral", "label": "Neutre", "icon": "Meh", "position": "right" },
-      { "id": "masculine", "label": "Masculin", "icon": "Mars", "position": "down" },
-      { "id": "delegate", "label": "À déléguer", "icon": "HelpingHand", "position": "left" }
+      { "id": "neutral", "label": "Neutre", "icon": "Meh", "position": "up" },
+      { "id": "feminine", "label": "Féminin", "icon": "Venus", "position": "left" },
+      { "id": "masculine", "label": "Masculin", "icon": "Mars", "position": "right" },
+      { "id": "delegate", "label": "À déléguer", "icon": "HelpingHand", "position": "down" }
     ]
   },
   {
@@ -91,10 +91,10 @@
     "angle_id": "talent",
     "priority": "important",
     "answers": [
-      { "id": "tidying", "label": "Ranger", "icon": "Boxes", "position": "up" },
-      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "right" },
-      { "id": "bedding", "label": "Draps", "icon": "Bed", "position": "down" },
-      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "left" }
+      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "up" },
+      { "id": "tidying", "label": "Ranger", "icon": "Boxes", "position": "left" },
+      { "id": "bedding", "label": "Draps", "icon": "Bed", "position": "right" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "down" }
     ]
   },
   {
@@ -105,10 +105,10 @@
     "angle_id": "preference",
     "priority": "important",
     "answers": [
-      { "id": "tidying", "label": "Ranger", "icon": "Boxes", "position": "up" },
-      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "right" },
-      { "id": "bins", "label": "Poubelles", "icon": "Trash2", "position": "down" },
-      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "left" }
+      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "up" },
+      { "id": "tidying", "label": "Ranger", "icon": "Boxes", "position": "left" },
+      { "id": "bins", "label": "Poubelles", "icon": "Trash2", "position": "right" },
+      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "down" }
     ]
   },
   {
@@ -119,10 +119,10 @@
     "angle_id": "environment",
     "priority": "important",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "rotation", "label": "À tour de rôle", "icon": "Repeat", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "children", "label": "Les enfants", "icon": "Baby", "position": "left" }
+      { "id": "rotation", "label": "À tour de rôle", "icon": "Repeat", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "children", "label": "Les enfants", "icon": "Baby", "position": "down" }
     ]
   },
   {
@@ -134,9 +134,9 @@
     "priority": "nice_to_have",
     "answers": [
       { "id": "liberating", "label": "Libérateur", "icon": "Sparkles", "position": "up" },
-      { "id": "good_theory", "label": "Bien en théorie", "icon": "Lightbulb", "position": "right" },
-      { "id": "stressful", "label": "Stressant", "icon": "HeartCrack", "position": "down" },
-      { "id": "keep", "label": "Je garde", "icon": "Sofa", "position": "left" }
+      { "id": "good_theory", "label": "Bien en théorie", "icon": "Lightbulb", "position": "left" },
+      { "id": "stressful", "label": "Stressant", "icon": "HeartCrack", "position": "right" },
+      { "id": "keep", "label": "Je garde", "icon": "Sofa", "position": "down" }
     ]
   },
   {
@@ -148,9 +148,9 @@
     "priority": "nice_to_have",
     "answers": [
       { "id": "essential", "label": "Indispensable", "icon": "ShieldCheck", "position": "up" },
-      { "id": "if_time", "label": "Si j'ai le temps", "icon": "Hourglass", "position": "right" },
-      { "id": "useless", "label": "Inutile", "icon": "X", "position": "down" },
-      { "id": "never", "label": "Jamais", "icon": "Ban", "position": "left" }
+      { "id": "if_time", "label": "Si j'ai le temps", "icon": "Hourglass", "position": "left" },
+      { "id": "useless", "label": "Inutile", "icon": "X", "position": "right" },
+      { "id": "never", "label": "Jamais", "icon": "Ban", "position": "down" }
     ]
   },
   {
@@ -161,10 +161,10 @@
     "angle_id": "environment",
     "priority": "essential",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "both", "label": "Les deux", "icon": "Users", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "everyone", "label": "Tous", "icon": "UsersRound", "position": "left" }
+      { "id": "both", "label": "Les deux", "icon": "Users", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "everyone", "label": "Tous", "icon": "UsersRound", "position": "down" }
     ]
   },
   {
@@ -176,9 +176,9 @@
     "priority": "essential",
     "answers": [
       { "id": "daily", "label": "Tous les jours", "icon": "CalendarDays", "position": "up" },
-      { "id": "sometimes", "label": "Quelques fois", "icon": "Repeat", "position": "right" },
-      { "id": "never", "label": "Presque jamais", "icon": "Ban", "position": "down" },
-      { "id": "rarely", "label": "Rarement", "icon": "TrendingDown", "position": "left" }
+      { "id": "sometimes", "label": "Quelques fois", "icon": "Repeat", "position": "left" },
+      { "id": "rarely", "label": "Rarement", "icon": "TrendingDown", "position": "right" },
+      { "id": "never", "label": "Presque jamais", "icon": "Ban", "position": "down" }
     ]
   },
   {
@@ -189,10 +189,10 @@
     "angle_id": "preference",
     "priority": "essential",
     "answers": [
-      { "id": "cooking", "label": "Cuisiner", "icon": "ChefHat", "position": "up" },
-      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "right" },
-      { "id": "dishes", "label": "Vaisselle", "icon": "UtensilsCrossed", "position": "down" },
-      { "id": "both_bother", "label": "Ni l'un ni l'autre", "icon": "ThumbsDown", "position": "left" }
+      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "up" },
+      { "id": "cooking", "label": "Cuisiner", "icon": "ChefHat", "position": "left" },
+      { "id": "dishes", "label": "Vaisselle", "icon": "UtensilsCrossed", "position": "right" },
+      { "id": "both_bother", "label": "Ni l'un ni l'autre", "icon": "ThumbsDown", "position": "down" }
     ]
   },
   {
@@ -204,9 +204,9 @@
     "priority": "essential",
     "answers": [
       { "id": "share", "label": "On partage", "icon": "Handshake", "position": "up" },
-      { "id": "who_likes", "label": "Celui qui aime", "icon": "Heart", "position": "right" },
-      { "id": "woman", "label": "La femme", "icon": "Venus", "position": "down" },
-      { "id": "who_arrives_first", "label": "Le premier rentré", "icon": "Hourglass", "position": "left" }
+      { "id": "who_likes", "label": "Celui qui aime", "icon": "Heart", "position": "left" },
+      { "id": "who_arrives_first", "label": "Le premier rentré", "icon": "Hourglass", "position": "right" },
+      { "id": "woman", "label": "La femme", "icon": "Venus", "position": "down" }
     ]
   },
   {
@@ -218,9 +218,9 @@
     "priority": "important",
     "answers": [
       { "id": "expert", "label": "Très bon", "icon": "Trophy", "position": "up" },
-      { "id": "decent", "label": "Correct", "icon": "ThumbsUp", "position": "right" },
-      { "id": "none", "label": "Quasi nul", "icon": "Ban", "position": "down" },
-      { "id": "basic", "label": "Basique", "icon": "BookOpen", "position": "left" }
+      { "id": "decent", "label": "Correct", "icon": "ThumbsUp", "position": "left" },
+      { "id": "basic", "label": "Basique", "icon": "BookOpen", "position": "right" },
+      { "id": "none", "label": "Quasi nul", "icon": "Ban", "position": "down" }
     ]
   },
   {
@@ -232,9 +232,9 @@
     "priority": "important",
     "answers": [
       { "id": "alternate", "label": "À tour de rôle", "icon": "Repeat", "position": "up" },
-      { "id": "yes_if_other_busy", "label": "Si l'autre est pris", "icon": "ThumbsUp", "position": "right" },
-      { "id": "no_unfair", "label": "Non, injuste", "icon": "BadgeX", "position": "down" },
-      { "id": "doesnt_matter", "label": "Peu importe", "icon": "Meh", "position": "left" }
+      { "id": "yes_if_other_busy", "label": "Si l'autre est pris", "icon": "ThumbsUp", "position": "left" },
+      { "id": "doesnt_matter", "label": "Peu importe", "icon": "Meh", "position": "right" },
+      { "id": "no_unfair", "label": "Non, injuste", "icon": "BadgeX", "position": "down" }
     ]
   },
   {
@@ -245,10 +245,10 @@
     "angle_id": "talent",
     "priority": "important",
     "answers": [
-      { "id": "budget", "label": "Budget", "icon": "Calculator", "position": "up" },
-      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "right" },
-      { "id": "planning", "label": "Menus", "icon": "CalendarCheck", "position": "down" },
-      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "left" }
+      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "up" },
+      { "id": "budget", "label": "Budget", "icon": "Calculator", "position": "left" },
+      { "id": "planning", "label": "Menus", "icon": "CalendarCheck", "position": "right" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "down" }
     ]
   },
   {
@@ -259,10 +259,10 @@
     "angle_id": "preference",
     "priority": "important",
     "answers": [
-      { "id": "groceries", "label": "Courses", "icon": "ShoppingBasket", "position": "up" },
-      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "right" },
-      { "id": "planning", "label": "Menus", "icon": "CalendarCheck", "position": "down" },
-      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "left" }
+      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "up" },
+      { "id": "groceries", "label": "Courses", "icon": "ShoppingBasket", "position": "left" },
+      { "id": "planning", "label": "Menus", "icon": "CalendarCheck", "position": "right" },
+      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "down" }
     ]
   },
   {
@@ -274,9 +274,9 @@
     "priority": "nice_to_have",
     "answers": [
       { "id": "love_it", "label": "J'adore", "icon": "Heart", "position": "up" },
-      { "id": "stressful_rewarding", "label": "Stressant mais bon", "icon": "HeartPulse", "position": "right" },
-      { "id": "prefer_restaurant", "label": "Au resto", "icon": "UtensilsCrossed", "position": "down" },
-      { "id": "impossible_alone", "label": "Pas seul(e)", "icon": "Ban", "position": "left" }
+      { "id": "stressful_rewarding", "label": "Stressant mais bon", "icon": "HeartPulse", "position": "left" },
+      { "id": "prefer_restaurant", "label": "Au resto", "icon": "UtensilsCrossed", "position": "right" },
+      { "id": "impossible_alone", "label": "Pas seul(e)", "icon": "Ban", "position": "down" }
     ]
   },
   {
@@ -288,9 +288,9 @@
     "priority": "nice_to_have",
     "answers": [
       { "id": "absolute_priority", "label": "Priorité absolue", "icon": "ShieldCheck", "position": "up" },
-      { "id": "important_flexible", "label": "Important, flexible", "icon": "Scale", "position": "right" },
-      { "id": "dont_think", "label": "J'y pense pas", "icon": "Ban", "position": "down" },
-      { "id": "secondary", "label": "Secondaire", "icon": "MinusCircle", "position": "left" }
+      { "id": "important_flexible", "label": "Important, flexible", "icon": "Scale", "position": "left" },
+      { "id": "secondary", "label": "Secondaire", "icon": "MinusCircle", "position": "right" },
+      { "id": "dont_think", "label": "J'y pense pas", "icon": "Ban", "position": "down" }
     ]
   },
   {
@@ -301,10 +301,10 @@
     "angle_id": "environment",
     "priority": "nice_to_have",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "both", "label": "Les deux", "icon": "Users", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "with_parent", "label": "Avec un parent", "icon": "HandHelping", "position": "left" }
+      { "id": "both", "label": "Les deux", "icon": "Users", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "with_parent", "label": "Avec un parent", "icon": "HandHelping", "position": "down" }
     ]
   },
   {
@@ -315,10 +315,10 @@
     "angle_id": "environment",
     "priority": "essential",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "both", "label": "Les deux", "icon": "Users", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "unknown", "label": "Je ne sais pas", "icon": "HelpCircle", "position": "left" }
+      { "id": "both", "label": "Les deux", "icon": "Users", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "unknown", "label": "Je ne sais pas", "icon": "HelpCircle", "position": "down" }
     ]
   },
   {
@@ -330,9 +330,9 @@
     "priority": "essential",
     "answers": [
       { "id": "rigorously", "label": "Rigoureusement", "icon": "ListChecks", "position": "up" },
-      { "id": "approximately", "label": "À peu près", "icon": "Gauge", "position": "right" },
-      { "id": "no", "label": "Non", "icon": "BadgeX", "position": "down" },
-      { "id": "not_really", "label": "Pas vraiment", "icon": "Meh", "position": "left" }
+      { "id": "approximately", "label": "À peu près", "icon": "Gauge", "position": "left" },
+      { "id": "not_really", "label": "Pas vraiment", "icon": "Meh", "position": "right" },
+      { "id": "no", "label": "Non", "icon": "BadgeX", "position": "down" }
     ]
   },
   {
@@ -343,10 +343,10 @@
     "angle_id": "preference",
     "priority": "essential",
     "answers": [
-      { "id": "budget", "label": "Budget", "icon": "Calculator", "position": "up" },
-      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "right" },
-      { "id": "admin", "label": "Paperasse", "icon": "FileText", "position": "down" },
-      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "left" }
+      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "up" },
+      { "id": "budget", "label": "Budget", "icon": "Calculator", "position": "left" },
+      { "id": "admin", "label": "Paperasse", "icon": "FileText", "position": "right" },
+      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "down" }
     ]
   },
   {
@@ -358,9 +358,9 @@
     "priority": "essential",
     "answers": [
       { "id": "merged", "label": "Fusionnées", "icon": "Combine", "position": "up" },
-      { "id": "case_by_case", "label": "Cas par cas", "icon": "Scale", "position": "right" },
-      { "id": "separate_contribution", "label": "Séparées", "icon": "Split", "position": "down" },
-      { "id": "by_competence", "label": "Par le plus à l'aise", "icon": "Award", "position": "left" }
+      { "id": "case_by_case", "label": "Cas par cas", "icon": "Scale", "position": "left" },
+      { "id": "by_competence", "label": "Par le plus à l'aise", "icon": "Award", "position": "right" },
+      { "id": "separate_contribution", "label": "Séparées", "icon": "Split", "position": "down" }
     ]
   },
   {
@@ -372,9 +372,9 @@
     "priority": "important",
     "answers": [
       { "id": "together", "label": "Ensemble", "icon": "Handshake", "position": "up" },
-      { "id": "by_amount", "label": "Selon le montant", "icon": "Banknote", "position": "right" },
-      { "id": "freely", "label": "Chacun sa part", "icon": "Coins", "position": "down" },
-      { "id": "by_manager", "label": "Qui gère le budget", "icon": "Crown", "position": "left" }
+      { "id": "by_amount", "label": "Selon le montant", "icon": "Banknote", "position": "left" },
+      { "id": "by_manager", "label": "Qui gère le budget", "icon": "Crown", "position": "right" },
+      { "id": "freely", "label": "Chacun sa part", "icon": "Coins", "position": "down" }
     ]
   },
   {
@@ -385,10 +385,10 @@
     "angle_id": "talent",
     "priority": "important",
     "answers": [
-      { "id": "taxes", "label": "Impôts", "icon": "Receipt", "position": "up" },
-      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "right" },
-      { "id": "insurance", "label": "Assurances", "icon": "Umbrella", "position": "down" },
-      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "left" }
+      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "up" },
+      { "id": "taxes", "label": "Impôts", "icon": "Receipt", "position": "left" },
+      { "id": "insurance", "label": "Assurances", "icon": "Umbrella", "position": "right" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "down" }
     ]
   },
   {
@@ -400,9 +400,9 @@
     "priority": "important",
     "answers": [
       { "id": "yes_invested", "label": "J'investis déjà", "icon": "PiggyBank", "position": "up" },
-      { "id": "basics", "label": "Les bases", "icon": "BookOpen", "position": "right" },
-      { "id": "none", "label": "Pas du tout", "icon": "Ban", "position": "down" },
-      { "id": "little", "label": "Très peu", "icon": "TrendingDown", "position": "left" }
+      { "id": "basics", "label": "Les bases", "icon": "BookOpen", "position": "left" },
+      { "id": "little", "label": "Très peu", "icon": "TrendingDown", "position": "right" },
+      { "id": "none", "label": "Pas du tout", "icon": "Ban", "position": "down" }
     ]
   },
   {
@@ -413,10 +413,10 @@
     "angle_id": "preference",
     "priority": "nice_to_have",
     "answers": [
-      { "id": "savings", "label": "Placements", "icon": "TrendingUp", "position": "up" },
-      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "right" },
-      { "id": "bills", "label": "Factures", "icon": "BadgeEuro", "position": "down" },
-      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "left" }
+      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "up" },
+      { "id": "savings", "label": "Placements", "icon": "TrendingUp", "position": "left" },
+      { "id": "bills", "label": "Factures", "icon": "BadgeEuro", "position": "right" },
+      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "down" }
     ]
   },
   {
@@ -427,10 +427,10 @@
     "angle_id": "environment",
     "priority": "nice_to_have",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "both", "label": "Les deux", "icon": "Users", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "unknown", "label": "Je ne sais pas", "icon": "HelpCircle", "position": "left" }
+      { "id": "both", "label": "Les deux", "icon": "Users", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "unknown", "label": "Je ne sais pas", "icon": "HelpCircle", "position": "down" }
     ]
   },
   {
@@ -441,10 +441,10 @@
     "angle_id": "talent",
     "priority": "essential",
     "answers": [
-      { "id": "diy", "label": "Réparer", "icon": "Hammer", "position": "up" },
-      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "right" },
-      { "id": "contractors", "label": "Artisans", "icon": "HardHat", "position": "down" },
-      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "left" }
+      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "up" },
+      { "id": "diy", "label": "Réparer", "icon": "Hammer", "position": "left" },
+      { "id": "contractors", "label": "Artisans", "icon": "HardHat", "position": "right" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "down" }
     ]
   },
   {
@@ -455,10 +455,10 @@
     "angle_id": "preference",
     "priority": "essential",
     "answers": [
-      { "id": "diy", "label": "Bricoler", "icon": "Hammer", "position": "up" },
-      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "right" },
-      { "id": "contractors", "label": "Artisans", "icon": "HardHat", "position": "down" },
-      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "left" }
+      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "up" },
+      { "id": "diy", "label": "Bricoler", "icon": "Hammer", "position": "left" },
+      { "id": "contractors", "label": "Artisans", "icon": "HardHat", "position": "right" },
+      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "down" }
     ]
   },
   {
@@ -469,10 +469,10 @@
     "angle_id": "environment",
     "priority": "essential",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "both", "label": "Les deux", "icon": "Users", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "professional", "label": "Un pro", "icon": "Briefcase", "position": "left" }
+      { "id": "both", "label": "Les deux", "icon": "Users", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "professional", "label": "Un pro", "icon": "Briefcase", "position": "down" }
     ]
   },
   {
@@ -483,10 +483,10 @@
     "angle_id": "value",
     "priority": "important",
     "answers": [
-      { "id": "reasonable", "label": "Raisonnable", "icon": "Scale", "position": "up" },
+      { "id": "best_option", "label": "Toujours mieux", "icon": "BadgeCheck", "position": "up" },
+      { "id": "reasonable", "label": "Raisonnable", "icon": "Scale", "position": "left" },
       { "id": "only_urgent", "label": "Si urgent", "icon": "Zap", "position": "right" },
-      { "id": "failure", "label": "Un échec", "icon": "HeartCrack", "position": "down" },
-      { "id": "best_option", "label": "Toujours mieux", "icon": "BadgeCheck", "position": "left" }
+      { "id": "failure", "label": "Un échec", "icon": "HeartCrack", "position": "down" }
     ]
   },
   {
@@ -497,10 +497,10 @@
     "angle_id": "talent",
     "priority": "important",
     "answers": [
-      { "id": "car", "label": "Voiture", "icon": "Car", "position": "up" },
-      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "right" },
-      { "id": "planning", "label": "Voyage", "icon": "Plane", "position": "down" },
-      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "left" }
+      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "up" },
+      { "id": "car", "label": "Voiture", "icon": "Car", "position": "left" },
+      { "id": "planning", "label": "Voyage", "icon": "Plane", "position": "right" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "down" }
     ]
   },
   {
@@ -511,10 +511,10 @@
     "angle_id": "preference",
     "priority": "important",
     "answers": [
-      { "id": "travel", "label": "Vacances", "icon": "Plane", "position": "up" },
-      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "right" },
-      { "id": "calendar", "label": "Calendrier", "icon": "CalendarDays", "position": "down" },
-      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "left" }
+      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "up" },
+      { "id": "travel", "label": "Vacances", "icon": "Plane", "position": "left" },
+      { "id": "calendar", "label": "Calendrier", "icon": "CalendarDays", "position": "right" },
+      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "down" }
     ]
   },
   {
@@ -526,9 +526,9 @@
     "priority": "nice_to_have",
     "answers": [
       { "id": "real_topic", "label": "Vrai sujet", "icon": "Megaphone", "position": "up" },
-      { "id": "understand_not_affected", "label": "Je vois, ça va", "icon": "Eye", "position": "right" },
-      { "id": "not_a_problem", "label": "Si on s'organise", "icon": "BadgeCheck", "position": "down" },
-      { "id": "dont_know", "label": "Je connais mal", "icon": "CircleHelp", "position": "left" }
+      { "id": "understand_not_affected", "label": "Je vois, ça va", "icon": "Eye", "position": "left" },
+      { "id": "dont_know", "label": "Je connais mal", "icon": "CircleHelp", "position": "right" },
+      { "id": "not_a_problem", "label": "Si on s'organise", "icon": "BadgeCheck", "position": "down" }
     ]
   },
   {
@@ -539,10 +539,10 @@
     "angle_id": "environment",
     "priority": "essential",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "both", "label": "Les deux", "icon": "Users", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "external", "label": "Aide extérieure", "icon": "UserPlus", "position": "left" }
+      { "id": "both", "label": "Les deux", "icon": "Users", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "external", "label": "Aide extérieure", "icon": "UserPlus", "position": "down" }
     ]
   },
   {
@@ -553,10 +553,10 @@
     "angle_id": "preference",
     "priority": "essential",
     "answers": [
-      { "id": "daily_care", "label": "Le quotidien", "icon": "HeartHandshake", "position": "up" },
-      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "right" },
-      { "id": "school", "label": "L'école", "icon": "School", "position": "down" },
-      { "id": "neither_sure", "label": "Pas encore réfléchi", "icon": "HelpCircle", "position": "left" }
+      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "up" },
+      { "id": "daily_care", "label": "Le quotidien", "icon": "HeartHandshake", "position": "left" },
+      { "id": "school", "label": "L'école", "icon": "School", "position": "right" },
+      { "id": "neither_sure", "label": "Pas encore réfléchi", "icon": "HelpCircle", "position": "down" }
     ]
   },
   {
@@ -567,10 +567,10 @@
     "angle_id": "value",
     "priority": "essential",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "equal", "label": "Également", "icon": "Scale", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "lower_income", "label": "Le plus petit salaire", "icon": "TrendingDown", "position": "left" }
+      { "id": "equal", "label": "Également", "icon": "Scale", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "lower_income", "label": "Le plus petit salaire", "icon": "TrendingDown", "position": "down" }
     ]
   },
   {
@@ -581,10 +581,10 @@
     "angle_id": "talent",
     "priority": "important",
     "answers": [
-      { "id": "daily", "label": "Le quotidien", "icon": "HeartHandshake", "position": "up" },
-      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "right" },
-      { "id": "medical", "label": "RDV médicaux", "icon": "Stethoscope", "position": "down" },
-      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "left" }
+      { "id": "both_fine", "label": "Les deux ✓", "icon": "CheckCheck", "position": "up" },
+      { "id": "daily", "label": "Le quotidien", "icon": "HeartHandshake", "position": "left" },
+      { "id": "medical", "label": "RDV médicaux", "icon": "Stethoscope", "position": "right" },
+      { "id": "neither_fine", "label": "Ni l'un ni l'autre", "icon": "CircleSlash", "position": "down" }
     ]
   },
   {
@@ -595,10 +595,10 @@
     "angle_id": "value",
     "priority": "important",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "both", "label": "Les deux", "icon": "Users", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "less_working", "label": "Qui travaille moins", "icon": "BatteryLow", "position": "left" }
+      { "id": "both", "label": "Les deux", "icon": "Users", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "less_working", "label": "Qui travaille moins", "icon": "BatteryLow", "position": "down" }
     ]
   },
   {
@@ -609,10 +609,10 @@
     "angle_id": "preference",
     "priority": "important",
     "answers": [
-      { "id": "medical", "label": "RDV médicaux", "icon": "Stethoscope", "position": "up" },
-      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "right" },
-      { "id": "activities", "label": "Activités", "icon": "PartyPopper", "position": "down" },
-      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "left" }
+      { "id": "both_fine", "label": "Les deux : ok", "icon": "CheckCheck", "position": "up" },
+      { "id": "medical", "label": "RDV médicaux", "icon": "Stethoscope", "position": "left" },
+      { "id": "activities", "label": "Activités", "icon": "PartyPopper", "position": "right" },
+      { "id": "both_bother", "label": "Les deux : non", "icon": "ThumbsDown", "position": "down" }
     ]
   },
   {
@@ -623,10 +623,10 @@
     "angle_id": "value",
     "priority": "nice_to_have",
     "answers": [
-      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "up" },
-      { "id": "defined_together", "label": "Ensemble", "icon": "Handshake", "position": "right" },
-      { "id": "father", "label": "Papa", "icon": "Mars", "position": "down" },
-      { "id": "situational", "label": "Selon la situation", "icon": "Shuffle", "position": "left" }
+      { "id": "defined_together", "label": "Ensemble", "icon": "Handshake", "position": "up" },
+      { "id": "mother", "label": "Maman", "icon": "Venus", "position": "left" },
+      { "id": "father", "label": "Papa", "icon": "Mars", "position": "right" },
+      { "id": "situational", "label": "Selon la situation", "icon": "Shuffle", "position": "down" }
     ]
   },
   {
@@ -638,9 +638,9 @@
     "priority": "essential",
     "answers": [
       { "id": "fifty_fifty", "label": "50/50", "icon": "Scale", "position": "up" },
-      { "id": "by_strength", "label": "Selon les forces", "icon": "Award", "position": "right" },
-      { "id": "ideal_hard", "label": "Idéal difficile", "icon": "Target", "position": "down" },
-      { "id": "by_availability", "label": "Selon le temps libre", "icon": "Clock", "position": "left" }
+      { "id": "by_strength", "label": "Selon les forces", "icon": "Award", "position": "left" },
+      { "id": "by_availability", "label": "Selon le temps libre", "icon": "Clock", "position": "right" },
+      { "id": "ideal_hard", "label": "Idéal difficile", "icon": "Target", "position": "down" }
     ]
   },
   {
@@ -652,9 +652,9 @@
     "priority": "important",
     "answers": [
       { "id": "great_idea", "label": "Excellente idée", "icon": "Lightbulb", "position": "up" },
-      { "id": "for_big_tasks", "label": "Pour les gros postes", "icon": "PaintBucket", "position": "right" },
-      { "id": "uncomfortable", "label": "Ça me gêne", "icon": "Frown", "position": "down" },
-      { "id": "superfluous", "label": "Superflu", "icon": "ThumbsDown", "position": "left" }
+      { "id": "for_big_tasks", "label": "Pour les gros postes", "icon": "PaintBucket", "position": "left" },
+      { "id": "superfluous", "label": "Superflu", "icon": "ThumbsDown", "position": "right" },
+      { "id": "uncomfortable", "label": "Ça me gêne", "icon": "Frown", "position": "down" }
     ]
   },
   {
@@ -666,9 +666,9 @@
     "priority": "important",
     "answers": [
       { "id": "talk", "label": "J'en parle", "icon": "MessageCircle", "position": "up" },
-      { "id": "depends", "label": "Selon la fatigue", "icon": "BatteryLow", "position": "right" },
-      { "id": "wait", "label": "J'attends", "icon": "Hourglass", "position": "down" },
-      { "id": "do_sighing", "label": "Je le fais (soupir)", "icon": "Wind", "position": "left" }
+      { "id": "depends", "label": "Selon la fatigue", "icon": "BatteryLow", "position": "left" },
+      { "id": "do_sighing", "label": "Je le fais (soupir)", "icon": "Wind", "position": "right" },
+      { "id": "wait", "label": "J'attends", "icon": "Hourglass", "position": "down" }
     ]
   },
   {
@@ -680,9 +680,9 @@
     "priority": "important",
     "answers": [
       { "id": "fixed_upfront", "label": "Fixée au départ", "icon": "Lock", "position": "up" },
-      { "id": "renegotiated", "label": "Renégociée", "icon": "RotateCw", "position": "right" },
-      { "id": "evolve_naturally", "label": "Évoluer", "icon": "Sprout", "position": "down" },
-      { "id": "flexible", "label": "Rester flexible", "icon": "Wind", "position": "left" }
+      { "id": "renegotiated", "label": "Renégociée", "icon": "RotateCw", "position": "left" },
+      { "id": "evolve_naturally", "label": "Évoluer", "icon": "Sprout", "position": "right" },
+      { "id": "flexible", "label": "Rester flexible", "icon": "Wind", "position": "down" }
     ]
   },
   {
@@ -694,9 +694,9 @@
     "priority": "nice_to_have",
     "answers": [
       { "id": "accept_standard", "label": "Acceptes", "icon": "ThumbsUp", "position": "up" },
-      { "id": "say_diplomatically", "label": "Dis avec tact", "icon": "Handshake", "position": "right" },
-      { "id": "redo_quietly", "label": "Refais en cachette", "icon": "RotateCcw", "position": "down" },
-      { "id": "take_over", "label": "Reprends la tâche", "icon": "UserCheck", "position": "left" }
+      { "id": "say_diplomatically", "label": "Dis avec tact", "icon": "Handshake", "position": "left" },
+      { "id": "redo_quietly", "label": "Refais en cachette", "icon": "RotateCcw", "position": "right" },
+      { "id": "take_over", "label": "Reprends la tâche", "icon": "UserCheck", "position": "down" }
     ]
   },
   {
@@ -707,10 +707,10 @@
     "angle_id": "preference",
     "priority": "nice_to_have",
     "answers": [
-      { "id": "naturally_me", "label": "Plutôt moi", "icon": "UserCheck", "position": "up" },
-      { "id": "shared", "label": "On partage", "icon": "HeartHandshake", "position": "right" },
-      { "id": "other", "label": "Plutôt l'autre", "icon": "UserMinus", "position": "down" },
-      { "id": "nobody", "label": "Personne", "icon": "UserX", "position": "left" }
+      { "id": "shared", "label": "On partage", "icon": "HeartHandshake", "position": "up" },
+      { "id": "naturally_me", "label": "Plutôt moi", "icon": "UserCheck", "position": "left" },
+      { "id": "other", "label": "Plutôt l'autre", "icon": "UserMinus", "position": "right" },
+      { "id": "nobody", "label": "Personne", "icon": "UserX", "position": "down" }
     ]
   },
   {
@@ -722,9 +722,9 @@
     "priority": "nice_to_have",
     "answers": [
       { "id": "reciprocity", "label": "Réciprocité", "icon": "ArrowLeftRight", "position": "up" },
-      { "id": "noticed", "label": "Être remarqué(e)", "icon": "Eye", "position": "right" },
-      { "id": "long_term", "label": "Sur le long terme", "icon": "Hourglass", "position": "down" },
-      { "id": "nothing", "label": "Rien, c'est normal", "icon": "Meh", "position": "left" }
+      { "id": "noticed", "label": "Être remarqué(e)", "icon": "Eye", "position": "left" },
+      { "id": "long_term", "label": "Sur le long terme", "icon": "Hourglass", "position": "right" },
+      { "id": "nothing", "label": "Rien, c'est normal", "icon": "Meh", "position": "down" }
     ]
   },
   {
@@ -736,9 +736,9 @@
     "priority": "nice_to_have",
     "answers": [
       { "id": "reproduce", "label": "Reproduire", "icon": "Repeat", "position": "up" },
-      { "id": "partially", "label": "Partiellement", "icon": "SplitSquareHorizontal", "position": "right" },
-      { "id": "opposite", "label": "À l'opposé", "icon": "RotateCcw", "position": "down" },
-      { "id": "distance", "label": "M'en éloigner", "icon": "MoveRight", "position": "left" }
+      { "id": "partially", "label": "Partiellement", "icon": "SplitSquareHorizontal", "position": "left" },
+      { "id": "distance", "label": "M'en éloigner", "icon": "MoveRight", "position": "right" },
+      { "id": "opposite", "label": "À l'opposé", "icon": "RotateCcw", "position": "down" }
     ]
   }
 ]
