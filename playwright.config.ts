@@ -13,7 +13,13 @@ export default defineConfig({
   workers: 1,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? [["github"], ["list"]] : "list",
+  // In CI: github annotations for inline PR feedback, list for log readability,
+  // and the html report so the uploaded artifact is a self-contained
+  // click-through (open: "never" suppresses the local browser auto-open that
+  // would otherwise hang the CI step).
+  reporter: process.env.CI
+    ? [["github"], ["list"], ["html", { open: "never" }]]
+    : "list",
   timeout: 60_000,
   expect: {
     // Realtime postgres_changes can take a beat to deliver locally.
