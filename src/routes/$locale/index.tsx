@@ -87,11 +87,12 @@ function SwipePreview() {
 
 function ResultsPreview() {
   const { t } = useTranslation("home");
+  const { t: tData } = useTranslation("data");
   const rows = [
-    { label: t("domains.cooking_daily") || "Cuisine quotidienne", tone: "converge", text: t("resultPreview.converge") },
-    { label: t("domains.sanitizing") || "Sanitaires", tone: "diverge", text: t("resultPreview.diverge") },
-    { label: t("domains.budget") || "Budget courses", tone: "converge", text: t("resultPreview.converge") },
-    { label: t("domains.meal_planning") || "Planifier les menus", tone: "diverge", text: t("resultPreview.diverge") },
+    { label: tData("tasks.cooking_daily", { defaultValue: "Cuisine quotidienne" }), tone: "converge", text: t("resultPreview.converge") },
+    { label: tData("tasks.sanitizing", { defaultValue: "Sanitaires" }), tone: "diverge", text: t("resultPreview.diverge") },
+    { label: tData("tasks.budget", { defaultValue: "Budget courses" }), tone: "converge", text: t("resultPreview.converge") },
+    { label: tData("tasks.meal_planning", { defaultValue: "Planifier les menus" }), tone: "diverge", text: t("resultPreview.diverge") },
   ] as const;
   return (
     <div className="rounded-3xl border border-border bg-card p-5">
