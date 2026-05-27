@@ -12,10 +12,7 @@ export const Route = createFileRoute("/$locale/foundations")({
   head: ({ params }) => {
     const t = i18n.getFixedT(params.locale as Locale, "foundations");
     return {
-      meta: [
-        { title: t("meta.title") },
-        { name: "description", content: t("meta.description") },
-      ],
+      meta: [{ title: t("meta.title") }, { name: "description", content: t("meta.description") }],
     };
   },
 });
@@ -46,12 +43,9 @@ export function FoundationsPage() {
           <LanguageSwitcher />
         </div>
 
-        <p className="mt-8 text-xs uppercase tracking-[0.25em] text-primary">
-          {t("eyebrow")}
-        </p>
+        <p className="mt-8 text-xs uppercase tracking-[0.25em] text-primary">{t("eyebrow")}</p>
         <h1 className="mt-3 text-pretty font-serif text-4xl leading-[1.05]">
-          {t("title1")} <em className="text-primary">{t("titleEm")}</em>{" "}
-          {t("title2")}
+          {t("title1")} <em className="text-primary">{t("titleEm")}</em> {t("title2")}
         </h1>
 
         {/* Origin */}
@@ -64,9 +58,7 @@ export function FoundationsPage() {
               {t("book.eyebrow")}
             </p>
           </div>
-          <h2 className="mt-4 font-serif text-2xl leading-tight">
-            {t("book.title")}
-          </h2>
+          <h2 className="mt-4 font-serif text-2xl leading-tight">{t("book.title")}</h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
             {t("book.body1")}
           </p>
@@ -77,12 +69,8 @@ export function FoundationsPage() {
 
         {/* The four angles */}
         <section className="mt-10">
-          <p className="text-xs uppercase tracking-[0.25em] text-primary">
-            {t("angles.eyebrow")}
-          </p>
-          <h2 className="mt-2 font-serif text-3xl leading-tight">
-            {t("angles.title")}
-          </h2>
+          <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("angles.eyebrow")}</p>
+          <h2 className="mt-2 font-serif text-3xl leading-tight">{t("angles.title")}</h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
             {t("angles.body")}
           </p>
@@ -91,14 +79,9 @@ export function FoundationsPage() {
             {ANGLES.map((a, i) => {
               const Icon = ANGLE_ICONS[a.id];
               return (
-                <li
-                  key={a.id}
-                  className="rounded-3xl border border-border bg-card p-5"
-                >
+                <li key={a.id} className="rounded-3xl border border-border bg-card p-5">
                   <div className="flex items-center gap-3">
-                    <span className="font-serif text-3xl text-primary/40">
-                      0{i + 1}
-                    </span>
+                    <span className="font-serif text-3xl text-primary/40">0{i + 1}</span>
                     <div className="flex size-10 items-center justify-center rounded-2xl bg-secondary/70 text-primary">
                       <Icon className="size-5" strokeWidth={1.6} />
                     </div>
@@ -117,12 +100,8 @@ export function FoundationsPage() {
 
         {/* Domains */}
         <section className="mt-10">
-          <p className="text-xs uppercase tracking-[0.25em] text-primary">
-            {t("domains.eyebrow")}
-          </p>
-          <h2 className="mt-2 font-serif text-3xl leading-tight">
-            {t("domains.title")}
-          </h2>
+          <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("domains.eyebrow")}</p>
+          <h2 className="mt-2 font-serif text-3xl leading-tight">{t("domains.title")}</h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
             {t("domains.body")}
           </p>
@@ -148,9 +127,7 @@ export function FoundationsPage() {
 
         {/* What you'll discover */}
         <section className="mt-10 rounded-3xl bg-secondary/40 p-6">
-          <h2 className="font-serif text-2xl leading-tight">
-            {t("results.title")}
-          </h2>
+          <h2 className="font-serif text-2xl leading-tight">{t("results.title")}</h2>
           <ul className="mt-4 flex flex-col gap-3 text-[15px] text-foreground">
             <li className="flex gap-3">
               <span className="mt-1 size-1.5 shrink-0 rounded-full bg-converge" />

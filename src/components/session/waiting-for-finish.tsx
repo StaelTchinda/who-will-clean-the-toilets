@@ -13,12 +13,10 @@ export function WaitingForFinish({
   totalQuestions: number;
 }) {
   const { t } = useTranslation("session");
-  const otherName =
-    partner === "a" ? session.partner_b_name : session.partner_a_name;
+  const otherName = partner === "a" ? session.partner_b_name : session.partner_a_name;
   const pct = otherProgress
     ? Math.round(
-        ((otherProgress.current_index || 0) /
-          Math.max(1, otherProgress.total || totalQuestions)) *
+        ((otherProgress.current_index || 0) / Math.max(1, otherProgress.total || totalQuestions)) *
           100,
       )
     : 0;

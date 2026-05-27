@@ -23,20 +23,13 @@ describe("compareAnswers", () => {
   });
 
   it("classifies a missing answer (either side) as neutral", () => {
-    expect(compareAnswers([q], [answer("a", "q1", "mother")])[0].alignment).toBe(
-      "neutral",
-    );
-    expect(compareAnswers([q], [answer("b", "q1", "mother")])[0].alignment).toBe(
-      "neutral",
-    );
+    expect(compareAnswers([q], [answer("a", "q1", "mother")])[0].alignment).toBe("neutral");
+    expect(compareAnswers([q], [answer("b", "q1", "mother")])[0].alignment).toBe("neutral");
     expect(compareAnswers([q], [])[0].alignment).toBe("neutral");
   });
 
   it("classifies identical answers as converge", () => {
-    const [row] = compareAnswers(
-      [q],
-      [answer("a", "q1", "mother"), answer("b", "q1", "mother")],
-    );
+    const [row] = compareAnswers([q], [answer("a", "q1", "mother"), answer("b", "q1", "mother")]);
     expect(row.alignment).toBe("converge");
   });
 
@@ -47,10 +40,7 @@ describe("compareAnswers", () => {
       ["neither_fine", "neither_else"],
     ];
     for (const [a, b] of pairs) {
-      const [row] = compareAnswers(
-        [q],
-        [answer("a", "q1", a), answer("b", "q1", b)],
-      );
+      const [row] = compareAnswers([q], [answer("a", "q1", a), answer("b", "q1", b)]);
       expect(row.alignment, `${a} vs ${b}`).toBe("converge");
     }
   });
@@ -64,18 +54,12 @@ describe("compareAnswers", () => {
   });
 
   it("diverges on plain different concrete answers", () => {
-    const [row] = compareAnswers(
-      [q],
-      [answer("a", "q1", "mother"), answer("b", "q1", "father")],
-    );
+    const [row] = compareAnswers([q], [answer("a", "q1", "mother"), answer("b", "q1", "father")]);
     expect(row.alignment).toBe("diverge");
   });
 
   it("resolves answer labels and leaves unknown ids without a label", () => {
-    const [row] = compareAnswers(
-      [q],
-      [answer("a", "q1", "mother"), answer("b", "q1", "ghost")],
-    );
+    const [row] = compareAnswers([q], [answer("a", "q1", "mother"), answer("b", "q1", "ghost")]);
     expect(row.labelA).toBe("Ma mère");
     expect(row.answerB).toBe("ghost");
     expect(row.labelB).toBeUndefined();
@@ -115,18 +99,12 @@ describe("groupByDomain", () => {
   });
 
   it("is 0 when a domain has no converging rows", () => {
-    const groups = groupByDomain([
-      mk("finances", "diverge"),
-      mk("finances", "neutral"),
-    ]);
+    const groups = groupByDomain([mk("finances", "diverge"), mk("finances", "neutral")]);
     expect(groups[0].convergence).toBe(0);
   });
 
   it("orders groups following the DOMAINS array (housekeeping before cooking)", () => {
-    const groups = groupByDomain([
-      mk("cooking", "converge"),
-      mk("housekeeping", "converge"),
-    ]);
+    const groups = groupByDomain([mk("cooking", "converge"), mk("housekeeping", "converge")]);
     expect(groups.map((g) => g.domain.id)).toEqual(["housekeeping", "cooking"]);
   });
 });

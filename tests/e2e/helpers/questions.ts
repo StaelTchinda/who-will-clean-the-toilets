@@ -9,13 +9,7 @@ import questionsJson from "../../../src/data/questions.json" with { type: "json"
 
 type Priority = "essential" | "important" | "nice_to_have";
 type AngleId = "environment" | "talent" | "preference" | "value";
-type DomainId =
-  | "housekeeping"
-  | "cooking"
-  | "finances"
-  | "logistics"
-  | "children"
-  | "values";
+type DomainId = "housekeeping" | "cooking" | "finances" | "logistics" | "children" | "values";
 
 export interface Answer {
   id: string;
@@ -48,14 +42,10 @@ const DOMAIN_ORDER: DomainId[] = [
 ];
 
 export function questionsFor(includeChildren: boolean): Question[] {
-  return QUESTIONS.filter(
-    (q) => includeChildren || q.domain_id !== "children",
-  ).sort((a, b) => {
+  return QUESTIONS.filter((q) => includeChildren || q.domain_id !== "children").sort((a, b) => {
     const pr = PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority];
     if (pr !== 0) return pr;
-    return (
-      DOMAIN_ORDER.indexOf(a.domain_id) - DOMAIN_ORDER.indexOf(b.domain_id)
-    );
+    return DOMAIN_ORDER.indexOf(a.domain_id) - DOMAIN_ORDER.indexOf(b.domain_id);
   });
 }
 

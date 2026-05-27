@@ -32,8 +32,7 @@ export interface ProgressRow {
 const ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // no easily confused chars
 function generateCode(): string {
   let s = "";
-  for (let i = 0; i < 4; i++)
-    s += ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+  for (let i = 0; i < 4; i++) s += ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
   return s;
 }
 
@@ -109,21 +108,13 @@ export async function markStarted(sessionId: string) {
 }
 
 export async function fetchAnswers(sessionId: string): Promise<AnswerRow[]> {
-  const { data, error } = await supabase
-    .from("answers")
-    .select("*")
-    .eq("session_id", sessionId);
+  const { data, error } = await supabase.from("answers").select("*").eq("session_id", sessionId);
   if (error) throw error;
   return (data || []) as AnswerRow[];
 }
 
-export async function fetchProgress(
-  sessionId: string,
-): Promise<ProgressRow[]> {
-  const { data, error } = await supabase
-    .from("progress")
-    .select("*")
-    .eq("session_id", sessionId);
+export async function fetchProgress(sessionId: string): Promise<ProgressRow[]> {
+  const { data, error } = await supabase.from("progress").select("*").eq("session_id", sessionId);
   if (error) throw error;
   return (data || []) as ProgressRow[];
 }
@@ -144,17 +135,13 @@ export async function upsertProgress(row: {
 }) {
   const { error } = await supabase
     .from("progress")
-    .upsert(
-      { ...row, updated_at: new Date().toISOString() },
-      { onConflict: "session_id,partner" },
-    );
+    .upsert({ ...row, updated_at: new Date().toISOString() }, { onConflict: "session_id,partner" });
   if (error) throw error;
 }
 
 const PARTNER_KEY = (code: string) => `nosroles:partner:${code}`;
 export function rememberPartner(code: string, partner: Partner) {
-  if (typeof window !== "undefined")
-    localStorage.setItem(PARTNER_KEY(code), partner);
+  if (typeof window !== "undefined") localStorage.setItem(PARTNER_KEY(code), partner);
 }
 export function recallPartner(code: string): Partner | null {
   if (typeof window === "undefined") return null;

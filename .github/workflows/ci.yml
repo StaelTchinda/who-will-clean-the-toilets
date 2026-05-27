@@ -235,8 +235,8 @@ jobs:
     if: always()
     permissions:
       contents: read
-      checks: write          # dorny/test-reporter writes check runs
-      pull-requests: write   # sticky coverage PR comment
+      checks: write # dorny/test-reporter writes check runs
+      pull-requests: write # sticky coverage PR comment
     steps:
       - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
@@ -298,7 +298,7 @@ jobs:
         with:
           name: Playwright results
           path: junit/e2e/playwright-junit.xml
-          reporter: java-junit   # Playwright's junit format is JUnit-XML
+          reporter: java-junit # Playwright's junit format is JUnit-XML
           fail-on-error: true
 
       # Sticky PR comment with the *merged* coverage (unit + e2e). Updates

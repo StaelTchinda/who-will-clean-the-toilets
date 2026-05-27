@@ -19,12 +19,7 @@ import {
   BookOpen,
   Compass,
 } from "lucide-react";
-import {
-  createSession,
-  joinSession,
-  rememberPartner,
-  type ChildrenAnswer,
-} from "@/lib/session";
+import { createSession, joinSession, rememberPartner, type ChildrenAnswer } from "@/lib/session";
 import i18n, { type Locale } from "@/i18n";
 import { useLocale } from "@/hooks/use-locale";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -34,10 +29,7 @@ export const Route = createFileRoute("/$locale/")({
   head: ({ params }) => {
     const t = i18n.getFixedT(params.locale as Locale, "home");
     return {
-      meta: [
-        { title: t("meta.title") },
-        { name: "description", content: t("meta.description") },
-      ],
+      meta: [{ title: t("meta.title") }, { name: "description", content: t("meta.description") }],
     };
   },
 });
@@ -90,10 +82,26 @@ function ResultsPreview() {
   const { t } = useTranslation("home");
   const { t: tData } = useTranslation("data");
   const rows = [
-    { label: tData("tasks.cooking_daily", { defaultValue: "Cuisine quotidienne" }), tone: "converge", text: t("resultPreview.converge") },
-    { label: tData("tasks.sanitizing", { defaultValue: "Sanitaires" }), tone: "diverge", text: t("resultPreview.diverge") },
-    { label: tData("tasks.budget", { defaultValue: "Budget courses" }), tone: "converge", text: t("resultPreview.converge") },
-    { label: tData("tasks.meal_planning", { defaultValue: "Planifier les menus" }), tone: "diverge", text: t("resultPreview.diverge") },
+    {
+      label: tData("tasks.cooking_daily", { defaultValue: "Cuisine quotidienne" }),
+      tone: "converge",
+      text: t("resultPreview.converge"),
+    },
+    {
+      label: tData("tasks.sanitizing", { defaultValue: "Sanitaires" }),
+      tone: "diverge",
+      text: t("resultPreview.diverge"),
+    },
+    {
+      label: tData("tasks.budget", { defaultValue: "Budget courses" }),
+      tone: "converge",
+      text: t("resultPreview.converge"),
+    },
+    {
+      label: tData("tasks.meal_planning", { defaultValue: "Planifier les menus" }),
+      tone: "diverge",
+      text: t("resultPreview.diverge"),
+    },
   ] as const;
   return (
     <div className="rounded-3xl border border-border bg-card p-5">
@@ -140,15 +148,11 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
     <main className="min-h-[100dvh] bg-background text-foreground">
       <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-6 py-10">
         <header className="mb-10 flex items-center justify-between">
-          <p className="text-xs uppercase tracking-[0.25em] text-primary">
-            {t("brand")}
-          </p>
+          <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("brand")}</p>
           <LanguageSwitcher />
         </header>
         {children}
-        <footer className="mt-auto pt-10 text-xs text-muted-foreground">
-          {t("footer")}
-        </footer>
+        <footer className="mt-auto pt-10 text-xs text-muted-foreground">{t("footer")}</footer>
       </div>
     </main>
   );
@@ -224,12 +228,8 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
             {t("book.eyebrow")}
           </p>
         </div>
-        <h2 className="mt-4 font-serif text-2xl leading-tight">
-          {t("book.title")}
-        </h2>
-        <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-          {t("book.body")}
-        </p>
+        <h2 className="mt-4 font-serif text-2xl leading-tight">{t("book.title")}</h2>
+        <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{t("book.body")}</p>
         <Link
           to="/$locale/foundations"
           params={{ locale }}
@@ -244,35 +244,23 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
         <p className="text-xs uppercase tracking-[0.25em] text-primary">
           {t("experience.eyebrow")}
         </p>
-        <h2 className="font-serif text-3xl leading-tight">
-          {t("experience.title")}
-        </h2>
-        <p className="text-[15px] leading-relaxed text-muted-foreground">
-          {t("experience.body")}
-        </p>
+        <h2 className="font-serif text-3xl leading-tight">{t("experience.title")}</h2>
+        <p className="text-[15px] leading-relaxed text-muted-foreground">{t("experience.body")}</p>
         <SwipePreview />
       </section>
 
       {/* Feedback preview */}
       <section className="flex flex-col gap-4">
-        <p className="text-xs uppercase tracking-[0.25em] text-primary">
-          {t("feedback.eyebrow")}
-        </p>
-        <h2 className="font-serif text-3xl leading-tight">
-          {t("feedback.title")}
-        </h2>
+        <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("feedback.eyebrow")}</p>
+        <h2 className="font-serif text-3xl leading-tight">{t("feedback.title")}</h2>
         <ResultsPreview />
-        <p className="text-[15px] leading-relaxed text-muted-foreground">
-          {t("feedback.body")}
-        </p>
+        <p className="text-[15px] leading-relaxed text-muted-foreground">{t("feedback.body")}</p>
       </section>
 
       {/* CTA repeat */}
       <section className="rounded-3xl bg-primary/5 p-6 text-center">
         <Compass className="mx-auto size-6 text-primary" strokeWidth={1.5} />
-        <p className="mt-3 font-serif text-2xl leading-tight">
-          {t("cta.title")}
-        </p>
+        <p className="mt-3 font-serif text-2xl leading-tight">{t("cta.title")}</p>
         <Button
           size="lg"
           onClick={() => onChoose("create")}
