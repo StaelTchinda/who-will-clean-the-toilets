@@ -1,4 +1,9 @@
 {
-  "hint": "glisse · ou tape une réponse",
-  "modified": "modifié"
+  "modified": "modifié",
+  "swipe": {
+    "hint": "tape une réponse · ou glisse depuis le centre",
+    "placeholder": "Choisis une réponse",
+    "previewAria": "Aperçu : {{label}}",
+    "previewEmptyAria": "Aperçu de ta réponse"
+  }
 }

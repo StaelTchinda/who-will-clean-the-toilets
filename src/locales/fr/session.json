@@ -4,6 +4,11 @@
   },
   "loading": "Chargement…",
   "sending": "envoi…",
+  "mode": {
+    "aria": "Mode d'affichage",
+    "swipe": "Glisser",
+    "form": "Formulaire"
+  },
   "notFound": {
     "title": "Session introuvable",
     "body": "Le code « {{code}} » ne correspond à aucune session active.",

@@ -59,16 +59,16 @@ export async function joinSessionUI(
  * Step through all questions for one partner. Drives the questionnaire by
  * the deterministic index (not by reading the live counter) and retries the
  * click if the counter fails to advance — which happens when a click lands
- * during SwipeCard's commit animation window:
+ * during SwipeStage's commit window:
  *
- *   SwipeCard.commit: setLocked(true) → animate 280ms → sleep 180ms →
+ *   SwipeStage.commit: setLocked(true) → preview flash ~220ms →
  *     await onPick → parent setIndex → re-render → useEffect resets locked.
  *
- * Between "parent counter updated" and "child SwipeCard useEffect runs",
- * the new card's Hint buttons are visible & enabled to Playwright but the
- * React handler is still `locked`, so the click is a no-op. Polling the
- * counter for advancement gives us the only honest "ready for next click"
- * signal the app exposes.
+ * Between "parent counter updated" and "child stage useEffect runs", the new
+ * card's buttons are visible & enabled to Playwright but the React handler
+ * is still `locked`, so the click is a no-op. Polling the counter for
+ * advancement gives us the only honest "ready for next click" signal the
+ * app exposes. (Form mode has no lock; the retry loop becomes a no-op.)
  *
  * Returns when the partner reaches either the WaitingForFinish or the
  * ResultsView stage — both unmount the questionnaire counter.
@@ -91,14 +91,10 @@ export async function answerAllQuestions(
     if (!answer) throw new Error(`Bad answer id ${answerId} for ${q.id}`);
 
     // Wait for this question's slot — both counter index and question text.
-    await expect(
-      page.getByText(`${i + 1}/${total}`, { exact: true }),
-    ).toBeVisible();
+    await expect(page.getByText(`${i + 1}/${total}`, { exact: true })).toBeVisible();
     await expect(page.getByText(q.label, { exact: true })).toBeVisible();
 
-    const answerBtn = page
-      .getByRole("button", { name: answer.label, exact: true })
-      .first();
+    const answerBtn = page.getByRole("button", { name: answer.label, exact: true }).first();
 
     // Click, then wait for the counter to advance. Retry up to 5 times if it
     // doesn't — covers the lock-window race + any one-off Realtime jitter.
@@ -111,20 +107,18 @@ export async function answerAllQuestions(
           // On the last question, the questionnaire unmounts entirely — we
           // land on WaitingForFinish or ResultsView. Either heading is fine.
           await expect(
-            page.getByText(
-              /On attend que .* finisse|Nos Rôles · résultats|Envoi de tes/,
-            ),
+            page.getByText(/On attend que .* finisse|Nos Rôles · résultats|Envoi de tes/),
           ).toBeVisible({ timeout: 3000 });
         } else {
-          await expect(
-            page.getByText(`${i + 2}/${total}`, { exact: true }),
-          ).toBeVisible({ timeout: 3000 });
+          await expect(page.getByText(`${i + 2}/${total}`, { exact: true })).toBeVisible({
+            timeout: 3000,
+          });
         }
         advanced = true;
         break;
       } catch {
-        // Counter didn't budge — the click was eaten by SwipeCard's lock.
-        // Re-clicking is safe: the same Hint button maps to the same answer.
+        // Counter didn't budge — the click was eaten by SwipeStage's lock.
+        // Re-clicking is safe: the same button maps to the same answer.
       }
     }
     if (!advanced) {
