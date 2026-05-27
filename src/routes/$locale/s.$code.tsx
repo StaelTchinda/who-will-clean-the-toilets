@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { supabase } from "@/integrations/supabase/client";
+import { backend } from "@/integrations/backend";
 import {
   fetchSession,
   fetchAnswers,
@@ -78,47 +78,18 @@ function SessionPage() {
     };
   }, [code]);
 
+  // Live updates: backend.subscribeToSession is realtime on Supabase and
+  // a 1.5s poll on Cloudflare D1 — same callback shape either way.
   const sessionId = session?.id;
   useEffect(() => {
     if (!sessionId) return;
-    const ch = supabase
-      .channel(`session:${sessionId}`)
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "sessions", filter: `id=eq.${sessionId}` },
-        (payload) => {
-          if (payload.new) setSession(payload.new as SessionRow);
-        },
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "progress", filter: `session_id=eq.${sessionId}` },
-        () => fetchProgress(sessionId).then(setProgress),
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "answers", filter: `session_id=eq.${sessionId}` },
-        () => fetchAnswers(sessionId).then(setAnswers),
-      )
-      .subscribe((status) => {
-        // Once we're actually listening, refetch everything. This closes the
-        // race window between the initial fetch (done in the other useEffect
-        // above) and the channel being ready: an UPDATE that landed in that
-        // gap would otherwise be lost, leaving Partner A stuck on
-        // WaitingForJoin forever even after Partner B has joined. The e2e
-        // suite tripped on this — the route now self-heals.
-        if (status === "SUBSCRIBED") {
-          fetchSession(code).then((s) => {
-            if (s) setSession(s);
-          });
-          fetchProgress(sessionId).then(setProgress);
-          fetchAnswers(sessionId).then(setAnswers);
-        }
-      });
-    return () => {
-      supabase.removeChannel(ch);
-    };
-  }, [sessionId, code]);
+    const unsubscribe = backend.subscribeToSession(sessionId, {
+      onSession: (next) => setSession(next),
+      onProgress: (rows) => setProgress(rows),
+      onAnswers: (rows) => setAnswers(rows),
+    });
+    return unsubscribe;
+  }, [sessionId]);
 
   if (loading) {
     return (
