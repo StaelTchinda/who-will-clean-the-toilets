@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "dev:e2e": "vite dev --mode e2e --port 5173 --strictPort",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
@@ -17,7 +18,12 @@
     "test:storybook": "vitest run --project storybook",
     "coverage": "rm -rf coverage && vitest run --coverage",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "e2e:supabase:start": "supabase start",
+    "e2e:supabase:stop": "supabase stop",
+    "e2e:supabase:reset": "supabase db reset"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",
@@ -81,9 +87,11 @@
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@lovable.dev/vite-tanstack-config": "^1.7.0",
+    "@playwright/test": "^1.60.0",
     "@storybook/addon-vitest": "^10.4.1",
     "@storybook/react-vite": "^10.4.1",
     "@types/node": "^22.16.5",
+    "@types/pg": "^8.20.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
@@ -98,9 +106,11 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
+    "pg": "^8.21.0",
     "playwright": "^1.60.0",
     "prettier": "^3.7.3",
     "storybook": "^10.4.1",
+    "supabase": "^2.101.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
     "vite": "^7.3.1",

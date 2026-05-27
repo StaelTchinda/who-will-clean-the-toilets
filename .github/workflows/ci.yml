@@ -163,6 +163,54 @@ jobs:
       - name: vite build
         run: bun run build
 
+  e2e:
+    name: E2E (Playwright + local Supabase)
+    runs-on: ubuntu-latest
+    # ubuntu-latest ships Docker preinstalled, which is all `supabase start`
+    # needs. The whole stack boots in ~25-35s; the 3 tests run in ~1 min.
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+
+      # --with-deps installs the apt packages chromium needs on the runner;
+      # we only need chromium (the suite has one project), not the full set.
+      - name: Install Playwright Chromium
+        run: bunx playwright install --with-deps chromium
+
+      # Boots Postgres, REST, Realtime, Auth, etc. in Docker containers and
+      # applies supabase/migrations/ automatically. Blocking — exits when the
+      # stack is healthy, which is what tests/e2e/global-setup.ts expects.
+      - name: Start local Supabase
+        run: bunx supabase start
+
+      # Playwright spawns `vite dev --mode e2e` itself via webServer; .env.e2e
+      # supplies the deterministic local anon key + 127.0.0.1:54321 URL.
+      - name: Run Playwright
+        run: bun run test:e2e
+
+      # On failure: html report + traces + videos (trace/video are set to
+      # retain-on-failure in playwright.config.ts, so successful runs upload
+      # nothing of size). On success the step is skipped entirely.
+      - name: Upload Playwright artifacts
+        if: failure()
+        uses: actions/upload-artifact@v6
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+
+      # Best-effort cleanup. Runner is ephemeral so not strictly needed, but
+      # `if: always()` ensures a hung container can't block the runner cache.
+      - name: Stop local Supabase
+        if: always()
+        run: bunx supabase stop --no-backup || true
+
   storybook:
     name: Build Storybook
     runs-on: ubuntu-latest
