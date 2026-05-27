@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "title": "Unsere Rollen — Paarbefragung",
+    "description": "Ein gemeinsamer Fragebogen, um eure Erwartungen, Talente und Präferenzen im Haushalt zu entdecken."
+  },
+  "brand": "Unsere Rollen",
+  "hero": {
+    "heading1": "Eure Rollen",
+    "heading2": "im Haushalt.",
+    "subtext": "Ein gemeinsamer Fragebogen, um eure Erwartungen, Talente und Präferenzen zu entdecken — bevor das Putzen zum Streitthema wird.",
+    "ctaCreate": "Fragebogen starten",
+    "ctaJoin": "Mit Code beitreten"
+  },
+  "stats": {
+    "questions": "Fragen",
+    "partners": "Partner",
+    "minutes": "Minuten"
+  },
+  "book": {
+    "eyebrow": "Nach Gary Chapman",
+    "title": "\"Die Sprachen der Liebe\"",
+    "body": "Der Autor der 5 Sprachen der Liebe beobachtet, dass die meisten Paarprobleme nicht von großen Themen wie Geld oder Familie kommen, sondern von kleinen Alltagsaufgaben, die nie klar verteilt wurden. Dieser Fragebogen nutzt seine Methode — vier Blickwinkel, sechs Bereiche — damit ihr Jahre von Reibung vermeidet.",
+    "link": "Die Grundlagen lesen"
+  },
+  "experience": {
+    "eyebrow": "Das Erlebnis",
+    "title": "Wischen zum Antworten.",
+    "body": "Jede Frage wird als Symbole dargestellt. Du wischst die Karte in Richtung deiner Antwort — oben, rechts, unten, links — oder tippst. Schneller als ein Formular, ausdrucksstärker als eine Liste."
+  },
+  "feedback": {
+    "eyebrow": "Das Ergebnis",
+    "title": "Wo ihr übereinstimmt und wo es hakt.",
+    "body": "Am Ende entdeckt ihr eure Gemeinsamkeiten, eure Unterschiede und einen Vorschlag zur Aufgabenverteilung basierend auf den Talenten und Präferenzen jedes Einzelnen — nicht auf ererbten Gewohnheiten."
+  },
+  "resultPreview": {
+    "eyebrow": "Vorschau · Ergebnisse",
+    "converge": "Einigkeit",
+    "diverge": "Besprechen",
+    "suggestion": "Plus ein Verteilungsvorschlag basierend auf euren kombinierten Talenten und Präferenzen."
+  },
+  "cta": {
+    "title": "Bereit, es in Worte zu fassen?",
+    "start": "Fragebogen starten",
+    "hasCode": "Ich habe bereits einen Code →"
+  },
+  "footer": "Inspiriert von Gary Chapmans Werk über die Sprachen der Liebe.",
+  "swipePreview": {
+    "eyebrow": "Vorschau · Haushalt · Umfeld",
+    "question": "Wer hat bei dir aufgeräumt, als du aufgewachsen bist?",
+    "both": "Beide",
+    "everyone": "Alle",
+    "papa": "Papa",
+    "maman": "Mama"
+  },
+  "create": {
+    "title1": "Erst",
+    "title2": "du.",
+    "nameLabel": "Dein Vorname",
+    "namePlaceholder": "Alex",
+    "childrenLabel": "Habt ihr Kinder oder plant ihr welche?",
+    "childrenYes": "Ja",
+    "childrenMaybe": "Vielleicht",
+    "childrenNo": "Nein",
+    "back": "← zurück",
+    "submit": "Fragebogen erstellen",
+    "submitting": "…"
+  },
+  "join": {
+    "title1": "Deinem",
+    "title2": "Partner beitreten.",
+    "codeLabel": "Sitzungscode",
+    "codePlaceholder": "A7K2",
+    "nameLabel": "Dein Vorname",
+    "namePlaceholder": "Alex",
+    "childrenLabel": "Habt ihr Kinder oder plant ihr welche?",
+    "childrenYes": "Ja",
+    "childrenMaybe": "Vielleicht",
+    "childrenNo": "Nein",
+    "back": "← zurück",
+    "submit": "Beitreten",
+    "submitting": "…"
+  },
+  "error": "Ein Fehler ist aufgetreten"
+}

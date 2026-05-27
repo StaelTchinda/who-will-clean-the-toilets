@@ -134,68 +134,11 @@ export function iconForAnswer(answerId: string, label: string): LucideIcon {
   return ArrowRight;
 }
 
-// Short, swipeable label (max ~12 chars). Falls back to the original label.
-export function shortLabel(answerId: string, label: string): string {
-  // Map of well-known ids to crisp 1–2 word labels.
-  const map: Record<string, string> = {
-    mother: "Maman",
-    father: "Papa",
-    both: "Les deux",
-    both_fine: "Les deux",
-    both_bother: "Aucun",
-    everyone: "Tous",
-    children: "Enfants",
-    rotation: "Chacun son tour",
-    alternate: "On alterne",
-    share: "On partage",
-    woman: "La femme",
-    sanitizing: "Sanitaires",
-    vacuuming: "Aspirateur",
-    floors: "Les sols",
-    tidying: "Ranger",
-    bedding: "Les draps",
-    bins: "Poubelles",
-    cooking: "Cuisiner",
-    dishes: "Vaisselle",
-    groceries: "Courses",
-    planning: "Planifier",
-    budget: "Budget",
-    daily: "Tous les jours",
-    sometimes: "Parfois",
-    rarely: "Rarement",
-    never: "Jamais",
-    none: "Aucun",
-    expert: "Expert",
-    decent: "Correct",
-    basic: "Basique",
-    diy: "Bricolage",
-    contractors: "Artisan",
-    medical: "Médical",
-    delegate: "Déléguer",
-    keep: "Garder",
-    liberating: "J'adore",
-    stressful: "Stressant",
-    essential: "Indispensable",
-    if_time: "Si j'ai le temps",
-    useless: "Inutile",
-    unbearable: "Insupportable",
-    annoying: "Gênant",
-    fine: "Ça va",
-    unnoticed: "Pas remarqué",
-    non_negotiable: "Non négo.",
-    important: "Important",
-    secondary: "Secondaire",
-    depends: "Ça dépend",
-    neutral: "Neutre",
-    feminine: "Féminine",
-    masculine: "Masculine",
-    neither_bothers: "Ni l'un ni l'autre",
-    neither_fine: "Ni l'un ni l'autre",
-    yes: "Oui",
-    no: "Non",
-    maybe: "Peut-être",
-  };
-  if (map[answerId]) return map[answerId];
-  // Truncate long labels
+// Short, swipeable label (max ~28 chars).
+// The `label` parameter is already translated by the caller via tData(), so we
+// just truncate if needed. A hardcoded-per-language map is intentionally avoided
+// here — it would produce French regardless of the active locale.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function shortLabel(_answerId: string, label: string): string {
   return label.length > 28 ? label.slice(0, 26).trimEnd() + "…" : label;
 }

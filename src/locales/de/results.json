@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "eyebrow": "Unsere Rollen · Ergebnisse"
+  },
+  "convergence": "{{pct}}% eurer Antworten stimmen überein. Hier ist, was das bedeutet.",
+  "tabs": {
+    "analysis": "Analyse",
+    "table": "Vergleich",
+    "tasks": "Verteilung"
+  },
+  "analysis": {
+    "alignedTitle": "Wo ihr übereinstimmt",
+    "alignedSub": "Eure gemeinsamen Stärken — feiernswert.",
+    "alignedEmpty": "Wenige klare Gemeinsamkeiten — das ist an sich schon eine Information.",
+    "divergedTitle": "Gemeinsam besprechen",
+    "divergedSub": "Keine Probleme — Gespräche, die geführt werden sollten.",
+    "divergedEmpty": "Keine wesentlichen Unterschiede gefunden.",
+    "overviewTitle": "Überblick nach Bereich",
+    "overviewSub": "% der Fragen, bei denen {{nameA}} und {{nameB}} übereinstimmen.",
+    "alignedDetail": "Ihr habt beide dasselbe geantwortet: «{{answer}}»",
+    "divergedDetail": "Eure Antworten unterscheiden sich — ein Thema, das es wert ist, gemeinsam zu erkunden."
+  },
+  "tasks": {
+    "intro": "Basierend auf euren Talent- + Präferenz-Antworten. Als Ausgangspunkt zu verstehen — das Gespräch ist wichtiger als der Vorschlag.",
+    "share": "Teilen",
+    "rationaleNoData": "Keine klare Präferenz — gemeinsam entscheiden.",
+    "rationaleTie": "Gleichstand — teilen oder abwechseln.",
+    "rationaleA": "{{name}} ist dabei wohler oder kann sich das besser vorstellen.",
+    "rationaleB": "{{name}} ist dabei wohler oder kann sich das besser vorstellen."
+  },
+  "footer": {
+    "disclaimer": "Diese Vorschläge sind ein Ausgangspunkt für ein Gespräch — keine endgültige Entscheidung. Drucken oder Screenshot machen, um eine Aufzeichnung zu behalten.",
+    "newQuestionnaire": "Neuer Fragebogen"
+  }
+}

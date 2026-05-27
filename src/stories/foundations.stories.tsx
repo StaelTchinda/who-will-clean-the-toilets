@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { FoundationsPage } from "@/routes/foundations";
+import { FoundationsPage } from "@/routes/$locale/foundations";
 
 const meta = {
   title: "Pages/Foundations",

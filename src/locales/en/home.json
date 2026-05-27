@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "title": "Our Roles — couples questionnaire",
+    "description": "A two-person questionnaire to reveal your expectations, talents and preferences around household management."
+  },
+  "brand": "Our Roles",
+  "hero": {
+    "heading1": "Your roles in",
+    "heading2": "the home.",
+    "subtext": "A two-person questionnaire to reveal your expectations, talents and preferences — before the dishes become a battlefield.",
+    "ctaCreate": "Start a questionnaire",
+    "ctaJoin": "Join with a code"
+  },
+  "stats": {
+    "questions": "questions",
+    "partners": "partners",
+    "minutes": "minutes"
+  },
+  "book": {
+    "eyebrow": "Based on Gary Chapman",
+    "title": "\"Profit from the 5 Love Languages\"",
+    "body": "The author of The 5 Love Languages observes that most couple conflicts don't stem from big issues like money or family, but from small everyday chores that were never explicitly assigned. This questionnaire uses his method — four angles, six domains — to spare you years of friction.",
+    "link": "Read the foundations"
+  },
+  "experience": {
+    "eyebrow": "The experience",
+    "title": "Swipe to answer.",
+    "body": "Each question comes to life as icons. You swipe the card towards your answer — up, right, down, left — or tap. Faster than a form, more expressive than a list."
+  },
+  "feedback": {
+    "eyebrow": "The results",
+    "title": "Your agreements, and where things chafe.",
+    "body": "At the end, you discover your convergences, your divergences, and a suggested distribution based on each person's talents and preferences — not inherited habits."
+  },
+  "resultPreview": {
+    "eyebrow": "Preview · results",
+    "converge": "Agreement",
+    "diverge": "Discuss",
+    "suggestion": "Plus a suggested distribution based on your combined talents and preferences."
+  },
+  "cta": {
+    "title": "Ready to put words to it?",
+    "start": "Start a questionnaire",
+    "hasCode": "I already have a code →"
+  },
+  "footer": "Inspired by \"Profit from the 5 Love Languages\" — Gary Chapman.",
+  "swipePreview": {
+    "eyebrow": "Preview · Housekeeping · Environment",
+    "question": "Growing up, who did the cleaning?",
+    "both": "Both",
+    "everyone": "Everyone",
+    "papa": "Dad",
+    "maman": "Mum"
+  },
+  "create": {
+    "title1": "First,",
+    "title2": "you.",
+    "nameLabel": "Your first name",
+    "namePlaceholder": "Alex",
+    "childrenLabel": "Do you have children, or plan to?",
+    "childrenYes": "Yes",
+    "childrenMaybe": "Maybe",
+    "childrenNo": "No",
+    "back": "← back",
+    "submit": "Create the questionnaire",
+    "submitting": "…"
+  },
+  "join": {
+    "title1": "Join",
+    "title2": "your partner.",
+    "codeLabel": "Session code",
+    "codePlaceholder": "A7K2",
+    "nameLabel": "Your first name",
+    "namePlaceholder": "Alex",
+    "childrenLabel": "Do you have children, or plan to?",
+    "childrenYes": "Yes",
+    "childrenMaybe": "Maybe",
+    "childrenNo": "No",
+    "back": "← back",
+    "submit": "Join",
+    "submitting": "…"
+  },
+  "error": "An error occurred"
+}

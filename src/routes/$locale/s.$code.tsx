@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import {
   fetchSession,
@@ -22,16 +23,21 @@ import { Centered } from "@/components/session/centered";
 import { PickPartner } from "@/components/session/pick-partner";
 import { WaitingForJoin } from "@/components/session/waiting-for-join";
 import { WaitingForFinish } from "@/components/session/waiting-for-finish";
+import i18n, { type Locale } from "@/i18n";
 
-export const Route = createFileRoute("/s/$code")({
+export const Route = createFileRoute("/$locale/s/$code")({
   component: SessionPage,
-  head: () => ({
-    meta: [{ title: "Questionnaire — Nos Rôles" }],
-  }),
+  head: ({ params }) => {
+    const t = i18n.getFixedT(params.locale as Locale, "session");
+    return {
+      meta: [{ title: t("meta.title") }],
+    };
+  },
 });
 
 function SessionPage() {
-  const { code } = Route.useParams();
+  const { code, locale } = Route.useParams();
+  const { t } = useTranslation("session");
   const navigate = useNavigate();
   const [session, setSession] = useState<SessionRow | null>(null);
   const [answers, setAnswers] = useState<AnswerRow[]>([]);
@@ -52,7 +58,10 @@ function SessionPage() {
         return;
       }
       setSession(s);
-      const [a, p] = await Promise.all([fetchAnswers(s.id), fetchProgress(s.id)]);
+      const [a, p] = await Promise.all([
+        fetchAnswers(s.id),
+        fetchProgress(s.id),
+      ]);
       if (!mounted) return;
       setAnswers(a);
       setProgress(p);
@@ -94,7 +103,7 @@ function SessionPage() {
   if (loading) {
     return (
       <Centered>
-        <p className="text-muted-foreground">Chargement…</p>
+        <p className="text-muted-foreground">{t("loading")}</p>
       </Centered>
     );
   }
@@ -102,18 +111,24 @@ function SessionPage() {
   if (notFound || !session) {
     return (
       <Centered>
-        <h1 className="font-serif text-3xl">Session introuvable</h1>
-        <p className="text-muted-foreground">
-          Le code « {code} » ne correspond à aucune session active.
-        </p>
-        <Button onClick={() => navigate({ to: "/" })}>Retour à l'accueil</Button>
+        <h1 className="font-serif text-3xl">{t("notFound.title")}</h1>
+        <p className="text-muted-foreground">{t("notFound.body", { code })}</p>
+        <Button onClick={() => navigate({ to: "/$locale", params: { locale: locale as Locale } })}>
+          {t("notFound.back")}
+        </Button>
       </Centered>
     );
   }
 
   // No partner role on this device yet — ask which one they are
   if (!partner) {
-    return <PickPartner session={session} code={code} onPicked={(p) => setPartner(p)} />;
+    return (
+      <PickPartner
+        session={session}
+        code={code}
+        onPicked={(p) => setPartner(p)}
+      />
+    );
   }
 
   // Waiting for second partner to join
@@ -121,14 +136,16 @@ function SessionPage() {
     return <WaitingForJoin session={session} code={code} partner={partner} />;
   }
 
-  const includeChildren = session.has_children_a !== "no" || session.has_children_b !== "no";
+  const includeChildren =
+    session.has_children_a !== "no" || session.has_children_b !== "no";
   const questions = buildQuestionList(includeChildren);
 
   const myAnswers = answers.filter((a) => a.partner === partner);
   const myProgress = progress.find((p) => p.partner === partner);
   const otherProgress = progress.find((p) => p.partner !== partner);
 
-  const completed = myAnswers.length >= questions.length || myProgress?.completed;
+  const completed =
+    myAnswers.length >= questions.length || myProgress?.completed;
   const otherCompleted = otherProgress?.completed;
 
   if (completed && otherCompleted) {
@@ -138,6 +155,7 @@ function SessionPage() {
         answers={answers}
         questions={questions}
         includeChildren={includeChildren}
+        locale={locale as Locale}
       />
     );
   }
@@ -154,19 +172,12 @@ function SessionPage() {
   }
 
   return (
-    <Questionnaire session={session} partner={partner} questions={questions} answers={myAnswers} />
-  );
-}
-
-// Centering chrome for the questionnaire stage. Lifted out of Questionnaire so
-// Storybook stage stories can render it the same way the route does.
-export function SessionShell({ children }: { children: React.ReactNode }) {
-  return (
-    <main className="min-h-[100dvh] bg-background">
-      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-5 pb-6 pt-[max(env(safe-area-inset-top),1rem)]">
-        {children}
-      </div>
-    </main>
+    <Questionnaire
+      session={session}
+      partner={partner}
+      questions={questions}
+      answers={myAnswers}
+    />
   );
 }
 
@@ -181,7 +192,13 @@ export function Questionnaire({
   questions: ReturnType<typeof buildQuestionList>;
   answers: AnswerRow[];
 }) {
-  const answeredIds = useMemo(() => new Set(answers.map((a) => a.question_id)), [answers]);
+  const { t } = useTranslation("session");
+  const { t: tData } = useTranslation("data");
+
+  const answeredIds = useMemo(
+    () => new Set(answers.map((a) => a.question_id)),
+    [answers],
+  );
   // Start at first unanswered
   const initialIndex = useMemo(() => {
     const idx = questions.findIndex((q) => !answeredIds.has(q.id));
@@ -247,48 +264,59 @@ export function Questionnaire({
   if (!q) {
     return (
       <Centered>
-        <p className="text-muted-foreground">Envoi de tes réponses…</p>
+        <p className="text-muted-foreground">{t("sending")}</p>
       </Centered>
     );
   }
 
   const domain = DOMAIN_BY_ID[q.domain_id];
   const angle = ANGLE_BY_ID[q.angle_id];
+  const domainLabel = tData(`domains.${q.domain_id}`, { defaultValue: domain.label });
+  const angleLabel = tData(`angles.${q.angle_id}.label`, { defaultValue: angle.label });
+  const questionLabel = tData(`questions.${q.id}.label`, { defaultValue: q.label });
+  const translatedAnswers = q.answers.map((a) => ({
+    ...a,
+    label: tData(`questions.${q.id}.answers.${a.id}`, { defaultValue: a.label }),
+  }));
 
   return (
-    <SessionShell>
-      {/* progress */}
-      <div className="flex items-center gap-3 pb-6">
-        <button
-          onClick={handlePrev}
-          disabled={index === 0}
-          className="text-sm text-muted-foreground disabled:opacity-30"
-        >
-          ←
-        </button>
-        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
-          <div
-            className="h-full bg-primary transition-all duration-500"
-            style={{ width: `${pct}%` }}
+    <main className="min-h-[100dvh] bg-background">
+      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-5 pb-6 pt-[max(env(safe-area-inset-top),1rem)]">
+        {/* progress */}
+        <div className="flex items-center gap-3 pb-6">
+          <button
+            onClick={handlePrev}
+            disabled={index === 0}
+            className="text-sm text-muted-foreground disabled:opacity-30"
+          >
+            ←
+          </button>
+          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
+            <div
+              className="h-full bg-primary transition-all duration-500"
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+          <span className="text-xs tabular-nums text-muted-foreground">
+            {index + 1}/{total}
+          </span>
+        </div>
+
+        <div className="flex flex-1 items-center">
+          <SwipeCard
+            questionLabel={questionLabel}
+            meta={`${domainLabel} · ${angleLabel}`}
+            domainId={q.domain_id}
+            answers={translatedAnswers}
+            current={current}
+            onPick={handlePick}
           />
         </div>
-        <span className="text-xs tabular-nums text-muted-foreground">
-          {index + 1}/{total}
-        </span>
-      </div>
 
-      <div className="flex flex-1 items-center">
-        <SwipeCard
-          questionLabel={q.label}
-          meta={`${domain.label} · ${angle.label}`}
-          domainId={q.domain_id}
-          answers={q.answers}
-          current={current}
-          onPick={handlePick}
-        />
+        {pending && (
+          <p className="text-center text-xs text-muted-foreground">{t("sending")}</p>
+        )}
       </div>
-
-      {pending && <p className="text-center text-xs text-muted-foreground">envoi…</p>}
-    </SessionShell>
+    </main>
   );
 }

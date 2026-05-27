@@ -1,20 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { ANGLES, DOMAINS } from "@/lib/dataset";
 import { DOMAIN_ICON } from "@/lib/icon-map";
 import { Compass, Eye, Hand, Heart, BookOpen, ArrowLeft, ArrowRight } from "lucide-react";
+import i18n, { type Locale } from "@/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useLocale } from "@/hooks/use-locale";
 
-export const Route = createFileRoute("/foundations")({
+export const Route = createFileRoute("/$locale/foundations")({
   component: FoundationsPage,
-  head: () => ({
-    meta: [
-      { title: "Les fondations — Nos Rôles" },
-      {
-        name: "description",
-        content:
-          "Pourquoi parler de la répartition des tâches avant qu'elle ne devienne un conflit. Inspiré du livre de Gary Chapman.",
-      },
-    ],
-  }),
+  head: ({ params }) => {
+    const t = i18n.getFixedT(params.locale as Locale, "foundations");
+    return {
+      meta: [
+        { title: t("meta.title") },
+        { name: "description", content: t("meta.description") },
+      ],
+    };
+  },
 });
 
 const ANGLE_ICONS: Record<string, typeof Compass> = {
@@ -25,22 +28,30 @@ const ANGLE_ICONS: Record<string, typeof Compass> = {
 };
 
 export function FoundationsPage() {
+  const { t } = useTranslation("foundations");
+  const { t: tData } = useTranslation("data");
+  const locale = useLocale();
+
   return (
     <main className="min-h-[100dvh] bg-background text-foreground">
       <div className="mx-auto max-w-md px-6 pb-16 pt-[max(env(safe-area-inset-top),1.5rem)]">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
-        >
-          <ArrowLeft className="size-3.5" /> retour
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link
+            to="/$locale"
+            params={{ locale: locale as Locale }}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="size-3.5" /> {t("back")}
+          </Link>
+          <LanguageSwitcher />
+        </div>
 
         <p className="mt-8 text-xs uppercase tracking-[0.25em] text-primary">
-          Les fondations
+          {t("eyebrow")}
         </p>
         <h1 className="mt-3 text-pretty font-serif text-4xl leading-[1.05]">
-          Pourquoi parler des rôles <em className="text-primary">avant</em> qu'ils
-          ne deviennent un conflit.
+          {t("title1")} <em className="text-primary">{t("titleEm")}</em>{" "}
+          {t("title2")}
         </h1>
 
         {/* Origin */}
@@ -50,39 +61,30 @@ export function FoundationsPage() {
               <BookOpen className="size-5" strokeWidth={1.6} />
             </div>
             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              D'après Gary Chapman
+              {t("book.eyebrow")}
             </p>
           </div>
           <h2 className="mt-4 font-serif text-2xl leading-tight">
-            « Les toilettes ne se nettoient pas toutes seules »
+            {t("book.title")}
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-            Dans son livre éponyme, Gary Chapman — l'auteur des Langages de
-            l'amour — observe que la majorité des tensions de couple ne viennent
-            pas des grands sujets (l'argent, la famille, le sexe) mais des
-            <em> petites tâches du quotidien</em> que personne n'a jamais
-            explicitement attribuées. Le problème : chacun arrive avec ses
-            modèles inconscients, ses talents, ses préférences, ses valeurs — et
-            personne n'en parle, jusqu'à ce que ça explose.
+            {t("book.body1")}
           </p>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-            <em>Nos Rôles</em> est l'outil qui force cette conversation, de
-            manière structurée, ludique et bienveillante.
+            <em>{t("book.body2")}</em>
           </p>
         </section>
 
         {/* The four angles */}
         <section className="mt-10">
           <p className="text-xs uppercase tracking-[0.25em] text-primary">
-            Les 4 angles d'analyse
+            {t("angles.eyebrow")}
           </p>
           <h2 className="mt-2 font-serif text-3xl leading-tight">
-            Chaque tâche est regardée sous quatre angles.
+            {t("angles.title")}
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-            Chapman insiste : assumer une tâche, ce n'est pas qu'une question de
-            qui sait faire. C'est aussi qui a vu ses parents la faire, qui la
-            tolère, et qui pense qu'elle est importante.
+            {t("angles.body")}
           </p>
 
           <ul className="mt-6 flex flex-col gap-3">
@@ -100,10 +102,12 @@ export function FoundationsPage() {
                     <div className="flex size-10 items-center justify-center rounded-2xl bg-secondary/70 text-primary">
                       <Icon className="size-5" strokeWidth={1.6} />
                     </div>
-                    <h3 className="font-serif text-xl">{a.label}</h3>
+                    <h3 className="font-serif text-xl">
+                      {tData(`angles.${a.id}.label`, { defaultValue: a.label })}
+                    </h3>
                   </div>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {a.description}
+                    {tData(`angles.${a.id}.description`, { defaultValue: a.description })}
                   </p>
                 </li>
               );
@@ -114,14 +118,13 @@ export function FoundationsPage() {
         {/* Domains */}
         <section className="mt-10">
           <p className="text-xs uppercase tracking-[0.25em] text-primary">
-            Les 6 domaines
+            {t("domains.eyebrow")}
           </p>
           <h2 className="mt-2 font-serif text-3xl leading-tight">
-            Six terrains de friction quotidiens.
+            {t("domains.title")}
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-            Le questionnaire couvre tout ce qui fait tourner un foyer — et que
-            personne ne pense à attribuer avant que ça grince.
+            {t("domains.body")}
           </p>
           <ul className="mt-6 grid grid-cols-2 gap-3">
             {DOMAINS.map((d) => {
@@ -135,7 +138,7 @@ export function FoundationsPage() {
                     <Icon className="size-5" strokeWidth={1.6} />
                   </div>
                   <span className="font-serif text-lg leading-tight">
-                    {d.label}
+                    {tData(`domains.${d.id}`, { defaultValue: d.label })}
                   </span>
                 </li>
               );
@@ -146,29 +149,42 @@ export function FoundationsPage() {
         {/* What you'll discover */}
         <section className="mt-10 rounded-3xl bg-secondary/40 p-6">
           <h2 className="font-serif text-2xl leading-tight">
-            À la fin, vous verrez :
+            {t("results.title")}
           </h2>
           <ul className="mt-4 flex flex-col gap-3 text-[15px] text-foreground">
             <li className="flex gap-3">
               <span className="mt-1 size-1.5 shrink-0 rounded-full bg-converge" />
-              <span><strong className="font-medium">Vos convergences</strong> — les sujets où vous êtes déjà alignés, sans le savoir.</span>
+              <span>
+                <strong className="font-medium">{t("results.convergences.label")}</strong>
+                {" — "}
+                {t("results.convergences.detail")}
+              </span>
             </li>
             <li className="flex gap-3">
               <span className="mt-1 size-1.5 shrink-0 rounded-full bg-diverge" />
-              <span><strong className="font-medium">Vos divergences</strong> — les zones où une vraie conversation est nécessaire.</span>
+              <span>
+                <strong className="font-medium">{t("results.divergences.label")}</strong>
+                {" — "}
+                {t("results.divergences.detail")}
+              </span>
             </li>
             <li className="flex gap-3">
               <span className="mt-1 size-1.5 shrink-0 rounded-full bg-primary" />
-              <span><strong className="font-medium">Une répartition suggérée</strong> — basée sur les talents et préférences de chacun, pas sur les habitudes héritées.</span>
+              <span>
+                <strong className="font-medium">{t("results.suggestion.label")}</strong>
+                {" — "}
+                {t("results.suggestion.detail")}
+              </span>
             </li>
           </ul>
         </section>
 
         <Link
-          to="/"
+          to="/$locale"
+          params={{ locale: locale as Locale }}
           className="mt-10 inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-primary text-base text-primary-foreground"
         >
-          Démarrer le questionnaire
+          {t("cta")}
           <ArrowRight className="size-4" />
         </Link>
       </div>

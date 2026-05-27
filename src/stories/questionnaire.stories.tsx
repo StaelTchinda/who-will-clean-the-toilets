@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Questionnaire } from "@/routes/s.$code";
+import { Questionnaire } from "@/routes/$locale/s.$code";
 import {
   QUESTIONNAIRE_QUESTIONS,
   answer,
@@ -47,13 +47,14 @@ export const MidFlow: Story = {
 /**
  * Stage 3c — same mid-flow position, but the visible question already has a
  * selection (user came back via the ← arrow). Highlights the SwipeCard's
- * "selected" state.
+ * "selected" state. Uses answers[1] so it differs visually from questionnaireMidAnswers
+ * which always picks answers[0].
  */
 export const MidFlowWithCurrent: Story = {
   args: {
     answers: [
       ...questionnaireMidAnswers("a", 5),
-      answer("a", QUESTIONNAIRE_QUESTIONS[5].id, "partner"),
+      answer("a", QUESTIONNAIRE_QUESTIONS[5].id, QUESTIONNAIRE_QUESTIONS[5].answers[1].id),
     ],
   },
 };

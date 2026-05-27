@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "title": "Questionnaire — Nos Rôles"
+  },
+  "loading": "Chargement…",
+  "sending": "envoi…",
+  "notFound": {
+    "title": "Session introuvable",
+    "body": "Le code « {{code}} » ne correspond à aucune session active.",
+    "back": "Retour à l'accueil"
+  },
+  "pickPartner": {
+    "title": "Qui est-ce ?",
+    "subtitle": "Sélectionne ton prénom sur ce téléphone."
+  },
+  "waiting": {
+    "greeting": "Salut {{name}} —",
+    "title": "Partage ce code avec ton partenaire.",
+    "copied": "copié ✓",
+    "tapToCopy": "tap pour copier",
+    "instructions": "Sur son téléphone, ton partenaire ouvre l'app, tape « Rejoindre avec un code », entre {{code}}, et son prénom.",
+    "waiting": "en attente…"
+  },
+  "waitingFinish": {
+    "done": "Tu as terminé —",
+    "title": "On attend que {{name}} finisse.",
+    "progress": "{{name}} est à {{pct}}%",
+    "autoReveal": "La page des résultats apparaîtra automatiquement quand vous aurez tous les deux fini."
+  },
+  "errors": {
+    "cannotGenerateCode": "Impossible de générer un code de session",
+    "sessionNotFound": "Code de session introuvable",
+    "generic": "Une erreur est survenue"
+  }
+}

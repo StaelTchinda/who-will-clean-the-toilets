@@ -1,5 +1,6 @@
 import { motion, useMotionValue, useTransform, animate, PanInfo } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ArrowUp, ArrowRight, ArrowDown, ArrowLeft } from "lucide-react";
 import type { Answer } from "@/lib/dataset";
 import { iconForAnswer, shortLabel, DOMAIN_ICON } from "@/lib/icon-map";
@@ -118,14 +119,7 @@ export function SwipeCard({
           <h2 className="mt-5 text-balance text-center font-serif text-[22px] leading-[1.15] text-foreground sm:text-2xl">
             {questionLabel}
           </h2>
-          <p className="absolute inset-x-5 bottom-4 text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            glisse · ou tape une réponse
-          </p>
-          {current && (
-            <div className="absolute right-3 top-3 rounded-full bg-primary px-2 py-0.5 text-[9px] uppercase tracking-wider text-primary-foreground">
-              modifié
-            </div>
-          )}
+          <SwipeCardHint current={current} />
         </motion.div>
         <Hint dir="right" answer={mapping.right} active={hovered === "right"} onTap={() => commit("right")} compact />
       </div>
@@ -133,6 +127,22 @@ export function SwipeCard({
       {/* Bottom hint */}
       <Hint dir="down" answer={mapping.down} active={hovered === "down"} onTap={() => commit("down")} />
     </div>
+  );
+}
+
+function SwipeCardHint({ current }: { current?: string }) {
+  const { t } = useTranslation("swipecard");
+  return (
+    <>
+      <p className="absolute inset-x-5 bottom-4 text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+        {t("hint")}
+      </p>
+      {current && (
+        <div className="absolute right-3 top-3 rounded-full bg-primary px-2 py-0.5 text-[9px] uppercase tracking-wider text-primary-foreground">
+          {t("modified")}
+        </div>
+      )}
+    </>
   );
 }
 

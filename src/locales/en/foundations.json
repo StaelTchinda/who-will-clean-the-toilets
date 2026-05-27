@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "Foundations — Our Roles",
+    "description": "Why talking about task distribution matters before it becomes a conflict. Inspired by Gary Chapman."
+  },
+  "back": "back",
+  "eyebrow": "The foundations",
+  "title1": "Why talk about roles",
+  "titleEm": "before",
+  "title2": "they become a conflict.",
+  "book": {
+    "eyebrow": "Based on Gary Chapman",
+    "title": "\"Profit from the 5 Love Languages\"",
+    "body1": "In his book, Gary Chapman — author of The 5 Love Languages — observes that most relationship tension doesn't come from big issues (money, family, intimacy) but from small everyday tasks that were never explicitly assigned. The problem: each person arrives with their unconscious models, talents, preferences, values — and nobody talks about it until it explodes.",
+    "body2": "Our Roles is the tool that forces this conversation, in a structured, playful and caring way."
+  },
+  "angles": {
+    "eyebrow": "The 4 analysis angles",
+    "title": "Each task is viewed through four angles.",
+    "body": "Chapman insists: taking on a task isn't just about who knows how. It's also who saw their parents do it, who tolerates it, and who thinks it matters."
+  },
+  "domains": {
+    "eyebrow": "The 6 domains",
+    "title": "Six daily friction zones.",
+    "body": "The questionnaire covers everything that keeps a household running — and that nobody thinks to assign before it becomes a problem."
+  },
+  "results": {
+    "title": "At the end, you'll see:",
+    "convergences": {
+      "label": "Your convergences",
+      "detail": "topics where you're already aligned, without knowing it."
+    },
+    "divergences": {
+      "label": "Your divergences",
+      "detail": "areas where a real conversation is needed."
+    },
+    "suggestion": {
+      "label": "A suggested distribution",
+      "detail": "based on each person's talents and preferences, not inherited habits."
+    }
+  },
+  "cta": "Start the questionnaire"
+}

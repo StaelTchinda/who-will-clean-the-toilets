@@ -2,7 +2,6 @@ import {
   QUESTIONS,
   DOMAINS,
   TASKS,
-  DOMAIN_BY_ID,
   TASK_BY_ID,
   answerById,
   type Question,
@@ -74,10 +73,21 @@ export function groupByDomain(rows: ComparedQuestion[]): DomainGroup[] {
   }).filter(Boolean) as DomainGroup[];
 }
 
+/**
+ * Highlight uses structured data so the component can translate at render time.
+ * - domainId: used with tData(`domains.${domainId}`) for translated domain label
+ * - questionId: used with tData(`questions.${questionId}.label`) for translated question
+ * - questionLabel: French fallback for tData defaultValue
+ * - detailKey: i18n key in the "results" namespace (analysis.alignedDetail or analysis.divergedDetail)
+ * - answerAId / answerALabel: present for aligned highlights, used to translate the shared answer
+ */
 export interface Highlight {
-  domain: string;
+  domainId: DomainId;
+  questionId: string;
   questionLabel: string;
-  detail: string;
+  detailKey: string;
+  answerAId?: string;
+  answerALabel?: string;
 }
 
 export function pickHighlights(rows: ComparedQuestion[]) {
@@ -85,25 +95,35 @@ export function pickHighlights(rows: ComparedQuestion[]) {
   const diverged = rows.filter((r) => r.alignment === "diverge");
   return {
     aligned: aligned.slice(0, 3).map<Highlight>((r) => ({
-      domain: DOMAIN_BY_ID[r.question.domain_id]?.label ?? "",
+      domainId: r.question.domain_id,
+      questionId: r.question.id,
       questionLabel: r.question.label,
-      detail: `Vous répondez la même chose : « ${r.labelA} »`,
+      detailKey: "analysis.alignedDetail",
+      answerAId: r.answerA,
+      answerALabel: r.labelA,
     })),
     diverged: diverged.slice(0, 3).map<Highlight>((r) => ({
-      domain: DOMAIN_BY_ID[r.question.domain_id]?.label ?? "",
+      domainId: r.question.domain_id,
+      questionId: r.question.id,
       questionLabel: r.question.label,
-      detail: `Vos réponses divergent — un sujet à explorer ensemble.`,
+      detailKey: "analysis.divergedDetail",
     })),
   };
 }
 
 export type Assignee = "a" | "b" | "share";
+
+/**
+ * TaskSuggestion uses translation keys for rationale so the component
+ * can render the correct language without passing a `t` function into this module.
+ */
 export interface TaskSuggestion {
   taskId: string;
   taskLabel: string;
   domainId: DomainId;
   assignee: Assignee;
-  rationale: string;
+  rationaleKey: string;
+  rationaleValues?: Record<string, string>;
 }
 
 /**
@@ -149,29 +169,37 @@ export function suggestAssignments(
         scoreB += scoreFor(b, task.id, q.angle_id);
       }
     }
+
+    const nameA = session.partner_a_name || "A";
+    const nameB = session.partner_b_name || "B";
+
     let assignee: Assignee;
-    let rationale: string;
-    const nameA = session.partner_a_name || "Partenaire A";
-    const nameB = session.partner_b_name || "Partenaire B";
+    let rationaleKey: string;
+    let rationaleValues: Record<string, string> | undefined;
+
     if (evidence === 0) {
       assignee = "share";
-      rationale = "Aucune préférence claire — à décider ensemble.";
+      rationaleKey = "tasks.rationaleNoData";
     } else if (scoreA === scoreB) {
       assignee = "share";
-      rationale = "Vous êtes à égalité — partagez ou alternez.";
+      rationaleKey = "tasks.rationaleTie";
     } else if (scoreA > scoreB) {
       assignee = "a";
-      rationale = `${nameA} y est plus à l'aise ou s'y projette mieux.`;
+      rationaleKey = "tasks.rationaleA";
+      rationaleValues = { name: nameA };
     } else {
       assignee = "b";
-      rationale = `${nameB} y est plus à l'aise ou s'y projette mieux.`;
+      rationaleKey = "tasks.rationaleB";
+      rationaleValues = { name: nameB };
     }
+
     return {
       taskId: task.id,
       taskLabel: task.label,
       domainId: task.domain_id,
       assignee,
-      rationale,
+      rationaleKey,
+      rationaleValues,
     };
   });
 }

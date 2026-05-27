@@ -42,3 +42,4 @@ supabase/.temp/
 *.sln
 *.sw?
 .env
+.claude/launch.json

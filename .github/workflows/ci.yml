@@ -165,6 +165,17 @@ jobs:
       - name: Install Playwright Chromium
         run: bunx playwright install --with-deps chromium
 
+      # Cache Supabase Docker images to avoid hitting AWS ECR public-registry
+      # rate limits ("toomanyrequests") on every run.  The key includes the
+      # supabase CLI version (from package.json) so the cache is invalidated
+      # whenever the CLI — and therefore the image tags it pulls — changes.
+      - name: Cache Supabase Docker images
+        uses: ScribeMD/docker-cache@0.5.0
+        with:
+          key: docker-${{ runner.os }}-supabase-${{ hashFiles('package.json') }}
+          restore-keys: |
+            docker-${{ runner.os }}-supabase-
+
       # Boots Postgres, REST, Realtime, Auth, etc. in Docker containers and
       # applies supabase/migrations/ automatically. Blocking — exits when the
       # stack is healthy, which is what tests/e2e/global-setup.ts expects.

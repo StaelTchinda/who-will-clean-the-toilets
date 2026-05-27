@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "title": "Nos Rôles — questionnaire de couple",
+    "description": "Un questionnaire à deux pour révéler vos attentes, talents et préférences sur la gestion du foyer."
+  },
+  "brand": "Nos Rôles",
+  "hero": {
+    "heading1": "Vos rôles dans",
+    "heading2": "le foyer.",
+    "subtext": "Un questionnaire à deux pour révéler vos attentes, talents et préférences — avant que les toilettes ne deviennent un sujet.",
+    "ctaCreate": "Démarrer un questionnaire",
+    "ctaJoin": "Rejoindre avec un code"
+  },
+  "stats": {
+    "questions": "questions",
+    "partners": "partenaires",
+    "minutes": "minutes"
+  },
+  "book": {
+    "eyebrow": "D'après Gary Chapman",
+    "title": "« Les toilettes ne se nettoient pas toutes seules »",
+    "body": "L'auteur des Langages de l'amour observe que la plupart des conflits de couple ne portent pas sur l'argent ou la famille, mais sur les petites tâches du quotidien que personne n'a jamais explicitement attribuées. Ce questionnaire reprend sa méthode — quatre angles, six domaines — pour vous éviter dix ans de friction.",
+    "link": "Lire les fondations"
+  },
+  "experience": {
+    "eyebrow": "L'expérience",
+    "title": "Glisse pour répondre.",
+    "body": "Chaque question s'incarne en icônes. Tu glisses la carte vers ta réponse — haut, droite, bas, gauche — ou tu tapes. Plus rapide qu'un formulaire, plus parlant qu'une liste."
+  },
+  "feedback": {
+    "eyebrow": "Le retour",
+    "title": "Vos points d'accord, et là où ça frotte.",
+    "body": "À la fin, vous découvrez vos convergences, vos divergences, et une répartition suggérée basée sur les talents et préférences de chacun — pas sur les habitudes héritées."
+  },
+  "resultPreview": {
+    "eyebrow": "Aperçu · résultats",
+    "converge": "Accord",
+    "diverge": "À discuter",
+    "suggestion": "Et une répartition suggérée selon vos talents et préférences combinés."
+  },
+  "cta": {
+    "title": "Prêt à mettre des mots dessus ?",
+    "start": "Démarrer un questionnaire",
+    "hasCode": "j'ai déjà un code →"
+  },
+  "footer": "Inspiré de « Les toilettes ne se nettoient pas toutes seules » — Gary Chapman.",
+  "swipePreview": {
+    "eyebrow": "Aperçu · Ménage · Environnement",
+    "question": "Le ménage, chez toi en grandissant ?",
+    "both": "Les deux",
+    "everyone": "Tous",
+    "papa": "Papa",
+    "maman": "Maman"
+  },
+  "create": {
+    "title1": "D'abord,",
+    "title2": "toi.",
+    "nameLabel": "Ton prénom",
+    "namePlaceholder": "Camille",
+    "childrenLabel": "Avez-vous des enfants, ou souhaitez-vous en avoir ?",
+    "childrenYes": "Oui",
+    "childrenMaybe": "Peut-être",
+    "childrenNo": "Non",
+    "back": "← retour",
+    "submit": "Créer le questionnaire",
+    "submitting": "…"
+  },
+  "join": {
+    "title1": "Rejoindre",
+    "title2": "ton partenaire.",
+    "codeLabel": "Code de session",
+    "codePlaceholder": "A7K2",
+    "nameLabel": "Ton prénom",
+    "namePlaceholder": "Alex",
+    "childrenLabel": "Avez-vous des enfants, ou souhaitez-vous en avoir ?",
+    "childrenYes": "Oui",
+    "childrenMaybe": "Peut-être",
+    "childrenNo": "Non",
+    "back": "← retour",
+    "submit": "Rejoindre",
+    "submitting": "…"
+  },
+  "error": "Une erreur est survenue"
+}

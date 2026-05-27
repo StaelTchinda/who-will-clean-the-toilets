@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { Partner, ProgressRow, SessionRow } from "@/lib/session";
 
 export function WaitingForFinish({
@@ -11,6 +12,7 @@ export function WaitingForFinish({
   otherProgress?: ProgressRow;
   totalQuestions: number;
 }) {
+  const { t } = useTranslation("session");
   const otherName =
     partner === "a" ? session.partner_b_name : session.partner_a_name;
   const pct = otherProgress
@@ -24,10 +26,10 @@ export function WaitingForFinish({
     <main className="min-h-[100dvh] bg-background">
       <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col items-center justify-center gap-8 px-6 text-center">
         <p className="text-xs uppercase tracking-[0.25em] text-primary">
-          Tu as terminé —
+          {t("waitingFinish.done")}
         </p>
         <h1 className="text-balance font-serif text-4xl leading-tight">
-          On attend que {otherName} finisse.
+          {t("waitingFinish.title", { name: otherName })}
         </h1>
         <div className="w-full">
           <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
@@ -37,12 +39,11 @@ export function WaitingForFinish({
             />
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
-            {otherName} est à {pct}%
+            {t("waitingFinish.progress", { name: otherName, pct })}
           </p>
         </div>
         <p className="max-w-xs text-balance text-sm text-muted-foreground">
-          La page des résultats apparaîtra automatiquement quand vous aurez
-          tous les deux fini.
+          {t("waitingFinish.autoReveal")}
         </p>
       </div>
     </main>
