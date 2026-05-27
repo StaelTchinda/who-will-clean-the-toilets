@@ -1,26 +1,32 @@
 [
   {
     "id": "housekeeping",
-    "label": "Ménage"
+    "label": "Ménage",
+    "icon": "Sparkles"
   },
   {
     "id": "cooking",
-    "label": "Cuisine & Repas"
+    "label": "Cuisine & Repas",
+    "icon": "ChefHat"
   },
   {
     "id": "finances",
-    "label": "Finances & Administration"
+    "label": "Finances & Administration",
+    "icon": "Wallet"
   },
   {
     "id": "logistics",
-    "label": "Logistique & Maison"
+    "label": "Logistique & Maison",
+    "icon": "Boxes"
   },
   {
     "id": "children",
-    "label": "Enfants"
+    "label": "Enfants",
+    "icon": "Baby"
   },
   {
     "id": "values",
-    "label": "Vision & Valeurs"
+    "label": "Vision & Valeurs",
+    "icon": "Heart"
   }
 ]

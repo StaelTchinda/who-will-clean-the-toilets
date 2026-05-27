@@ -64,126 +64,126 @@
     "q_housekeeping_env_general": {
       "label": "Growing up, who mainly did the cleaning?",
       "answers": {
-        "mother": "Mainly my mother",
-        "father": "Mainly my father",
-        "both": "Both equally",
-        "everyone": "Everyone, kids included"
+        "mother": "Mum",
+        "father": "Dad",
+        "both": "Both",
+        "everyone": "Everyone"
       }
     },
     "q_housekeeping_val_cleanliness": {
-      "label": "A clean and tidy home — for you that's…",
+      "label": "A clean and tidy home is…",
       "answers": {
-        "non_negotiable": "Non-negotiable",
-        "important": "Important but flexible",
+        "non_negotiable": "Must-have",
+        "important": "Important",
         "secondary": "Secondary",
-        "depends": "Depends on the period"
+        "depends": "Depends"
       }
     },
     "q_housekeeping_val_disorder": {
-      "label": "Coming home to a messy flat after a long day is…",
+      "label": "A messy home — how does it feel?",
       "answers": {
         "unbearable": "Unbearable",
         "annoying": "Annoying",
-        "fine": "Doesn't really affect me",
-        "unnoticed": "I don't even notice"
+        "fine": "I don't mind",
+        "unnoticed": "Don't notice"
       }
     },
     "q_housekeeping_pref_sanitizing_vs_vacuuming": {
-      "label": "Between cleaning the bathrooms and vacuuming, which would bother you least to do every week?",
+      "label": "Bathrooms or vacuuming — which weekly?",
       "answers": {
-        "sanitizing": "Cleaning the bathrooms",
-        "vacuuming": "Vacuuming",
-        "both_bother": "Both bother me equally",
-        "neither_bothers": "Neither really bothers me"
+        "sanitizing": "Bathrooms",
+        "vacuuming": "Vacuum",
+        "both_bother": "Both bother me",
+        "neither_bothers": "Both fine"
       }
     },
     "q_housekeeping_talent_sanitizing_vs_floors": {
-      "label": "Between cleaning the bathrooms and mopping floors, which do you handle best?",
+      "label": "Better at bathrooms or floors?",
       "answers": {
-        "sanitizing": "Cleaning the bathrooms",
-        "floors": "Mopping floors",
-        "both_fine": "I'm good at both",
-        "neither_fine": "Neither really"
+        "sanitizing": "Bathrooms",
+        "floors": "Floors",
+        "both_fine": "Both ✓",
+        "neither_fine": "Neither"
       }
     },
     "q_housekeeping_val_sanitizing_gender": {
-      "label": "Cleaning the toilet is a task that is…",
+      "label": "Cleaning the toilet is…",
       "answers": {
-        "neutral": "Neutral — anyone can do it",
-        "feminine": "More feminine",
-        "masculine": "More masculine",
-        "delegate": "To be outsourced if possible"
+        "neutral": "Neutral",
+        "feminine": "Feminine",
+        "masculine": "Masculine",
+        "delegate": "Outsource"
       }
     },
     "q_housekeeping_talent_tidying_vs_bedding": {
-      "label": "Between tidying/decluttering and changing sheets, which do you feel most competent at?",
+      "label": "More comfortable tidying or changing sheets?",
       "answers": {
-        "tidying": "Tidying & decluttering",
-        "bedding": "Changing sheets",
-        "both_fine": "Both, no problem",
-        "neither_fine": "Neither really"
+        "tidying": "Tidy",
+        "bedding": "Sheets",
+        "both_fine": "Both ✓",
+        "neither_fine": "Neither"
       }
     },
     "q_housekeeping_pref_tidying_vs_bins": {
-      "label": "Between tidying the house and taking out the bins, which could you best take on alone?",
+      "label": "Tidying or bins — which alone?",
       "answers": {
-        "tidying": "Tidying the house",
-        "bins": "Taking out the bins",
-        "both_fine": "Either works for me",
-        "both_bother": "Both bother me equally"
+        "tidying": "Tidy",
+        "bins": "Bins",
+        "both_fine": "Either works",
+        "both_bother": "Both bother me"
       }
     },
     "q_housekeeping_env_bins": {
-      "label": "Growing up, who automatically took out the bins?",
+      "label": "And the bins — who took them out?",
       "answers": {
-        "father": "My father",
-        "mother": "My mother",
-        "children": "The children",
-        "rotation": "Everyone took turns"
+        "father": "Dad",
+        "mother": "Mum",
+        "children": "The kids",
+        "rotation": "We took turns"
       }
     },
     "q_housekeeping_val_clutter": {
-      "label": "Throwing away or donating things you no longer use is…",
+      "label": "Throwing or donating unused things is…",
       "answers": {
-        "liberating": "Liberating — I do it regularly",
-        "good_theory": "Great in theory but hard in practice",
+        "liberating": "Liberating",
+        "good_theory": "Good in theory",
         "stressful": "Stressful",
-        "keep": "I prefer to keep things just in case"
+        "keep": "I keep it"
       }
     },
     "q_housekeeping_pref_bedmaking": {
       "label": "Making the bed every morning is…",
       "answers": {
-        "essential": "Essential to start the day right",
-        "if_time": "Nice if I have time",
-        "useless": "Pointless — we'll mess it up again at night",
-        "never": "I never do it"
+        "essential": "A must",
+        "if_time": "If I have time",
+        "useless": "Pointless",
+        "never": "Never"
       }
     },
     "q_cooking_env_general": {
-      "label": "Growing up, who was in the kitchen?",
+      "label": "Growing up, who mainly cooked?",
       "answers": {
-        "mother": "My mother, almost always",
-        "father": "My father, almost always",
-        "both": "Both, depending on the day",
-        "everyone": "Everyone cooked"
+        "mother": "Mum",
+        "father": "Dad",
+        "both": "Both",
+        "everyone": "Everyone"
       }
     },
     "q_cooking_talent_daily": {
-      "label": "Do you already cook regularly for yourself?",
+      "label": "Do you cook for yourself?",
       "answers": {
-        "daily": "Yes, every day or nearly",
-        "sometimes": "A few times a week",
+        "daily": "Every day",
+        "sometimes": "A few times",
         "rarely": "Rarely",
         "never": "Almost never"
       }
     },
     "q_cooking_pref_cooking_vs_dishes": {
-      "label": "Between cooking and doing the dishes, which do you prefer to take on?",
+      "label": "Cooking or dishes — which do you prefer?",
       "answers": {
         "cooking": "Cooking",
-        "dishes": "Doing the dishes",
-        "both_fine": "I enjoy both",
+        "dishes": "Dishes",
+        "both_fine": "Both ✓",
         "both_bother": "Neither"
       }
     },
@@ -191,351 +191,351 @@
       "label": "In a couple, who should cook?",
       "answers": {
         "who_likes": "Whoever enjoys it",
-        "who_arrives_first": "Whoever gets home first",
-        "share": "We share it",
-        "woman": "The woman, naturally"
+        "who_arrives_first": "First home",
+        "share": "We share",
+        "woman": "The woman"
       }
     },
     "q_cooking_talent_level": {
-      "label": "How would you describe your cooking level?",
+      "label": "Your cooking level?",
       "answers": {
-        "expert": "Very good cook",
-        "decent": "Decent — I get by",
+        "expert": "Very good",
+        "decent": "I get by",
         "basic": "Basic",
-        "none": "Almost non-existent"
+        "none": "Almost none"
       }
     },
     "q_cooking_val_dishes_fairness": {
-      "label": "Should the one who cooks also do the dishes?",
+      "label": "Should the cook also do the dishes?",
       "answers": {
-        "no_unfair": "No, that's unfair",
-        "yes_if_other_busy": "Yes if the other is busy",
-        "alternate": "It should alternate",
-        "doesnt_matter": "Doesn't matter as long as it gets done"
+        "no_unfair": "No, unfair",
+        "yes_if_other_busy": "If other's busy",
+        "alternate": "We alternate",
+        "doesnt_matter": "Doesn't matter"
       }
     },
     "q_cooking_talent_groceries_vs_meal_planning": {
-      "label": "Between optimising a grocery budget and planning the week's meals, which are you most comfortable with?",
+      "label": "Better at grocery budget or planning meals?",
       "answers": {
-        "budget": "Optimising the grocery budget",
-        "planning": "Planning meals",
-        "both_fine": "Both, no problem",
-        "neither_fine": "Neither really"
+        "budget": "Budget",
+        "planning": "Menus",
+        "both_fine": "Both ✓",
+        "neither_fine": "Neither"
       }
     },
     "q_cooking_pref_groceries_vs_meal_planning": {
-      "label": "Between doing the shopping and deciding what to eat this week, which would bother you least to take on?",
+      "label": "Grocery shopping or meal planning?",
       "answers": {
-        "groceries": "Doing the shopping",
-        "planning": "Planning meals",
-        "both_fine": "Either works for me",
-        "both_bother": "Both bother me equally"
+        "groceries": "Shopping",
+        "planning": "Menus",
+        "both_fine": "Either works",
+        "both_bother": "Both bother me"
       }
     },
     "q_cooking_pref_guests": {
       "label": "Cooking for guests is…",
       "answers": {
-        "love_it": "Something I love",
-        "stressful_rewarding": "Stressful but satisfying",
-        "prefer_restaurant": "I'd rather order in or go out",
-        "impossible_alone": "Unthinkable alone"
+        "love_it": "I love it",
+        "stressful_rewarding": "Stressful but fun",
+        "prefer_restaurant": "Eat out",
+        "impossible_alone": "Not alone"
       }
     },
     "q_cooking_val_balanced_diet": {
-      "label": "Eating healthily every day is…",
+      "label": "Eating healthy every day is…",
       "answers": {
-        "absolute_priority": "An absolute priority",
+        "absolute_priority": "Top priority",
         "important_flexible": "Important but flexible",
         "secondary": "Secondary",
-        "dont_think": "I don't really think about it"
+        "dont_think": "I don't think about it"
       }
     },
     "q_cooking_env_groceries": {
-      "label": "Growing up, who did the grocery shopping?",
+      "label": "Growing up, who did the shopping?",
       "answers": {
-        "mother": "My mother",
-        "father": "My father",
+        "mother": "Mum",
+        "father": "Dad",
         "both": "Both",
-        "with_parent": "I often went with a parent"
+        "with_parent": "With a parent"
       }
     },
     "q_finances_env_general": {
-      "label": "Growing up, who managed the household finances?",
+      "label": "Growing up, who managed the money?",
       "answers": {
-        "father": "My father",
-        "mother": "My mother",
-        "both": "Both together",
-        "unknown": "I don't know — it wasn't visible"
+        "father": "Dad",
+        "mother": "Mum",
+        "both": "Both",
+        "unknown": "Don't know"
       }
     },
     "q_finances_talent_budget": {
-      "label": "Do you already manage a personal budget today?",
+      "label": "Do you manage a budget today?",
       "answers": {
-        "rigorously": "Yes, rigorously",
+        "rigorously": "Rigorously",
         "approximately": "Roughly",
         "not_really": "Not really",
         "no": "No"
       }
     },
     "q_finances_pref_budget_vs_admin": {
-      "label": "Between tracking the monthly budget and handling administrative paperwork, which do you prefer?",
+      "label": "Monthly budget or admin paperwork?",
       "answers": {
-        "budget": "Tracking the budget",
-        "admin": "Administrative paperwork",
-        "both_fine": "Either works for me",
-        "both_bother": "Both bother me equally"
+        "budget": "Budget",
+        "admin": "Paperwork",
+        "both_fine": "Either works",
+        "both_bother": "Both bother me"
       }
     },
     "q_finances_val_shared_finances": {
       "label": "In a couple, finances should be…",
       "answers": {
-        "merged": "Completely merged",
-        "separate_contribution": "Separate with a shared contribution",
-        "by_competence": "Managed by whoever knows best",
-        "case_by_case": "Decided together case by case"
+        "merged": "Merged",
+        "separate_contribution": "Separate pots",
+        "by_competence": "By who knows best",
+        "case_by_case": "Case by case"
       }
     },
     "q_finances_val_big_expense": {
-      "label": "An unexpected large expense should be decided…",
+      "label": "An unexpected big expense is decided…",
       "answers": {
-        "together": "Together, always",
-        "by_manager": "By whoever manages the budget",
-        "by_amount": "Depending on the amount",
-        "freely": "Freely by each person in their own share"
+        "together": "Together",
+        "by_manager": "Whoever runs it",
+        "by_amount": "By the amount",
+        "freely": "Each their own"
       }
     },
     "q_finances_talent_taxes_vs_insurance": {
-      "label": "Between filing taxes and negotiating insurance contracts, which do you handle best?",
+      "label": "Taxes or insurance — which do you handle better?",
       "answers": {
-        "taxes": "Filing taxes",
-        "insurance": "Negotiating insurance",
-        "both_fine": "Both, no problem",
-        "neither_fine": "Neither really"
+        "taxes": "Taxes",
+        "insurance": "Insurance",
+        "both_fine": "Both ✓",
+        "neither_fine": "Neither"
       }
     },
     "q_finances_talent_savings": {
-      "label": "Do you know about savings and investments?",
+      "label": "Do you know about saving and investing?",
       "answers": {
-        "yes_invested": "Yes, I already have investments",
-        "basics": "Basic knowledge",
+        "yes_invested": "I already invest",
+        "basics": "The basics",
         "little": "A little",
         "none": "Not at all"
       }
     },
     "q_finances_pref_savings_vs_bills": {
-      "label": "Between managing investments and tracking bills/subscriptions, which do you prefer?",
+      "label": "Managing investments or tracking bills?",
       "answers": {
-        "savings": "Managing investments",
-        "bills": "Tracking bills",
-        "both_fine": "Either works for me",
-        "both_bother": "Both bother me equally"
+        "savings": "Investments",
+        "bills": "Bills",
+        "both_fine": "Either works",
+        "both_bother": "Both bother me"
       }
     },
     "q_finances_env_admin": {
-      "label": "Growing up, who handled administrative tasks?",
+      "label": "Growing up, who did the admin?",
       "answers": {
-        "father": "My father",
-        "mother": "My mother",
+        "father": "Dad",
+        "mother": "Mum",
         "both": "Both",
-        "unknown": "I don't know"
+        "unknown": "Don't know"
       }
     },
     "q_logistics_talent_diy_vs_contractors": {
-      "label": "Between fixing something at home and managing tradespeople/quotes, which are you most comfortable with?",
+      "label": "Better at DIY or managing tradespeople?",
       "answers": {
-        "diy": "Fixing it myself",
-        "contractors": "Managing tradespeople",
-        "both_fine": "Both, no problem",
-        "neither_fine": "Neither really"
+        "diy": "Fix it",
+        "contractors": "Tradespeople",
+        "both_fine": "Both ✓",
+        "neither_fine": "Neither"
       }
     },
     "q_logistics_pref_diy_vs_contractors": {
-      "label": "Between doing DIY at home and calling/comparing tradespeople, which do you prefer?",
+      "label": "DIY or calling a tradesperson?",
       "answers": {
-        "diy": "DIY myself",
-        "contractors": "Managing tradespeople",
-        "both_fine": "Either works for me",
-        "both_bother": "Both bother me equally"
+        "diy": "DIY",
+        "contractors": "Tradespeople",
+        "both_fine": "Either works",
+        "both_bother": "Both bother me"
       }
     },
     "q_logistics_env_diy": {
       "label": "Growing up, who did the DIY and repairs?",
       "answers": {
-        "father": "My father",
-        "mother": "My mother",
-        "professional": "We always called a professional",
-        "both": "Both, depending on the task"
+        "father": "Dad",
+        "mother": "Mum",
+        "professional": "A pro",
+        "both": "Both"
       }
     },
     "q_logistics_val_diy": {
       "label": "Calling a tradesperson instead of fixing it yourself is…",
       "answers": {
-        "reasonable": "Reasonable if you lack the skills",
-        "failure": "An admission of failure",
-        "best_option": "The best option in all cases",
-        "only_urgent": "Only if it's urgent"
+        "reasonable": "Reasonable",
+        "failure": "A failure",
+        "best_option": "Always better",
+        "only_urgent": "When urgent"
       }
     },
     "q_logistics_talent_car_vs_planning": {
-      "label": "Between maintaining the car and organising a trip from A to Z, which are you most comfortable with?",
+      "label": "Better at car maintenance or trip planning?",
       "answers": {
-        "car": "Maintaining the car",
-        "planning": "Organising a trip",
-        "both_fine": "Both, no problem",
-        "neither_fine": "Neither really"
+        "car": "Car",
+        "planning": "Trip",
+        "both_fine": "Both ✓",
+        "neither_fine": "Neither"
       }
     },
     "q_logistics_pref_planning_vs_calendar": {
-      "label": "Between planning holidays and managing the daily family calendar, which do you prefer?",
+      "label": "Holiday planning or family calendar?",
       "answers": {
-        "travel": "Planning holidays",
-        "calendar": "Managing the family calendar",
-        "both_fine": "Either works for me",
-        "both_bother": "Both bother me equally"
+        "travel": "Holidays",
+        "calendar": "Calendar",
+        "both_fine": "Either works",
+        "both_bother": "Both bother me"
       }
     },
     "q_logistics_val_mental_load": {
-      "label": "The \"mental load\" — remembering everything that needs doing — is…",
+      "label": "The \"mental load\" — for you it's…",
       "answers": {
-        "real_topic": "A real topic that needs discussing",
-        "understand_not_affected": "I understand it but it doesn't affect me much",
-        "dont_know": "A concept I don't fully grasp",
-        "not_a_problem": "Not a problem if you're organised"
+        "real_topic": "A real topic",
+        "understand_not_affected": "I see it, fine",
+        "dont_know": "Don't really know",
+        "not_a_problem": "Fine if organised"
       }
     },
     "q_children_env_daily": {
-      "label": "Growing up, who looked after the children day to day?",
+      "label": "Growing up, who looked after the kids day to day?",
       "answers": {
-        "mother": "Mainly my mother",
-        "father": "Mainly my father",
-        "both": "Both equally",
-        "external": "External help"
+        "mother": "Mum",
+        "father": "Dad",
+        "both": "Both",
+        "external": "Outside help"
       }
     },
     "q_children_pref_daily_vs_school": {
-      "label": "Between daily childcare (bath, meals, bedtime) and school follow-up, which do you naturally see yourself doing?",
+      "label": "Daily care or school support — which feels natural?",
       "answers": {
-        "daily_care": "Daily childcare",
-        "school": "School follow-up",
-        "both_fine": "Both naturally",
-        "neither_sure": "I haven't really thought about it yet"
+        "daily_care": "Daily care",
+        "school": "School",
+        "both_fine": "Both ✓",
+        "neither_sure": "Haven't thought"
       }
     },
     "q_children_val_work_reduction": {
-      "label": "After the birth of a child, who should reduce working hours?",
+      "label": "After a birth, who should cut their hours?",
       "answers": {
-        "mother": "Mainly the mother",
-        "father": "Mainly the father",
-        "lower_income": "Whoever earns less",
-        "equal": "We share equally"
+        "mother": "Mum",
+        "father": "Dad",
+        "lower_income": "The lower earner",
+        "equal": "Equally"
       }
     },
     "q_children_talent_daily_vs_medical": {
-      "label": "Between managing a child's daily care and their medical appointments, which are you more comfortable with?",
+      "label": "Daily care or medical appts — better at which?",
       "answers": {
         "daily": "Daily care",
-        "medical": "Medical appointments",
-        "both_fine": "Both, no problem",
-        "neither_fine": "Neither really"
+        "medical": "Medical",
+        "both_fine": "Both ✓",
+        "neither_fine": "Neither"
       }
     },
     "q_children_val_school": {
-      "label": "School follow-up for a child is naturally…",
+      "label": "School follow-up is naturally…",
       "answers": {
-        "both": "Both parents' responsibility",
-        "mother": "More the mother's",
-        "father": "More the father's",
-        "less_working": "The parent who works less"
+        "both": "Both parents",
+        "mother": "Mum",
+        "father": "Dad",
+        "less_working": "The one with more time"
       }
     },
     "q_children_pref_medical_vs_activities": {
-      "label": "Between managing medical appointments and accompanying children to activities, which do you prefer?",
+      "label": "Medical appts or activities — which do you prefer?",
       "answers": {
-        "medical": "Medical appointments",
-        "activities": "After-school activities",
-        "both_fine": "Either works for me",
-        "both_bother": "Both bother me equally"
+        "medical": "Medical",
+        "activities": "Activities",
+        "both_fine": "Either works",
+        "both_bother": "Both bother me"
       }
     },
     "q_children_val_discipline": {
-      "label": "Discipline and household rules should be…",
+      "label": "Household discipline should be…",
       "answers": {
-        "defined_together": "Defined together and applied by both",
-        "father": "Mainly by the father",
-        "mother": "Mainly by the mother",
-        "situational": "Adapted to situations"
+        "defined_together": "Together",
+        "father": "Dad",
+        "mother": "Mum",
+        "situational": "Situational"
       }
     },
     "q_values_val_fairness": {
-      "label": "A fair distribution of tasks is…",
+      "label": "For you, a fair split means…",
       "answers": {
-        "fifty_fifty": "50/50 across the board",
-        "by_strength": "Everyone does what they do well",
-        "by_availability": "Based on who's available",
-        "ideal_hard": "An ideal that's hard to achieve"
+        "fifty_fifty": "50/50",
+        "by_strength": "By strengths",
+        "by_availability": "Whoever's free",
+        "ideal_hard": "A hard ideal"
       }
     },
     "q_values_val_outsourcing": {
-      "label": "If the budget allows, having a cleaner is…",
+      "label": "Hiring a cleaner is…",
       "answers": {
-        "great_idea": "An excellent idea",
-        "for_big_tasks": "Acceptable for big tasks",
-        "superfluous": "A superfluous luxury",
-        "uncomfortable": "Something that would make me uncomfortable"
+        "great_idea": "Great idea",
+        "for_big_tasks": "For big jobs",
+        "superfluous": "Superfluous",
+        "uncomfortable": "Makes me uneasy"
       }
     },
     "q_values_pref_conflict": {
-      "label": "When a task isn't done by either of you, how do you react?",
+      "label": "A task isn't done by either of you — how do you react?",
       "answers": {
-        "talk": "I bring it up directly",
-        "do_sighing": "I do it myself with a sigh",
-        "wait": "I wait for the other person to do it",
-        "depends": "Depends on how tired I am"
+        "talk": "I bring it up",
+        "do_sighing": "I do it (sigh)",
+        "wait": "I wait",
+        "depends": "Depends how tired"
       }
     },
     "q_values_val_evolution": {
-      "label": "The distribution of tasks in a couple should…",
+      "label": "Task split in a couple should…",
       "answers": {
-        "fixed_upfront": "Be clearly set from the start",
-        "evolve_naturally": "Evolve naturally over time",
-        "renegotiated": "Be renegotiated regularly",
-        "flexible": "Stay flexible without fixed rules"
+        "fixed_upfront": "Fixed upfront",
+        "evolve_naturally": "Evolve",
+        "renegotiated": "Renegotiated",
+        "flexible": "Stay flexible"
       }
     },
     "q_values_val_standards": {
-      "label": "If your partner does a task less well than you, you…",
+      "label": "Your partner does a task less well than you — you…",
       "answers": {
-        "redo_quietly": "Quietly redo it",
-        "say_diplomatically": "Say so diplomatically",
-        "accept_standard": "Accept their standard",
-        "take_over": "Take over that task yourself going forward"
+        "redo_quietly": "Quietly redo",
+        "say_diplomatically": "Say it tactfully",
+        "accept_standard": "Accept it",
+        "take_over": "Take it over"
       }
     },
     "q_values_pref_mental_load": {
-      "label": "\"Remembering to restock, anticipating appointments, keeping track of birthdays\"… for you, that's…",
+      "label": "Remembering everything (stocks, appts, birthdays) — it's…",
       "answers": {
-        "naturally_me": "Naturally me who does it",
-        "other": "More the other person",
-        "shared": "We share it well",
-        "nobody": "Nobody really does it"
+        "naturally_me": "Mostly me",
+        "other": "Mostly them",
+        "shared": "We share",
+        "nobody": "Nobody"
       }
     },
     "q_values_pref_recognition": {
-      "label": "When you do a household task, you expect…",
+      "label": "When you do a chore, you expect…",
       "answers": {
-        "noticed": "For it to be noticed and appreciated",
-        "nothing": "Nothing — it's normal",
-        "reciprocity": "For the other to do as much in return",
-        "long_term": "Reciprocity over the long term"
+        "noticed": "To be noticed",
+        "nothing": "Nothing, it's normal",
+        "reciprocity": "The same back",
+        "long_term": "Over the long term"
       }
     },
     "q_values_env_parental_model": {
-      "label": "Your parents' model for running the household — you want to…",
+      "label": "Your parents' model — you want to…",
       "answers": {
-        "reproduce": "Broadly replicate it",
-        "partially": "Partially replicate it",
-        "distance": "Move away from it",
-        "opposite": "Do the complete opposite"
+        "reproduce": "Replicate it",
+        "partially": "Partially",
+        "distance": "Move away",
+        "opposite": "The opposite"
       }
     }
   }
