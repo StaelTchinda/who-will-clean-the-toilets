@@ -1,0 +1,47 @@
+name: Format
+
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch to format
+        required: false
+        default: dev
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  format:
+    # Only run on label events when the label is exactly "format".
+    if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'format'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || inputs.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - name: Apply Prettier
+        run: bun run format
+      - name: Apply ESLint --fix
+        run: bunx eslint . --fix
+        continue-on-error: true
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: apply prettier + eslint --fix [skip ci]"
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
+      - name: Remove label (so re-labeling re-triggers)
+        if: github.event_name == 'pull_request'
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: format
