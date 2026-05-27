@@ -4,7 +4,7 @@ import { I18nextProvider } from "react-i18next";
 import i18n, { LOCALES, DEFAULT_LOCALE, type Locale } from "@/i18n";
 
 export const Route = createFileRoute("/$locale")({
-  beforeLoad: ({ params }) => {
+  beforeLoad: async ({ params }) => {
     if (!LOCALES.includes(params.locale as Locale)) {
       throw redirect({
         to: "/$locale",
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/$locale")({
       });
     }
     // Set language synchronously before render (works for SSR)
-    i18n.changeLanguage(params.locale);
+    await i18n.changeLanguage(params.locale);
   },
   component: LocaleLayout,
 });
