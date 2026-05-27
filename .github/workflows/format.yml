@@ -20,7 +20,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'format'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref || inputs.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
