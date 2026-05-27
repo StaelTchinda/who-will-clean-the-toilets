@@ -4,6 +4,11 @@
   },
   "loading": "Laden…",
   "sending": "speichern…",
+  "mode": {
+    "aria": "Anzeigemodus",
+    "swipe": "Wischen",
+    "form": "Formular"
+  },
   "notFound": {
     "title": "Sitzung nicht gefunden",
     "body": "Der Code «{{code}}» entspricht keiner aktiven Sitzung.",
