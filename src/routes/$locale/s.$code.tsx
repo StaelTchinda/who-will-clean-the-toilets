@@ -17,8 +17,16 @@ import {
 } from "@/lib/session";
 import { buildQuestionList, ANGLE_BY_ID, DOMAIN_BY_ID } from "@/lib/dataset";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ResultsView } from "@/components/ui/results-view";
-import { SwipeCard } from "@/components/ui/swipe-card";
+import { FormStage, QuestionHeader, SwipeStage } from "@/components/ui/swipe-card";
+import { useInputMode, type InputMode } from "@/hooks/use-input-mode";
 import { Centered } from "@/components/session/centered";
 import { PickPartner } from "@/components/session/pick-partner";
 import { WaitingForJoin } from "@/components/session/waiting-for-join";
@@ -58,10 +66,7 @@ function SessionPage() {
         return;
       }
       setSession(s);
-      const [a, p] = await Promise.all([
-        fetchAnswers(s.id),
-        fetchProgress(s.id),
-      ]);
+      const [a, p] = await Promise.all([fetchAnswers(s.id), fetchProgress(s.id)]);
       if (!mounted) return;
       setAnswers(a);
       setProgress(p);
@@ -122,13 +127,7 @@ function SessionPage() {
 
   // No partner role on this device yet — ask which one they are
   if (!partner) {
-    return (
-      <PickPartner
-        session={session}
-        code={code}
-        onPicked={(p) => setPartner(p)}
-      />
-    );
+    return <PickPartner session={session} code={code} onPicked={(p) => setPartner(p)} />;
   }
 
   // Waiting for second partner to join
@@ -136,16 +135,14 @@ function SessionPage() {
     return <WaitingForJoin session={session} code={code} partner={partner} />;
   }
 
-  const includeChildren =
-    session.has_children_a !== "no" || session.has_children_b !== "no";
+  const includeChildren = session.has_children_a !== "no" || session.has_children_b !== "no";
   const questions = buildQuestionList(includeChildren);
 
   const myAnswers = answers.filter((a) => a.partner === partner);
   const myProgress = progress.find((p) => p.partner === partner);
   const otherProgress = progress.find((p) => p.partner !== partner);
 
-  const completed =
-    myAnswers.length >= questions.length || myProgress?.completed;
+  const completed = myAnswers.length >= questions.length || myProgress?.completed;
   const otherCompleted = otherProgress?.completed;
 
   if (completed && otherCompleted) {
@@ -172,12 +169,7 @@ function SessionPage() {
   }
 
   return (
-    <Questionnaire
-      session={session}
-      partner={partner}
-      questions={questions}
-      answers={myAnswers}
-    />
+    <Questionnaire session={session} partner={partner} questions={questions} answers={myAnswers} />
   );
 }
 
@@ -186,19 +178,18 @@ export function Questionnaire({
   partner,
   questions,
   answers,
+  initialInputMode,
 }: {
   session: SessionRow;
   partner: Partner;
   questions: ReturnType<typeof buildQuestionList>;
   answers: AnswerRow[];
+  initialInputMode?: InputMode;
 }) {
   const { t } = useTranslation("session");
   const { t: tData } = useTranslation("data");
 
-  const answeredIds = useMemo(
-    () => new Set(answers.map((a) => a.question_id)),
-    [answers],
-  );
+  const answeredIds = useMemo(() => new Set(answers.map((a) => a.question_id)), [answers]);
   // Start at first unanswered
   const initialIndex = useMemo(() => {
     const idx = questions.findIndex((q) => !answeredIds.has(q.id));
@@ -207,6 +198,7 @@ export function Questionnaire({
 
   const [index, setIndex] = useState(initialIndex);
   const [pending, setPending] = useState(false);
+  const [mode, setMode] = useInputMode(initialInputMode);
   const total = questions.length;
 
   // `q` and `current` may be undefined for one render tick after the final
@@ -214,9 +206,7 @@ export function Questionnaire({
   // WaitingForFinish / ResultsView. Access them defensively below and
   // early-return *after* every hook (Rules of Hooks).
   const q = questions[index];
-  const current = q
-    ? answers.find((a) => a.question_id === q.id)?.answer_id
-    : undefined;
+  const current = q ? answers.find((a) => a.question_id === q.id)?.answer_id : undefined;
 
   const pct = Math.round(((index + (current ? 1 : 0)) / total) * 100);
 
@@ -302,21 +292,54 @@ export function Questionnaire({
           </span>
         </div>
 
-        <div className="flex flex-1 items-center">
-          <SwipeCard
-            questionLabel={questionLabel}
-            meta={`${domainLabel} · ${angleLabel}`}
-            domainId={q.domain_id}
-            answers={translatedAnswers}
-            current={current}
-            onPick={handlePick}
-          />
+        <div className="mb-3 flex justify-end">
+          <ModeSelect mode={mode} onChange={setMode} />
         </div>
 
-        {pending && (
-          <p className="text-center text-xs text-muted-foreground">{t("sending")}</p>
-        )}
+        <QuestionHeader
+          questionLabel={questionLabel}
+          meta={`${domainLabel} · ${angleLabel}`}
+          domainId={q.domain_id}
+          modified={!!current}
+        />
+
+        <div className="flex flex-1 items-start pt-2">
+          {mode === "swipe" && (
+            <SwipeStage
+              domainId={q.domain_id}
+              answers={translatedAnswers}
+              current={current}
+              onPick={handlePick}
+            />
+          )}
+          {mode === "form" && (
+            <FormStage answers={translatedAnswers} current={current} onPick={handlePick} />
+          )}
+        </div>
+
+        {pending && <p className="text-center text-xs text-muted-foreground">{t("sending")}</p>}
       </div>
     </main>
+  );
+}
+
+// Subtle inline picker — no background, no box border, just a solid bottom
+// underline + a small chevron. Right-aligned under the progress bar so it
+// reads as a quiet preference, not a primary control.
+function ModeSelect({ mode, onChange }: { mode: InputMode; onChange: (m: InputMode) => void }) {
+  const { t } = useTranslation("session");
+  return (
+    <Select value={mode} onValueChange={(value) => onChange(value as InputMode)}>
+      <SelectTrigger
+        aria-label={t("mode.aria")}
+        className="h-6 w-auto gap-1.5 rounded-none border-0 border-b border-solid border-muted-foreground/40 bg-transparent px-0 pb-0.5 text-xs text-muted-foreground shadow-none ring-0 transition hover:text-foreground focus:ring-0 focus-visible:border-foreground/60 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:opacity-50"
+      >
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent align="end">
+        <SelectItem value="swipe">{t("mode.swipe")}</SelectItem>
+        <SelectItem value="form">{t("mode.form")}</SelectItem>
+      </SelectContent>
+    </Select>
   );
 }

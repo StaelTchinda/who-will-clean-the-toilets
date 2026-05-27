@@ -4,6 +4,11 @@
   },
   "loading": "Loading…",
   "sending": "saving…",
+  "mode": {
+    "aria": "View mode",
+    "swipe": "Swipe",
+    "form": "Form"
+  },
   "notFound": {
     "title": "Session not found",
     "body": "The code \"{{code}}\" doesn't match any active session.",
