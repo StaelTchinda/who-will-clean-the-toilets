@@ -1,21 +1,33 @@
 import { motion, useMotionValue, useTransform, animate, PanInfo } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { Answer, DomainId } from "@/lib/dataset";
-import { iconForAnswer, DOMAIN_ICON } from "@/lib/icon-map";
+import type { Answer, AnswerPosition, DomainId } from "@/lib/dataset";
+import { DOMAIN_BY_ID } from "@/lib/dataset";
+import { iconByName } from "@/lib/icon-map";
 
-type Dir = "up" | "right" | "down" | "left";
+type Dir = AnswerPosition;
 const SWIPE_THRESHOLD = 90;
 
-// Direction → answer slot mapping. Kept in one place so the drag handler
-// and the visual layout can't disagree.
+// Direction → answer mapping. Driven by `answer.position` in the JSON data
+// (see src/data/questions.json), so the visual layout and the drag handler
+// can't disagree and the data file is the single source of truth.
 function mapAnswers(answers: Answer[]): Record<Dir, Answer> {
-  return {
-    up: answers[0],
-    right: answers[1],
-    down: answers[2],
-    left: answers[3],
-  };
+  const m: Partial<Record<Dir, Answer>> = {};
+  for (const a of answers) {
+    m[a.position] = a;
+  }
+  // Surface data bugs loudly in dev: every question must declare exactly one
+  // answer per direction. In prod the missing slot would fall through to
+  // undefined and crash later inside <SwipeCell />.
+  for (const d of ["up", "right", "down", "left"] as Dir[]) {
+    if (!m[d]) {
+      throw new Error(
+        `[SwipeStage] missing answer at position "${d}". ` +
+          `Got positions: ${answers.map((a) => a.position).join(", ")}`,
+      );
+    }
+  }
+  return m as Record<Dir, Answer>;
 }
 
 // ---------------------------------------------------------------------------
@@ -39,7 +51,7 @@ export function QuestionHeader({
   modified = false,
 }: QuestionHeaderProps) {
   const { t } = useTranslation("swipecard");
-  const DomainIcon = DOMAIN_ICON[domainId];
+  const DomainIcon = iconByName(DOMAIN_BY_ID[domainId].icon);
   return (
     <div className="relative px-1 pb-4 pt-1 text-center">
       <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-primary">
@@ -85,7 +97,7 @@ export interface StageProps {
 
 export function SwipeStage({ domainId, answers, current, onPick }: StageProps) {
   const { t } = useTranslation("swipecard");
-  const DomainIcon = DOMAIN_ICON[domainId];
+  const DomainIcon = iconByName(DOMAIN_BY_ID[domainId].icon);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-6, 6]);
@@ -99,14 +111,21 @@ export function SwipeStage({ domainId, answers, current, onPick }: StageProps) {
 
   const mapping = mapAnswers(answers);
 
-  const firstId = answers[0]?.id;
+  // Reset all transient state whenever the answer *set* changes — i.e. a new
+  // question arrived. We can't rely on `answers[0].id` alone: many questions
+  // share their first answer id (e.g. "mother" appears as answers[0] across
+  // 11 different questions in the dataset), and if `locked` doesn't reset on
+  // those transitions, the next swipe/tap on the new card is a silent no-op.
+  // Joining all four ids gives us a stable per-question fingerprint without
+  // requiring the parent to thread a question id through.
+  const answersKey = answers.map((a) => a.id).join("|");
   useEffect(() => {
     x.set(0);
     y.set(0);
     setHovered(null);
     setPreviewing(null);
     setLocked(false);
-  }, [firstId, x, y]);
+  }, [answersKey, x, y]);
 
   // Resolve which direction (if any) the center should mirror. Priority:
   // drag-hovered > tap-preview > previously-saved selection > none.
@@ -115,7 +134,7 @@ export function SwipeStage({ domainId, answers, current, onPick }: StageProps) {
     : null;
   const centerDir = hovered ?? previewing ?? dirForCurrent;
   const centerAnswer = centerDir ? mapping[centerDir] : null;
-  const CenterIcon = centerAnswer ? iconForAnswer(centerAnswer.id, centerAnswer.label) : DomainIcon;
+  const CenterIcon = centerAnswer ? iconByName(centerAnswer.icon) : DomainIcon;
   const centerFilled = !!hovered || !!previewing || !!centerAnswer;
 
   const commit = async (dir: Dir, viaSwipe: boolean) => {
@@ -235,7 +254,7 @@ function SwipeCell({
   active: boolean;
   onTap: () => void;
 }) {
-  const Icon = iconForAnswer(answer.id, answer.label);
+  const Icon = iconByName(answer.icon);
   // Place each outer cell in the 3×3 grid via Tailwind utilities so the
   // visual cross matches the direction → answer mapping above.
   const placement = {
@@ -275,7 +294,7 @@ export function FormStage({ answers, current, onPick }: Omit<StageProps, "domain
   return (
     <div className="flex w-full flex-col gap-2.5">
       {answers.map((a) => {
-        const Icon = iconForAnswer(a.id, a.label);
+        const Icon = iconByName(a.icon);
         const selected = current === a.id;
         return (
           <button

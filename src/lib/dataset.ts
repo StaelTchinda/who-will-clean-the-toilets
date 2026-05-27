@@ -13,9 +13,23 @@ export type DomainId =
   | "children"
   | "values";
 
+/** Where this answer sits in the SwipeStage 3×3 cross. */
+export type AnswerPosition = "up" | "right" | "down" | "left";
+
 export interface Answer {
   id: string;
   label: string;
+  /**
+   * Lucide-react icon name (e.g. "Venus", "ShieldCheck"). Resolved at render
+   * time via `iconByName()` in src/lib/icon-map.ts.
+   */
+  icon: string;
+  /**
+   * Slot in the SwipeStage cross. Opposites should sit on the same axis:
+   * up ↔ down (vertical), right ↔ left (horizontal). Each question must
+   * declare exactly one answer per position.
+   */
+  position: AnswerPosition;
 }
 
 export interface Question {
@@ -43,6 +57,8 @@ export interface Angle {
 export interface Domain {
   id: DomainId;
   label: string;
+  /** Lucide-react icon name; resolved via `iconByName()`. */
+  icon: string;
 }
 
 export const QUESTIONS = questionsJson as Question[];
