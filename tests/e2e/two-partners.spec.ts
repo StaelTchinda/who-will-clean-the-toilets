@@ -137,8 +137,7 @@ test.describe("two partners", () => {
       });
 
       // A should now see WaitingForFinish (header copy is unique).
-      // 30s for realtime — same rationale as the pairing test above.
-      await expect(pageA.getByText(/On attend que .* finisse/)).toBeVisible({ timeout: 30_000 });
+      await expect(pageA.getByText(/On attend que .* finisse/)).toBeVisible({ timeout: 10_000 });
 
       // Drive B to completion.
       await answerAllQuestions(pageB, {
