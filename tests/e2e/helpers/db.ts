@@ -25,9 +25,7 @@ export async function withDb<T>(fn: (client: Client) => Promise<T>): Promise<T> 
  * serial columns sane. CASCADE handles the FK from answers/progress.
  */
 export async function truncateAll(): Promise<void> {
-  await withDb((c) =>
-    c.query(`TRUNCATE sessions, answers, progress RESTART IDENTITY CASCADE`),
-  );
+  await withDb((c) => c.query(`TRUNCATE sessions, answers, progress RESTART IDENTITY CASCADE`));
 }
 
 export interface DbSession {

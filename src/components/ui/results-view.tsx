@@ -1,12 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import {
-  compareAnswers,
-  groupByDomain,
-  pickHighlights,
-  suggestAssignments,
-} from "@/lib/analysis";
+import { compareAnswers, groupByDomain, pickHighlights, suggestAssignments } from "@/lib/analysis";
 import type { Highlight } from "@/lib/analysis";
 import type { Question } from "@/lib/dataset";
 import { DOMAIN_BY_ID } from "@/lib/dataset";
@@ -33,10 +28,7 @@ export function ResultsView({
   const nameA = session.partner_a_name || "A";
   const nameB = session.partner_b_name || "B";
 
-  const compared = useMemo(
-    () => compareAnswers(questions, answers),
-    [questions, answers],
-  );
+  const compared = useMemo(() => compareAnswers(questions, answers), [questions, answers]);
   const grouped = useMemo(() => groupByDomain(compared), [compared]);
   const highlights = useMemo(() => pickHighlights(compared), [compared]);
   const suggestions = useMemo(
@@ -47,23 +39,18 @@ export function ResultsView({
   const [tab, setTab] = useState<"analysis" | "table" | "tasks">("analysis");
 
   const overall = Math.round(
-    (compared.filter((c) => c.alignment === "converge").length /
-      Math.max(1, compared.length)) *
+    (compared.filter((c) => c.alignment === "converge").length / Math.max(1, compared.length)) *
       100,
   );
 
   return (
     <main className="min-h-[100dvh] bg-background">
       <div className="mx-auto max-w-2xl px-5 pb-16 pt-[max(env(safe-area-inset-top),1.5rem)]">
-        <p className="text-xs uppercase tracking-[0.25em] text-primary">
-          {t("meta.eyebrow")}
-        </p>
+        <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("meta.eyebrow")}</p>
         <h1 className="mt-3 text-balance font-serif text-4xl leading-tight sm:text-5xl">
           {nameA} <span className="text-muted-foreground">&</span> {nameB}
         </h1>
-        <p className="mt-3 text-sm text-muted-foreground">
-          {t("convergence", { pct: overall })}
-        </p>
+        <p className="mt-3 text-sm text-muted-foreground">{t("convergence", { pct: overall })}</p>
 
         <div className="mt-6 grid grid-cols-3 gap-1 rounded-full bg-secondary p-1 text-sm">
           {(
@@ -77,9 +64,7 @@ export function ResultsView({
               key={id}
               onClick={() => setTab(id)}
               className={`rounded-full px-3 py-2 transition ${
-                tab === id
-                  ? "bg-card text-foreground shadow-sm"
-                  : "text-muted-foreground"
+                tab === id ? "bg-card text-foreground shadow-sm" : "text-muted-foreground"
               }`}
             >
               {label}
@@ -96,18 +81,14 @@ export function ResultsView({
               nameB={nameB}
             />
           )}
-          {tab === "table" && (
-            <TableSection grouped={grouped} nameA={nameA} nameB={nameB} />
-          )}
+          {tab === "table" && <TableSection grouped={grouped} nameA={nameA} nameB={nameB} />}
           {tab === "tasks" && (
             <TasksSection suggestions={suggestions} nameA={nameA} nameB={nameB} />
           )}
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-border pt-8">
-          <p className="text-xs text-muted-foreground">
-            {t("footer.disclaimer")}
-          </p>
+          <p className="text-xs text-muted-foreground">{t("footer.disclaimer")}</p>
           <Button
             variant="outline"
             className="rounded-full"
@@ -151,20 +132,13 @@ function AnalysisSection({
     <div className="flex flex-col gap-8">
       <section>
         <h2 className="font-serif text-2xl">{t("analysis.alignedTitle")}</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {t("analysis.alignedSub")}
-        </p>
+        <p className="mt-1 text-sm text-muted-foreground">{t("analysis.alignedSub")}</p>
         <ul className="mt-4 flex flex-col gap-3">
           {highlights.aligned.length === 0 && (
-            <li className="text-sm text-muted-foreground">
-              {t("analysis.alignedEmpty")}
-            </li>
+            <li className="text-sm text-muted-foreground">{t("analysis.alignedEmpty")}</li>
           )}
           {highlights.aligned.map((h, i) => (
-            <li
-              key={i}
-              className="rounded-2xl border border-border bg-card p-4"
-            >
+            <li key={i} className="rounded-2xl border border-border bg-card p-4">
               <p className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-converge)]">
                 {tData(`domains.${h.domainId}`, { defaultValue: h.domainId })}
               </p>
@@ -179,20 +153,13 @@ function AnalysisSection({
 
       <section>
         <h2 className="font-serif text-2xl">{t("analysis.divergedTitle")}</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {t("analysis.divergedSub")}
-        </p>
+        <p className="mt-1 text-sm text-muted-foreground">{t("analysis.divergedSub")}</p>
         <ul className="mt-4 flex flex-col gap-3">
           {highlights.diverged.length === 0 && (
-            <li className="text-sm text-muted-foreground">
-              {t("analysis.divergedEmpty")}
-            </li>
+            <li className="text-sm text-muted-foreground">{t("analysis.divergedEmpty")}</li>
           )}
           {highlights.diverged.map((h, i) => (
-            <li
-              key={i}
-              className="rounded-2xl border border-border bg-card p-4"
-            >
+            <li key={i} className="rounded-2xl border border-border bg-card p-4">
               <p className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-diverge)]">
                 {tData(`domains.${h.domainId}`, { defaultValue: h.domainId })}
               </p>
@@ -209,10 +176,7 @@ function AnalysisSection({
         <h2 className="font-serif text-2xl">{t("analysis.overviewTitle")}</h2>
         <ul className="mt-4 flex flex-col gap-2">
           {grouped.map((g) => (
-            <li
-              key={g.domain.id}
-              className="flex items-center gap-3 rounded-xl bg-card p-3"
-            >
+            <li key={g.domain.id} className="flex items-center gap-3 rounded-xl bg-card p-3">
               <span className="w-32 shrink-0 text-sm">
                 {tData(`domains.${g.domain.id}`, { defaultValue: g.domain.label })}
               </span>
@@ -257,10 +221,14 @@ function TableSection({
           <ul className="mt-3 flex flex-col gap-2">
             {g.rows.map((r) => {
               const labelA = r.answerA
-                ? tData(`questions.${r.question.id}.answers.${r.answerA}`, { defaultValue: r.labelA ?? "—" })
+                ? tData(`questions.${r.question.id}.answers.${r.answerA}`, {
+                    defaultValue: r.labelA ?? "—",
+                  })
                 : r.labelA;
               const labelB = r.answerB
-                ? tData(`questions.${r.question.id}.answers.${r.answerB}`, { defaultValue: r.labelB ?? "—" })
+                ? tData(`questions.${r.question.id}.answers.${r.answerB}`, {
+                    defaultValue: r.labelB ?? "—",
+                  })
                 : r.labelB;
               const questionLabel = tData(`questions.${r.question.id}.label`, {
                 defaultValue: r.question.label,

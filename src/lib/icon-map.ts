@@ -71,13 +71,19 @@ const RULES: Array<{ re: RegExp; icon: LucideIcon }> = [
   // Strong yes / no
   { re: /never|jamais|none|aucun|useless|inutile|dont_think|impossible/i, icon: Ban },
   { re: /no_unfair|^no$|non,/i, icon: X },
-  { re: /daily|tous les jours|always|toujours|absolute_priority|non_negotiable|essential|indispensable/i, icon: Star },
+  {
+    re: /daily|tous les jours|always|toujours|absolute_priority|non_negotiable|essential|indispensable/i,
+    icon: Star,
+  },
   { re: /expert|love_it|adore|liberating|libérateur/i, icon: Smile },
   { re: /unbearable|insupportable|stressful|stressant|annoying|frown/i, icon: Frown },
 
   // Frequency / nuance
   { re: /sometimes|parfois|if_time|si j'ai|depends|dépend|maybe|peut/i, icon: Clock },
-  { re: /rarely|rarement|secondary|basic|decent|fine|good_theory|important_flexible|important/i, icon: Minus },
+  {
+    re: /rarely|rarement|secondary|basic|decent|fine|good_theory|important_flexible|important/i,
+    icon: Minus,
+  },
   { re: /yes|oui/i, icon: ThumbsUp },
 
   // Cleaning subdomains

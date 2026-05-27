@@ -5,11 +5,7 @@ import { randomUUID } from "node:crypto";
 
 // Where the raw window.__coverage__ dumps land. `scripts/merge-coverage.mjs`
 // reads from here, runs istanbul merge, and writes the final report.
-export const E2E_COVERAGE_RAW_DIR = join(
-  process.cwd(),
-  "coverage-e2e",
-  "raw",
-);
+export const E2E_COVERAGE_RAW_DIR = join(process.cwd(), "coverage-e2e", "raw");
 
 let dirEnsured = false;
 function ensureRawDir() {
@@ -42,10 +38,7 @@ async function dumpContextCoverage(context: BrowserContext): Promise<void> {
       });
       if (!coverage || Object.keys(coverage).length === 0) continue;
       ensureRawDir();
-      writeFileSync(
-        join(E2E_COVERAGE_RAW_DIR, `${randomUUID()}.json`),
-        JSON.stringify(coverage),
-      );
+      writeFileSync(join(E2E_COVERAGE_RAW_DIR, `${randomUUID()}.json`), JSON.stringify(coverage));
     } catch {
       // Coverage collection should never fail a test; the underlying
       // assertion result is what matters.

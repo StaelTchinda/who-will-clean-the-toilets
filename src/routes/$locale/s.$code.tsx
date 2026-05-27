@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { supabase } from "@/integrations/supabase/client";
+import { backend } from "@/integrations/backend";
 import {
   fetchSession,
   fetchAnswers,
@@ -78,31 +78,16 @@ function SessionPage() {
     };
   }, [code]);
 
+  // Live updates: backend.subscribeToSession is realtime on Supabase and
+  // a 1.5s poll on Cloudflare D1 — same callback shape either way.
   useEffect(() => {
     if (!session) return;
-    const ch = supabase
-      .channel(`session:${session.id}`)
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "sessions", filter: `id=eq.${session.id}` },
-        (payload) => {
-          if (payload.new) setSession(payload.new as SessionRow);
-        },
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "progress", filter: `session_id=eq.${session.id}` },
-        () => fetchProgress(session.id).then(setProgress),
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "answers", filter: `session_id=eq.${session.id}` },
-        () => fetchAnswers(session.id).then(setAnswers),
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(ch);
-    };
+    const unsubscribe = backend.subscribeToSession(session.id, {
+      onSession: (next) => setSession(next),
+      onProgress: (rows) => setProgress(rows),
+      onAnswers: (rows) => setAnswers(rows),
+    });
+    return unsubscribe;
   }, [session?.id]);
 
   if (loading) {

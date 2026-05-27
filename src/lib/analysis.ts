@@ -32,10 +32,7 @@ function classify(q: Question, a?: string, b?: string): Alignment {
   return "diverge";
 }
 
-export function compareAnswers(
-  questions: Question[],
-  answers: AnswerRow[],
-): ComparedQuestion[] {
+export function compareAnswers(questions: Question[], answers: AnswerRow[]): ComparedQuestion[] {
   const byPartner = (p: "a" | "b") =>
     new Map(answers.filter((x) => x.partner === p).map((x) => [x.question_id, x.answer_id]));
   const mapA = byPartner("a");
@@ -145,14 +142,10 @@ export function suggestAssignments(
   );
 
   const relevantQ = QUESTIONS.filter(
-    (q) =>
-      (q.angle_id === "talent" || q.angle_id === "preference") &&
-      q.task_ids.length >= 1,
+    (q) => (q.angle_id === "talent" || q.angle_id === "preference") && q.task_ids.length >= 1,
   );
 
-  return TASKS.filter(
-    (t) => includeChildren || t.domain_id !== "children",
-  ).map((task) => {
+  return TASKS.filter((t) => includeChildren || t.domain_id !== "children").map((task) => {
     const qs = relevantQ.filter((q) => q.task_ids.includes(task.id));
     let scoreA = 0;
     let scoreB = 0;
@@ -211,8 +204,7 @@ function scoreFor(answerId: string, taskId: string, angle: string): number {
   if (answerId === "both_fine") return 1;
   if (answerId === "both_bother" || answerId === "neither_fine") return -1;
   // Fallback: answer id contains task id (e.g. "groceries" vs "groceries")
-  if (taskId.includes(answerId) || answerId.includes(taskId))
-    return angle === "talent" ? 2 : 1;
+  if (taskId.includes(answerId) || answerId.includes(taskId)) return angle === "talent" ? 2 : 1;
   return 0;
 }
 

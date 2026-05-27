@@ -1,6 +1,6 @@
 # Nos Rôles
 
-A two-partner web questionnaire that helps couples talk about household roles **before** daily chores become a source of conflict. Inspired by Gary Chapman’s book [*Les toilettes ne se nettoient pas toutes seules*](https://www.garychapman.org/) (and his “four angles, six domains” framework).
+A two-partner web questionnaire that helps couples talk about household roles **before** daily chores become a source of conflict. Inspired by Gary Chapman’s book [_Les toilettes ne se nettoient pas toutes seules_](https://www.garychapman.org/) (and his “four angles, six domains” framework).
 
 Each partner answers **53 swipe-based questions** (~20 minutes) on their phone. When both finish, the app shows **convergences**, **divergences**, and a **suggested task split** based on talents and preferences—not inherited habits.
 
@@ -15,14 +15,14 @@ Each partner answers **53 swipe-based questions** (~20 minutes) on their phone. 
 
 ## Tech stack
 
-| Layer | Choice |
-|--------|--------|
-| Framework | [TanStack Start](https://tanstack.com/start) + [TanStack Router](https://tanstack.com/router) |
-| UI | React 19, Tailwind CSS 4, [shadcn/ui](https://ui.shadcn.com/) (Radix) |
-| Data | [Supabase](https://supabase.com/) (Postgres + Realtime) |
-| Build | Vite 7, `@lovable.dev/vite-tanstack-config` |
-| Deploy target | Cloudflare Workers (`wrangler.jsonc`) |
-| Package manager | [Bun](https://bun.sh/) (`bun.lock`) |
+| Layer           | Choice                                                                                        |
+| --------------- | --------------------------------------------------------------------------------------------- |
+| Framework       | [TanStack Start](https://tanstack.com/start) + [TanStack Router](https://tanstack.com/router) |
+| UI              | React 19, Tailwind CSS 4, [shadcn/ui](https://ui.shadcn.com/) (Radix)                         |
+| Data            | [Supabase](https://supabase.com/) (Postgres + Realtime)                                       |
+| Build           | Vite 7, `@lovable.dev/vite-tanstack-config`                                                   |
+| Deploy target   | Cloudflare Workers (`wrangler.jsonc`)                                                         |
+| Package manager | [Bun](https://bun.sh/) (`bun.lock`)                                                           |
 
 ## Prerequisites
 
@@ -92,14 +92,14 @@ Concept background: `/foundations`.
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `bun run dev` | Start Vite dev server |
-| `bun run build` | Production build |
-| `bun run build:dev` | Development-mode build |
-| `bun run preview` | Preview production build |
-| `bun run lint` | ESLint |
-| `bun run format` | Prettier write |
+| Command             | Description              |
+| ------------------- | ------------------------ |
+| `bun run dev`       | Start Vite dev server    |
+| `bun run build`     | Production build         |
+| `bun run build:dev` | Development-mode build   |
+| `bun run preview`   | Preview production build |
+| `bun run lint`      | ESLint                   |
+| `bun run format`    | Prettier write           |
 
 ## Project structure
 
@@ -108,25 +108,66 @@ src/
   routes/           # Pages: home (/), foundations, session (/s/:code)
   components/       # UI (shadcn) + SwipeCard, ResultsView
   data/             # questions, tasks, domains, angles (JSON)
-  lib/              # dataset, session API, analysis engine
-  integrations/     # Supabase client, auth middleware
+  lib/              # dataset, session API (delegates to backend), analysis
+  integrations/
+    backend.ts      # Backend interface + factory (VITE_BACKEND)
+    supabase/       # Supabase client + Backend impl + auth middleware
+    cloudflare/     # D1 schema + /api/cf/* handler + Backend impl
 supabase/
   migrations/       # Postgres schema + Realtime
 ```
 
 Question content and scoring logic live in JSON + `src/lib/analysis.ts`; session CRUD in `src/lib/session.ts`.
 
+## Backend selection
+
+The data layer is pluggable via the `VITE_BACKEND` env var (`src/integrations/backend.ts`):
+
+| `VITE_BACKEND`       | Storage                | Realtime                               |
+| -------------------- | ---------------------- | -------------------------------------- |
+| `supabase` (default) | Supabase Postgres      | Supabase Realtime (`postgres_changes`) |
+| `cloudflare`         | Cloudflare D1 (SQLite) | 1.5 s polling over `/api/cf/*`         |
+
+The Cloudflare backend hits HTTP routes in `src/integrations/cloudflare/api.ts`, mounted by `src/server.ts` and backed by the `DB` D1 binding in `wrangler.jsonc`.
+
 ## Deployment (Cloudflare)
 
-The app is configured for Cloudflare Workers via `@cloudflare/vite-plugin` and `wrangler.jsonc` (`main`: `src/server.ts`).
+The app deploys as a Cloudflare Worker via `@cloudflare/vite-plugin` + `wrangler.jsonc` (`main`: `src/server.ts`).
+
+### One-time setup
 
 ```bash
-bun run build
-# Deploy with Wrangler (configure account + secrets separately)
-npx wrangler deploy
+# Create the D1 database — note the printed database_id.
+bunx wrangler d1 create nos-roles
+# Apply the schema (use --remote for the real DB; omit for a local one).
+bunx wrangler d1 execute nos-roles --remote --file=./src/integrations/cloudflare/schema.sql
 ```
 
-Set `VITE_SUPABASE_*` (or worker secrets) in your Cloudflare environment for production.
+Add these secrets in **GitHub → Settings → Secrets and variables → Actions**:
+
+- `CLOUDFLARE_API_TOKEN` — token with Workers + D1 edit perms
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_D1_DATABASE_ID` — from `wrangler d1 create`
+
+### Automated deploy
+
+Push to `master` triggers `.github/workflows/deploy-cloudflare.yml`, which:
+
+1. Injects `CLOUDFLARE_D1_DATABASE_ID` into `wrangler.jsonc`.
+2. Re-applies `schema.sql` (idempotent — `CREATE TABLE IF NOT EXISTS`).
+3. Builds with `VITE_BACKEND=cloudflare`.
+4. Runs `wrangler deploy`.
+
+Manual runs from the Actions tab can skip step 2 via the `apply_migrations` input.
+
+### Manual deploy
+
+```bash
+VITE_BACKEND=cloudflare bun run build
+bunx wrangler deploy
+```
+
+If you stay on Supabase, leave `VITE_BACKEND=supabase` and set `VITE_SUPABASE_*` as worker vars in the Cloudflare dashboard (or via `wrangler secret put`).
 
 ## Content & methodology
 
