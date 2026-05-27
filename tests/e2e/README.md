@@ -45,6 +45,34 @@ bun run e2e:supabase:stop
    `WaitingForFinish`, then auto-transitions to `ResultsView` when B
    completes — again through realtime, without any reload.
 
+## Coverage
+
+The dev server, when run via `bun run dev:e2e`, sets `VITE_E2E_COVERAGE=1`,
+which activates [vite-plugin-istanbul](https://github.com/iFaxity/vite-plugin-istanbul)
+in [vite.config.ts](../../vite.config.ts). Every instrumented file
+contributes to `window.__coverage__` in the browser.
+
+The Playwright fixture in [helpers/coverage.ts](./helpers/coverage.ts) wraps
+`browser.newContext` so it can read `window.__coverage__` from each context
+just before close. Dumps land in `coverage-e2e/raw/<uuid>.json` — one per
+browser context per test (six total for the current three-test, two-context
+suite).
+
+`bun run coverage:merge` (script: [scripts/merge-coverage.mjs](../../scripts/merge-coverage.mjs))
+combines them with the Vitest unit coverage from `coverage/coverage-final.json`
+and writes a unified istanbul report to `coverage-merged/` (json-summary, json,
+lcov, browseable HTML). In CI, the `report` job uploads this as an artifact
+*and* posts a sticky PR comment via `davelosert/vitest-coverage-report-action`.
+
+End-to-end locally:
+
+```bash
+bun run coverage         # unit + storybook → coverage/
+bun run test:e2e         # e2e → coverage-e2e/raw/
+bun run coverage:merge   # → coverage-merged/
+open coverage-merged/lcov-report/index.html
+```
+
 ## How it works
 
 - **Two browser contexts per test.** Each context has its own `localStorage`,
