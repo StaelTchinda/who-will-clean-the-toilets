@@ -123,7 +123,7 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-type Mode = "intro" | "create" | "join";
+export type Mode = "intro" | "create" | "join";
 
 function HomePage() {
   const [mode, setMode] = useState<Mode>("intro");
@@ -150,7 +150,7 @@ function HomePage() {
   );
 }
 
-function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
+export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
   return (
     <div className="flex flex-col gap-10">
       {/* Hero */}

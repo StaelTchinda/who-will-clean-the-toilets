@@ -24,7 +24,7 @@ const ANGLE_ICONS: Record<string, typeof Compass> = {
   value: Compass,
 };
 
-function FoundationsPage() {
+export function FoundationsPage() {
   return (
     <main className="min-h-[100dvh] bg-background text-foreground">
       <div className="mx-auto max-w-md px-6 pb-16 pt-[max(env(safe-area-inset-top),1.5rem)]">
