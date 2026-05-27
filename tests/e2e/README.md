@@ -62,7 +62,7 @@ suite).
 combines them with the Vitest unit coverage from `coverage/coverage-final.json`
 and writes a unified istanbul report to `coverage-merged/` (json-summary, json,
 lcov, browseable HTML). In CI, the `report` job uploads this as an artifact
-*and* posts a sticky PR comment via `davelosert/vitest-coverage-report-action`.
+_and_ posts a sticky PR comment via `davelosert/vitest-coverage-report-action`.
 
 End-to-end locally:
 

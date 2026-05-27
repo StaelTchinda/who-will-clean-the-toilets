@@ -58,9 +58,7 @@ export const DOMAIN_BY_ID: Record<DomainId, Domain> = Object.fromEntries(
   DOMAINS.map((d) => [d.id, d]),
 ) as Record<DomainId, Domain>;
 
-export const TASK_BY_ID: Record<string, Task> = Object.fromEntries(
-  TASKS.map((t) => [t.id, t]),
-);
+export const TASK_BY_ID: Record<string, Task> = Object.fromEntries(TASKS.map((t) => [t.id, t]));
 
 const PRIORITY_ORDER: Record<Priority, number> = {
   essential: 0,
@@ -78,14 +76,10 @@ const DOMAIN_ORDER: DomainId[] = [
 ];
 
 export function buildQuestionList(includeChildren: boolean): Question[] {
-  return QUESTIONS.filter(
-    (q) => includeChildren || q.domain_id !== "children",
-  ).sort((a, b) => {
+  return QUESTIONS.filter((q) => includeChildren || q.domain_id !== "children").sort((a, b) => {
     const pr = PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority];
     if (pr !== 0) return pr;
-    return (
-      DOMAIN_ORDER.indexOf(a.domain_id) - DOMAIN_ORDER.indexOf(b.domain_id)
-    );
+    return DOMAIN_ORDER.indexOf(a.domain_id) - DOMAIN_ORDER.indexOf(b.domain_id);
   });
 }
 
