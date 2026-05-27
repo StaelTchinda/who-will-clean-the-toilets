@@ -166,20 +166,6 @@ export const partialDivergence: Scenario = {
   }),
 };
 
-/** includeChildren on — the children question/tasks are present. */
-export const withChildren: Scenario = {
-  ...fullAgreement,
-  includeChildren: true,
-};
-
-/** includeChildren off — children domain excluded from suggestions. */
-export const withoutChildren: Scenario = {
-  session: makeSession({ has_children_a: "no", has_children_b: "no" }),
-  questions: SCENARIO_QUESTIONS.filter((q) => q.domain_id !== "children"),
-  includeChildren: false,
-  answers: fullAgreement.answers.filter((a) => a.question_id !== "sc_kids"),
-};
-
 // ── Questionnaire stage fixtures ────────────────────────────────────────────
 // A larger, ordered question list for the questionnaire stories so Start,
 // MidFlow, and NearEnd land on visibly different states (progress bar,
