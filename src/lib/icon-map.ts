@@ -144,7 +144,6 @@ export function iconForAnswer(answerId: string, label: string): LucideIcon {
 // The `label` parameter is already translated by the caller via tData(), so we
 // just truncate if needed. A hardcoded-per-language map is intentionally avoided
 // here — it would produce French regardless of the active locale.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function shortLabel(_answerId: string, label: string): string {
   return label.length > 28 ? label.slice(0, 26).trimEnd() + "…" : label;
 }

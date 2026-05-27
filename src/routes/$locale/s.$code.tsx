@@ -80,15 +80,16 @@ function SessionPage() {
 
   // Live updates: backend.subscribeToSession is realtime on Supabase and
   // a 1.5s poll on Cloudflare D1 — same callback shape either way.
+  const sessionId = session?.id;
   useEffect(() => {
-    if (!session) return;
-    const unsubscribe = backend.subscribeToSession(session.id, {
+    if (!sessionId) return;
+    const unsubscribe = backend.subscribeToSession(sessionId, {
       onSession: (next) => setSession(next),
       onProgress: (rows) => setProgress(rows),
       onAnswers: (rows) => setAnswers(rows),
     });
     return unsubscribe;
-  }, [session?.id]);
+  }, [sessionId]);
 
   if (loading) {
     return (
