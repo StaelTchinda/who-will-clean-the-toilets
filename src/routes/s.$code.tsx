@@ -1,4 +1,5 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, redirect } from "@tanstack/react-router";
+import { DEFAULT_LOCALE } from "@/i18n";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -143,6 +144,7 @@ function SessionPage() {
         answers={answers}
         questions={questions}
         includeChildren={includeChildren}
+        locale={DEFAULT_LOCALE}
       />
     );
   }

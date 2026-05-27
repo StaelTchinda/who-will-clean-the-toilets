@@ -25,7 +25,7 @@ import {
   rememberPartner,
   type ChildrenAnswer,
 } from "@/lib/session";
-import i18n, { type Locale } from "@/i18n";
+import i18n, { type Locale, DEFAULT_LOCALE } from "@/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const Route = createFileRoute("/$locale/")({
@@ -126,13 +126,15 @@ function ResultsPreview() {
   );
 }
 
-type Mode = "intro" | "create" | "join";
+export type Mode = "intro" | "create" | "join";
 
-function HomePage() {
+/**
+ * Centering chrome shared by HomePage and Storybook stories — max-w-md layout,
+ * brand header with LanguageSwitcher, and Chapman footer. Translated via i18n so
+ * the Storybook locale toolbar immediately updates header and footer text.
+ */
+export function HomeShell({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation("home");
-  const { locale } = Route.useParams();
-  const [mode, setMode] = useState<Mode>("intro");
-
   return (
     <main className="min-h-[100dvh] bg-background text-foreground">
       <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-6 py-10">
@@ -142,11 +144,7 @@ function HomePage() {
           </p>
           <LanguageSwitcher />
         </header>
-
-        {mode === "intro" && <Intro onChoose={setMode} locale={locale as Locale} />}
-        {mode === "create" && <CreateForm onBack={() => setMode("intro")} locale={locale as Locale} />}
-        {mode === "join" && <JoinForm onBack={() => setMode("intro")} locale={locale as Locale} />}
-
+        {children}
         <footer className="mt-auto pt-10 text-xs text-muted-foreground">
           {t("footer")}
         </footer>
@@ -155,8 +153,22 @@ function HomePage() {
   );
 }
 
-function Intro({ onChoose, locale }: { onChoose: (m: Mode) => void; locale: Locale }) {
+function HomePage() {
+  const { locale } = Route.useParams();
+  const [mode, setMode] = useState<Mode>("intro");
+
+  return (
+    <HomeShell>
+      {mode === "intro" && <Intro onChoose={setMode} locale={locale as Locale} />}
+      {mode === "create" && <CreateForm onBack={() => setMode("intro")} locale={locale as Locale} />}
+      {mode === "join" && <JoinForm onBack={() => setMode("intro")} locale={locale as Locale} />}
+    </HomeShell>
+  );
+}
+
+export function Intro({ onChoose, locale: localeProp }: { onChoose: (m: Mode) => void; locale?: Locale }) {
   const { t } = useTranslation("home");
+  const locale = localeProp ?? (i18n.language as Locale) ?? DEFAULT_LOCALE;
   return (
     <div className="flex flex-col gap-10">
       {/* Hero */}
@@ -312,9 +324,10 @@ function ChildrenChoice({
   );
 }
 
-function CreateForm({ onBack, locale }: { onBack: () => void; locale: Locale }) {
+export function CreateForm({ onBack, locale: localeProp }: { onBack: () => void; locale?: Locale }) {
   const { t } = useTranslation("home");
   const navigate = useNavigate();
+  const locale = localeProp ?? (i18n.language as Locale) ?? DEFAULT_LOCALE;
   const [name, setName] = useState("");
   const [kids, setKids] = useState<ChildrenAnswer | "">("");
   const [loading, setLoading] = useState(false);
@@ -376,9 +389,10 @@ function CreateForm({ onBack, locale }: { onBack: () => void; locale: Locale }) 
   );
 }
 
-function JoinForm({ onBack, locale }: { onBack: () => void; locale: Locale }) {
+export function JoinForm({ onBack, locale: localeProp }: { onBack: () => void; locale?: Locale }) {
   const { t } = useTranslation("home");
   const navigate = useNavigate();
+  const locale = localeProp ?? (i18n.language as Locale) ?? DEFAULT_LOCALE;
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [kids, setKids] = useState<ChildrenAnswer | "">("");

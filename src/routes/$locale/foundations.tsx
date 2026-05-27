@@ -1,9 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { ANGLES, DOMAINS } from "@/lib/dataset";
 import { DOMAIN_ICON } from "@/lib/icon-map";
 import { Compass, Eye, Hand, Heart, BookOpen, ArrowLeft, ArrowRight } from "lucide-react";
-import i18n, { type Locale } from "@/i18n";
+import i18n, { type Locale, DEFAULT_LOCALE } from "@/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const Route = createFileRoute("/$locale/foundations")({
@@ -26,10 +26,13 @@ const ANGLE_ICONS: Record<string, typeof Compass> = {
   value: Compass,
 };
 
-function FoundationsPage() {
+export function FoundationsPage() {
   const { t } = useTranslation("foundations");
   const { t: tData } = useTranslation("data");
-  const { locale } = Route.useParams();
+  // useParams({ strict: false }) is safe in both the app router and Storybook's
+  // minimal router (where /$locale/foundations is not in the route tree).
+  const { locale: localeParam } = useParams({ strict: false });
+  const locale = (localeParam as Locale | undefined) ?? (i18n.language as Locale) ?? DEFAULT_LOCALE;
 
   return (
     <main className="min-h-[100dvh] bg-background text-foreground">

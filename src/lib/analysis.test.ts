@@ -168,9 +168,10 @@ describe("pickHighlights", () => {
     expect(diverged).toHaveLength(3);
   });
 
-  it("interpolates labelA into the aligned detail", () => {
+  it("stores labelA in answerALabel for the aligned detail", () => {
     const { aligned } = pickHighlights([converge(1, "Toujours moi")]);
-    expect(aligned[0].detail).toContain("Toujours moi");
+    expect(aligned[0].detailKey).toBe("analysis.alignedDetail");
+    expect(aligned[0].answerALabel).toBe("Toujours moi");
   });
 });
 
@@ -187,7 +188,7 @@ describe("suggestAssignments", () => {
     expect(out.length).toBeGreaterThan(0);
     for (const s of out) {
       expect(s.assignee).toBe("share");
-      expect(s.rationale).toContain("Aucune préférence claire");
+      expect(s.rationaleKey).toBe("tasks.rationaleNoData");
     }
   });
 
@@ -209,14 +210,16 @@ describe("suggestAssignments", () => {
     const out = suggestAssignments(session, [answer("a", QID, "sanitizing")], true);
     const sani = out.find((s) => s.taskId === "sanitizing")!;
     expect(sani.assignee).toBe("a");
-    expect(sani.rationale).toContain("Camille");
+    expect(sani.rationaleKey).toBe("tasks.rationaleA");
+    expect(sani.rationaleValues?.name).toBe("Camille");
   });
 
   it("assigns to B (with their name) when B scores higher", () => {
     const out = suggestAssignments(session, [answer("b", QID, "sanitizing")], true);
     const sani = out.find((s) => s.taskId === "sanitizing")!;
     expect(sani.assignee).toBe("b");
-    expect(sani.rationale).toContain("Alex");
+    expect(sani.rationaleKey).toBe("tasks.rationaleB");
+    expect(sani.rationaleValues?.name).toBe("Alex");
   });
 
   it("shares on a tie (both directly pick the same task)", () => {
@@ -227,14 +230,15 @@ describe("suggestAssignments", () => {
     );
     const sani = out.find((s) => s.taskId === "sanitizing")!;
     expect(sani.assignee).toBe("share");
-    expect(sani.rationale).toContain("égalité");
+    expect(sani.rationaleKey).toBe("tasks.rationaleTie");
   });
 
-  it("falls back to Partenaire A/B when names are null", () => {
+  it("falls back to 'A'/'B' when names are null", () => {
     const anon = makeSession({ partner_a_name: null, partner_b_name: null });
     const out = suggestAssignments(anon, [answer("a", QID, "sanitizing")], true);
     const sani = out.find((s) => s.taskId === "sanitizing")!;
-    expect(sani.rationale).toContain("Partenaire A");
+    expect(sani.rationaleKey).toBe("tasks.rationaleA");
+    expect(sani.rationaleValues?.name).toBe("A");
   });
 });
 
@@ -269,7 +273,7 @@ describe("real dataset pipeline (smoke)", () => {
     expect(noKids.every((s) => s.domainId !== "children")).toBe(true);
     for (const s of withKids) {
       expect(["a", "b", "share"]).toContain(s.assignee);
-      expect(s.rationale.length).toBeGreaterThan(0);
+      expect(s.rationaleKey.length).toBeGreaterThan(0);
     }
   });
 });

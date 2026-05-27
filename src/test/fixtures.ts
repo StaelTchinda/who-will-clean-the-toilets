@@ -3,6 +3,7 @@
 // no Supabase access), so it is safe in the node test env and the browser SB env.
 import type { Answer, Question, AngleId, DomainId } from "@/lib/dataset";
 import type { AnswerRow, ChildrenAnswer, SessionRow } from "@/lib/session";
+import type { Locale } from "@/i18n";
 
 // ── Builders ────────────────────────────────────────────────────────────────
 
@@ -60,6 +61,7 @@ export interface Scenario {
   questions: Question[];
   answers: AnswerRow[];
   includeChildren: boolean;
+  locale: Locale;
 }
 
 // A handful of questions spanning a few domains/angles, used to drive the
@@ -124,6 +126,7 @@ export const fullAgreement: Scenario = {
   session,
   questions: SCENARIO_QUESTIONS,
   includeChildren: true,
+  locale: "fr",
   answers: SCENARIO_QUESTIONS.flatMap((q) => [
     answer("a", q.id, q.answers[0].id),
     answer("b", q.id, q.answers[0].id),
@@ -135,6 +138,7 @@ export const highDivergence: Scenario = {
   session,
   questions: SCENARIO_QUESTIONS,
   includeChildren: true,
+  locale: "fr",
   answers: SCENARIO_QUESTIONS.flatMap((q) => [
     answer("a", q.id, q.answers[0].id),
     answer("b", q.id, q.answers[1].id),
@@ -146,6 +150,7 @@ export const empty: Scenario = {
   session,
   questions: SCENARIO_QUESTIONS,
   includeChildren: true,
+  locale: "fr",
   answers: [],
 };
 
@@ -160,6 +165,7 @@ export const partialDivergence: Scenario = {
   session,
   questions: SCENARIO_QUESTIONS,
   includeChildren: true,
+  locale: "fr",
   answers: SCENARIO_QUESTIONS.flatMap((q, i) => {
     const converge = i < 2;
     return [answer("a", q.id, q.answers[0].id), answer("b", q.id, q.answers[converge ? 0 : 1].id)];
