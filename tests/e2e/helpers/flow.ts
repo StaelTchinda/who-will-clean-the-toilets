@@ -91,14 +91,10 @@ export async function answerAllQuestions(
     if (!answer) throw new Error(`Bad answer id ${answerId} for ${q.id}`);
 
     // Wait for this question's slot — both counter index and question text.
-    await expect(
-      page.getByText(`${i + 1}/${total}`, { exact: true }),
-    ).toBeVisible();
+    await expect(page.getByText(`${i + 1}/${total}`, { exact: true })).toBeVisible();
     await expect(page.getByText(q.label, { exact: true })).toBeVisible();
 
-    const answerBtn = page
-      .getByRole("button", { name: answer.label, exact: true })
-      .first();
+    const answerBtn = page.getByRole("button", { name: answer.label, exact: true }).first();
 
     // Click, then wait for the counter to advance. Retry up to 5 times if it
     // doesn't — covers the lock-window race + any one-off Realtime jitter.
@@ -111,14 +107,12 @@ export async function answerAllQuestions(
           // On the last question, the questionnaire unmounts entirely — we
           // land on WaitingForFinish or ResultsView. Either heading is fine.
           await expect(
-            page.getByText(
-              /On attend que .* finisse|Nos Rôles · résultats|Envoi de tes/,
-            ),
+            page.getByText(/On attend que .* finisse|Nos Rôles · résultats|Envoi de tes/),
           ).toBeVisible({ timeout: 3000 });
         } else {
-          await expect(
-            page.getByText(`${i + 2}/${total}`, { exact: true }),
-          ).toBeVisible({ timeout: 3000 });
+          await expect(page.getByText(`${i + 2}/${total}`, { exact: true })).toBeVisible({
+            timeout: 3000,
+          });
         }
         advanced = true;
         break;

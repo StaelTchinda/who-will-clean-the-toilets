@@ -27,16 +27,12 @@ export function WaitingForJoin({
         <p className="text-xs uppercase tracking-[0.25em] text-primary">
           {t("waiting.greeting", { name: myName })}
         </p>
-        <h1 className="text-balance font-serif text-4xl leading-tight">
-          {t("waiting.title")}
-        </h1>
+        <h1 className="text-balance font-serif text-4xl leading-tight">{t("waiting.title")}</h1>
         <button
           onClick={copy}
           className="group relative rounded-3xl border border-border bg-card px-10 py-6 transition hover:border-primary"
         >
-          <span className="font-serif text-6xl tracking-[0.3em] text-foreground">
-            {code}
-          </span>
+          <span className="font-serif text-6xl tracking-[0.3em] text-foreground">{code}</span>
           <span className="mt-2 block text-xs uppercase tracking-[0.2em] text-muted-foreground group-hover:text-primary">
             {copied ? t("waiting.copied") : t("waiting.tapToCopy")}
           </span>

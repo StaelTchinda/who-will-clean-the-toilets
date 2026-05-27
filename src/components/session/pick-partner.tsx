@@ -22,12 +22,7 @@ export function PickPartner({
       <h1 className="font-serif text-3xl">{t("pickPartner.title")}</h1>
       <p className="text-muted-foreground">{t("pickPartner.subtitle")}</p>
       <div className="flex w-full flex-col gap-3 pt-4">
-        <Button
-          size="lg"
-          variant="outline"
-          className="h-14 rounded-full"
-          onClick={() => pick("a")}
-        >
+        <Button size="lg" variant="outline" className="h-14 rounded-full" onClick={() => pick("a")}>
           {session.partner_a_name || "A"}
         </Button>
         {session.partner_b_name && (

@@ -58,10 +58,7 @@ function SessionPage() {
         return;
       }
       setSession(s);
-      const [a, p] = await Promise.all([
-        fetchAnswers(s.id),
-        fetchProgress(s.id),
-      ]);
+      const [a, p] = await Promise.all([fetchAnswers(s.id), fetchProgress(s.id)]);
       if (!mounted) return;
       setAnswers(a);
       setProgress(p);
@@ -122,13 +119,7 @@ function SessionPage() {
 
   // No partner role on this device yet — ask which one they are
   if (!partner) {
-    return (
-      <PickPartner
-        session={session}
-        code={code}
-        onPicked={(p) => setPartner(p)}
-      />
-    );
+    return <PickPartner session={session} code={code} onPicked={(p) => setPartner(p)} />;
   }
 
   // Waiting for second partner to join
@@ -136,16 +127,14 @@ function SessionPage() {
     return <WaitingForJoin session={session} code={code} partner={partner} />;
   }
 
-  const includeChildren =
-    session.has_children_a !== "no" || session.has_children_b !== "no";
+  const includeChildren = session.has_children_a !== "no" || session.has_children_b !== "no";
   const questions = buildQuestionList(includeChildren);
 
   const myAnswers = answers.filter((a) => a.partner === partner);
   const myProgress = progress.find((p) => p.partner === partner);
   const otherProgress = progress.find((p) => p.partner !== partner);
 
-  const completed =
-    myAnswers.length >= questions.length || myProgress?.completed;
+  const completed = myAnswers.length >= questions.length || myProgress?.completed;
   const otherCompleted = otherProgress?.completed;
 
   if (completed && otherCompleted) {
@@ -172,12 +161,7 @@ function SessionPage() {
   }
 
   return (
-    <Questionnaire
-      session={session}
-      partner={partner}
-      questions={questions}
-      answers={myAnswers}
-    />
+    <Questionnaire session={session} partner={partner} questions={questions} answers={myAnswers} />
   );
 }
 
@@ -195,10 +179,7 @@ export function Questionnaire({
   const { t } = useTranslation("session");
   const { t: tData } = useTranslation("data");
 
-  const answeredIds = useMemo(
-    () => new Set(answers.map((a) => a.question_id)),
-    [answers],
-  );
+  const answeredIds = useMemo(() => new Set(answers.map((a) => a.question_id)), [answers]);
   // Start at first unanswered
   const initialIndex = useMemo(() => {
     const idx = questions.findIndex((q) => !answeredIds.has(q.id));
@@ -214,9 +195,7 @@ export function Questionnaire({
   // WaitingForFinish / ResultsView. Access them defensively below and
   // early-return *after* every hook (Rules of Hooks).
   const q = questions[index];
-  const current = q
-    ? answers.find((a) => a.question_id === q.id)?.answer_id
-    : undefined;
+  const current = q ? answers.find((a) => a.question_id === q.id)?.answer_id : undefined;
 
   const pct = Math.round(((index + (current ? 1 : 0)) / total) * 100);
 
@@ -313,9 +292,7 @@ export function Questionnaire({
           />
         </div>
 
-        {pending && (
-          <p className="text-center text-xs text-muted-foreground">{t("sending")}</p>
-        )}
+        {pending && <p className="text-center text-xs text-muted-foreground">{t("sending")}</p>}
       </div>
     </main>
   );

@@ -1,11 +1,7 @@
 import type { BrowserContext } from "@playwright/test";
 import { test, expect } from "./helpers/coverage";
 import { countAnswers, getSession, truncateAll } from "./helpers/db";
-import {
-  answerAllQuestions,
-  createSessionUI,
-  joinSessionUI,
-} from "./helpers/flow";
+import { answerAllQuestions, createSessionUI, joinSessionUI } from "./helpers/flow";
 
 // Each test gets a fresh DB. Cheaper than `supabase db reset` and keeps the
 // Realtime publication intact (which a full reset would drop & re-add).
@@ -30,9 +26,7 @@ async function twoPartnerContexts(browser: BrowserContext["browser"]) {
 }
 
 test.describe("two partners", () => {
-  test("pairing: B joining unblocks A's WaitingForJoin via realtime", async ({
-    browser,
-  }) => {
+  test("pairing: B joining unblocks A's WaitingForJoin via realtime", async ({ browser }) => {
     const { a, b, cleanup } = await twoPartnerContexts(browser);
     try {
       const pageA = await a.newPage();
@@ -41,14 +35,10 @@ test.describe("two partners", () => {
       const code = await createSessionUI(pageA, { name: "Alice", kids: "Non" });
 
       // Partner A is parked on WaitingForJoin — the giant code is visible.
-      await expect(
-        pageA.getByText("Partage ce code avec ton partenaire."),
-      ).toBeVisible();
+      await expect(pageA.getByText("Partage ce code avec ton partenaire.")).toBeVisible();
       // Code shows in two places (big copy button + descriptive paragraph);
       // the copy button is the canonical display.
-      await expect(
-        pageA.getByRole("button", { name: new RegExp(`^${code} `) }),
-      ).toBeVisible();
+      await expect(pageA.getByRole("button", { name: new RegExp(`^${code} `) })).toBeVisible();
 
       // Sanity: row exists, A's columns filled, B's still null.
       const before = await getSession(code);
@@ -71,9 +61,7 @@ test.describe("two partners", () => {
     }
   });
 
-  test("full flow: both partners answer every question, see results", async ({
-    browser,
-  }) => {
+  test("full flow: both partners answer every question, see results", async ({ browser }) => {
     // The headline test. ~44 questions × 2 partners with realtime sync.
     // Generous timeout because the SwipeCard has a ~460ms commit animation;
     // 44 × 2 × ~0.5s ≈ 45s minimum just for clicks.
@@ -106,12 +94,8 @@ test.describe("two partners", () => {
 
       // Both should land on ResultsView. The "Nos Rôles · résultats" header
       // is unique to that component.
-      await expect(
-        pageA.getByText("Nos Rôles · résultats"),
-      ).toBeVisible({ timeout: 15_000 });
-      await expect(
-        pageB.getByText("Nos Rôles · résultats"),
-      ).toBeVisible({ timeout: 15_000 });
+      await expect(pageA.getByText("Nos Rôles · résultats")).toBeVisible({ timeout: 15_000 });
+      await expect(pageB.getByText("Nos Rôles · résultats")).toBeVisible({ timeout: 15_000 });
 
       // Both partners' names show up in the title.
       await expect(pageA.getByRole("heading", { name: /Alice.*Bob/ })).toBeVisible();
@@ -150,9 +134,7 @@ test.describe("two partners", () => {
       });
 
       // A should now see WaitingForFinish (header copy is unique).
-      await expect(
-        pageA.getByText(/On attend que .* finisse/),
-      ).toBeVisible({ timeout: 10_000 });
+      await expect(pageA.getByText(/On attend que .* finisse/)).toBeVisible({ timeout: 10_000 });
 
       // Drive B to completion.
       await answerAllQuestions(pageB, {
@@ -162,9 +144,7 @@ test.describe("two partners", () => {
       });
 
       // A's screen should flip to ResultsView via realtime — no reload.
-      await expect(
-        pageA.getByText("Nos Rôles · résultats"),
-      ).toBeVisible({ timeout: 15_000 });
+      await expect(pageA.getByText("Nos Rôles · résultats")).toBeVisible({ timeout: 15_000 });
     } finally {
       await cleanup();
     }

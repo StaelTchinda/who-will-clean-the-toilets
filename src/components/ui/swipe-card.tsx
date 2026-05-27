@@ -96,7 +96,13 @@ export function SwipeCard({
 
       {/* Middle row: left hint, card, right hint */}
       <div className="my-3 grid grid-cols-[auto_1fr_auto] items-center gap-2">
-        <Hint dir="left" answer={mapping.left} active={hovered === "left"} onTap={() => commit("left")} compact />
+        <Hint
+          dir="left"
+          answer={mapping.left}
+          active={hovered === "left"}
+          onTap={() => commit("left")}
+          compact
+        />
         <motion.div
           drag
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
@@ -121,11 +127,22 @@ export function SwipeCard({
           </h2>
           <SwipeCardHint current={current} />
         </motion.div>
-        <Hint dir="right" answer={mapping.right} active={hovered === "right"} onTap={() => commit("right")} compact />
+        <Hint
+          dir="right"
+          answer={mapping.right}
+          active={hovered === "right"}
+          onTap={() => commit("right")}
+          compact
+        />
       </div>
 
       {/* Bottom hint */}
-      <Hint dir="down" answer={mapping.down} active={hovered === "down"} onTap={() => commit("down")} />
+      <Hint
+        dir="down"
+        answer={mapping.down}
+        active={hovered === "down"}
+        onTap={() => commit("down")}
+      />
     </div>
   );
 }
@@ -159,7 +176,8 @@ function Hint({
   onTap: () => void;
   compact?: boolean;
 }) {
-  const Arrow = dir === "up" ? ArrowUp : dir === "right" ? ArrowRight : dir === "down" ? ArrowDown : ArrowLeft;
+  const Arrow =
+    dir === "up" ? ArrowUp : dir === "right" ? ArrowRight : dir === "down" ? ArrowDown : ArrowLeft;
   const Icon = iconForAnswer(answer.id, answer.label);
   const short = shortLabel(answer.id, answer.label);
 

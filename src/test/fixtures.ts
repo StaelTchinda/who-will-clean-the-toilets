@@ -77,9 +77,9 @@ const pick = (id: string): Question => {
 
 const SCENARIO_QUESTIONS: Question[] = [
   pick("q_housekeeping_val_cleanliness"), // housekeeping / value
-  pick("q_cooking_talent_daily"),          // cooking / talent
-  pick("q_finances_talent_budget"),        // finances / talent
-  pick("q_children_env_daily"),            // children / environment
+  pick("q_cooking_talent_daily"), // cooking / talent
+  pick("q_finances_talent_budget"), // finances / talent
+  pick("q_children_env_daily"), // children / environment
 ];
 
 const session = makeSession();
@@ -131,10 +131,7 @@ export const partialDivergence: Scenario = {
   locale: "fr",
   answers: SCENARIO_QUESTIONS.flatMap((q, i) => {
     const converge = i < 2;
-    return [
-      answer("a", q.id, q.answers[0].id),
-      answer("b", q.id, q.answers[converge ? 0 : 1].id),
-    ];
+    return [answer("a", q.id, q.answers[0].id), answer("b", q.id, q.answers[converge ? 0 : 1].id)];
   }),
 };
 
@@ -144,16 +141,16 @@ export const partialDivergence: Scenario = {
 // angle names — locale toolbar changes propagate through everything.
 
 export const QUESTIONNAIRE_QUESTIONS: Question[] = [
-  pick("q_housekeeping_env_general"),           // housekeeping / environment
-  pick("q_housekeeping_val_cleanliness"),        // housekeeping / value
-  pick("q_cooking_env_general"),                 // cooking / environment
-  pick("q_cooking_talent_daily"),                // cooking / talent
-  pick("q_finances_env_general"),                // finances / environment
-  pick("q_finances_talent_budget"),              // finances / talent
+  pick("q_housekeeping_env_general"), // housekeeping / environment
+  pick("q_housekeeping_val_cleanliness"), // housekeeping / value
+  pick("q_cooking_env_general"), // cooking / environment
+  pick("q_cooking_talent_daily"), // cooking / talent
+  pick("q_finances_env_general"), // finances / environment
+  pick("q_finances_talent_budget"), // finances / talent
   pick("q_logistics_talent_diy_vs_contractors"), // logistics / talent
-  pick("q_logistics_pref_diy_vs_contractors"),   // logistics / preference
-  pick("q_children_env_daily"),                  // children / environment
-  pick("q_values_val_fairness"),                 // values / value
+  pick("q_logistics_pref_diy_vs_contractors"), // logistics / preference
+  pick("q_children_env_daily"), // children / environment
+  pick("q_values_val_fairness"), // values / value
 ];
 
 /**
