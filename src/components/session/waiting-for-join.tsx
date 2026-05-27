@@ -19,7 +19,9 @@ export function WaitingForJoin({
       await navigator.clipboard.writeText(code);
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
-    } catch {}
+    } catch {
+      // Clipboard access may fail (e.g. permission denied); silently ignore.
+    }
   };
   return (
     <main className="min-h-[100dvh] bg-background">

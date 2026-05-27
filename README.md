@@ -1,6 +1,6 @@
 # Nos Rôles
 
-A two-partner web questionnaire that helps couples talk about household roles **before** daily chores become a source of conflict. Inspired by Gary Chapman’s book [*Les toilettes ne se nettoient pas toutes seules*](https://www.garychapman.org/) (and his “four angles, six domains” framework).
+A two-partner web questionnaire that helps couples talk about household roles **before** daily chores become a source of conflict. Inspired by Gary Chapman’s book [_Les toilettes ne se nettoient pas toutes seules_](https://www.garychapman.org/) (and his “four angles, six domains” framework).
 
 Each partner answers **53 swipe-based questions** (~20 minutes) on their phone. When both finish, the app shows **convergences**, **divergences**, and a **suggested task split** based on talents and preferences—not inherited habits.
 
@@ -15,14 +15,14 @@ Each partner answers **53 swipe-based questions** (~20 minutes) on their phone. 
 
 ## Tech stack
 
-| Layer | Choice |
-|--------|--------|
-| Framework | [TanStack Start](https://tanstack.com/start) + [TanStack Router](https://tanstack.com/router) |
-| UI | React 19, Tailwind CSS 4, [shadcn/ui](https://ui.shadcn.com/) (Radix) |
-| Data | [Supabase](https://supabase.com/) (Postgres + Realtime) |
-| Build | Vite 7, `@lovable.dev/vite-tanstack-config` |
-| Deploy target | Cloudflare Workers (`wrangler.jsonc`) |
-| Package manager | [Bun](https://bun.sh/) (`bun.lock`) |
+| Layer           | Choice                                                                                        |
+| --------------- | --------------------------------------------------------------------------------------------- |
+| Framework       | [TanStack Start](https://tanstack.com/start) + [TanStack Router](https://tanstack.com/router) |
+| UI              | React 19, Tailwind CSS 4, [shadcn/ui](https://ui.shadcn.com/) (Radix)                         |
+| Data            | [Supabase](https://supabase.com/) (Postgres + Realtime)                                       |
+| Build           | Vite 7, `@lovable.dev/vite-tanstack-config`                                                   |
+| Deploy target   | Cloudflare Workers (`wrangler.jsonc`)                                                         |
+| Package manager | [Bun](https://bun.sh/) (`bun.lock`)                                                           |
 
 ## Prerequisites
 
@@ -92,14 +92,14 @@ Concept background: `/foundations`.
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `bun run dev` | Start Vite dev server |
-| `bun run build` | Production build |
-| `bun run build:dev` | Development-mode build |
-| `bun run preview` | Preview production build |
-| `bun run lint` | ESLint |
-| `bun run format` | Prettier write |
+| Command             | Description              |
+| ------------------- | ------------------------ |
+| `bun run dev`       | Start Vite dev server    |
+| `bun run build`     | Production build         |
+| `bun run build:dev` | Development-mode build   |
+| `bun run preview`   | Preview production build |
+| `bun run lint`      | ESLint                   |
+| `bun run format`    | Prettier write           |
 
 ## Project structure
 
