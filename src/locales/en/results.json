@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "eyebrow": "Our Roles · results"
+  },
+  "convergence": "{{pct}}% of your answers converge. Here's what that tells us.",
+  "tabs": {
+    "analysis": "Analysis",
+    "table": "Comparison",
+    "tasks": "Distribution"
+  },
+  "analysis": {
+    "alignedTitle": "Where you agree",
+    "alignedSub": "Your shared strengths — worth celebrating.",
+    "alignedEmpty": "Few clear convergences — that's informative in itself.",
+    "divergedTitle": "To discuss together",
+    "divergedSub": "Not problems — conversations to have.",
+    "divergedEmpty": "No major divergences detected.",
+    "overviewTitle": "Overview by domain",
+    "overviewSub": "% of questions where {{nameA}} and {{nameB}} are aligned.",
+    "alignedDetail": "You both answered the same: \"{{answer}}\"",
+    "divergedDetail": "Your answers diverge — a topic worth exploring together."
+  },
+  "tasks": {
+    "intro": "Based on your Talent + Preference answers. See this as a starting point — the conversation matters more than the suggestion.",
+    "share": "Share",
+    "rationaleNoData": "No clear preference — decide together.",
+    "rationaleTie": "You're tied — share or alternate.",
+    "rationaleA": "{{name}} is more comfortable or sees themselves doing this.",
+    "rationaleB": "{{name}} is more comfortable or sees themselves doing this."
+  },
+  "footer": {
+    "disclaimer": "These suggestions are a starting point for discussion — not a final decision. Print or screenshot to keep a record.",
+    "newQuestionnaire": "New questionnaire"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "title": "Les fondations — Nos Rôles",
+    "description": "Pourquoi parler de la répartition des tâches avant qu'elle ne devienne un conflit. Inspiré du livre de Gary Chapman."
+  },
+  "back": "retour",
+  "eyebrow": "Les fondations",
+  "title1": "Pourquoi parler des rôles",
+  "titleEm": "avant",
+  "title2": "qu'ils ne deviennent un conflit.",
+  "book": {
+    "eyebrow": "D'après Gary Chapman",
+    "title": "« Les toilettes ne se nettoient pas toutes seules »",
+    "body1": "Dans son livre éponyme, Gary Chapman — l'auteur des Langages de l'amour — observe que la majorité des tensions de couple ne viennent pas des grands sujets (l'argent, la famille, le sexe) mais des petites tâches du quotidien que personne n'a jamais explicitement attribuées. Le problème : chacun arrive avec ses modèles inconscients, ses talents, ses préférences, ses valeurs — et personne n'en parle, jusqu'à ce que ça explose.",
+    "body2": "Nos Rôles est l'outil qui force cette conversation, de manière structurée, ludique et bienveillante."
+  },
+  "angles": {
+    "eyebrow": "Les 4 angles d'analyse",
+    "title": "Chaque tâche est regardée sous quatre angles.",
+    "body": "Chapman insiste : assumer une tâche, ce n'est pas qu'une question de qui sait faire. C'est aussi qui a vu ses parents la faire, qui la tolère, et qui pense qu'elle est importante."
+  },
+  "domains": {
+    "eyebrow": "Les 6 domaines",
+    "title": "Six terrains de friction quotidiens.",
+    "body": "Le questionnaire couvre tout ce qui fait tourner un foyer — et que personne ne pense à attribuer avant que ça grince."
+  },
+  "results": {
+    "title": "À la fin, vous verrez :",
+    "convergences": "Vos convergences — les sujets où vous êtes déjà alignés, sans le savoir.",
+    "divergences": "Vos divergences — les zones où une vraie conversation est nécessaire.",
+    "suggestion": "Une répartition suggérée — basée sur les talents et préférences de chacun, pas sur les habitudes héritées."
+  },
+  "cta": "Démarrer le questionnaire"
+}
