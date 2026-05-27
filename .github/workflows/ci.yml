@@ -26,12 +26,11 @@ jobs:
           bun-version: latest
       - run: bun install --frozen-lockfile
 
-      # Lint/format issues are surfaced as PR annotations + a comment, but never
-      # fail the job (continue-on-error keeps the job green on non-zero exits).
-      - name: ESLint (annotations)
-        continue-on-error: true
-        run: bunx eslint . --format github
-
+      # Lint/format issues are surfaced as a sticky PR comment further down,
+      # never failing the job (continue-on-error keeps it green on non-zero
+      # exits). We deliberately avoid `eslint-formatter-github`: it calls
+      # the GitHub API to post check annotations and 404s on every run,
+      # leaving a stray "Process completed with exit code 2" in the logs.
       - name: ESLint (report)
         continue-on-error: true
         run: bunx eslint . --format stylish 2>&1 | tee eslint-report.txt
@@ -169,12 +168,17 @@ jobs:
       # rate limits ("toomanyrequests") on every run.  The key includes the
       # supabase CLI version (from package.json) so the cache is invalidated
       # whenever the CLI — and therefore the image tags it pulls — changes.
+      #
+      # ScribeMD/docker-cache@0.5.0 only accepts `key` and `read-only` (no
+      # `restore-keys`). Cache misses fall through to `supabase start`
+      # pulling fresh — that's fine, just slower. The `continue-on-error`
+      # guards against the action's known 400s against the new GitHub cache
+      # service, which would otherwise leave a red warning on every run.
       - name: Cache Supabase Docker images
+        continue-on-error: true
         uses: ScribeMD/docker-cache@0.5.0
         with:
           key: docker-${{ runner.os }}-supabase-${{ hashFiles('package.json') }}
-          restore-keys: |
-            docker-${{ runner.os }}-supabase-
 
       # Boots Postgres, REST, Realtime, Auth, etc. in Docker containers and
       # applies supabase/migrations/ automatically. Blocking — exits when the

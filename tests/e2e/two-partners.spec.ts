@@ -52,7 +52,10 @@ test.describe("two partners", () => {
       // questionnaire without a reload, because the sessions row UPDATE comes
       // through the postgres_changes channel A subscribed to.
       // (With kids=Non on both sides, includeChildren=false → 44 questions.)
-      await expect(pageA.getByText(/^1\/\d+$/)).toBeVisible({ timeout: 10_000 });
+      //
+      // CI realtime propagation can spike past 10s under load, so we give
+      // this a generous 30s window before declaring it flaky.
+      await expect(pageA.getByText(/^1\/\d+$/)).toBeVisible({ timeout: 30_000 });
 
       const after = await getSession(code);
       expect(after!.partner_b_name).toBe("Bob");

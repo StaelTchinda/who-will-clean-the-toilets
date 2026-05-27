@@ -63,7 +63,6 @@ async function dumpContextCoverage(context: BrowserContext): Promise<void> {
 export const test = base.extend({
   // Worker-scoped: the patch only needs to happen once per browser instance.
   // Tuple form ([fn, opts]) sets the scope.
-  // eslint-disable-next-line no-empty-pattern
   browser: [
     async ({ browser }, use) => {
       const originalNewContext = browser.newContext.bind(browser);
