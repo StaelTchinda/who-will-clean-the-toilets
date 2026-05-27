@@ -1,6 +1,10 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { StorybookConfig } from "@storybook/react-vite";
 import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Storybook runs its OWN Vite — it deliberately does NOT load the project's
 // vite.config.ts (which uses @lovable.dev/vite-tanstack-config: tanstackStart +
@@ -17,6 +21,29 @@ const config: StorybookConfig = {
   async viteFinal(cfg) {
     cfg.plugins = cfg.plugins ?? [];
     cfg.plugins.push(tsconfigPaths(), tailwindcss());
+
+    // Swap the real Supabase client for an in-memory fake so stories never
+    // need VITE_SUPABASE_URL and never touch the network. The fake lives in
+    // .storybook/supabase-mock.ts so it's obviously a test artifact.
+    // Vite's alias accepts both record and array forms; normalize to array so
+    // we don't accidentally clobber whatever tsconfigPaths wrote.
+    cfg.resolve = cfg.resolve ?? {};
+    const existing = cfg.resolve.alias;
+    const asArray = Array.isArray(existing)
+      ? existing
+      : existing
+        ? Object.entries(existing).map(([find, replacement]) => ({
+            find,
+            replacement: replacement as string,
+          }))
+        : [];
+    cfg.resolve.alias = [
+      {
+        find: "@/integrations/supabase/client",
+        replacement: path.resolve(__dirname, "./supabase-mock.ts"),
+      },
+      ...asArray,
+    ];
     return cfg;
   },
 };

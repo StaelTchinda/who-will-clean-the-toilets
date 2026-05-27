@@ -18,12 +18,7 @@ import {
   BookOpen,
   Compass,
 } from "lucide-react";
-import {
-  createSession,
-  joinSession,
-  rememberPartner,
-  type ChildrenAnswer,
-} from "@/lib/session";
+import { createSession, joinSession, rememberPartner, type ChildrenAnswer } from "@/lib/session";
 
 function SwipePreview() {
   return (
@@ -108,7 +103,6 @@ function ResultsPreview() {
   );
 }
 
-
 export const Route = createFileRoute("/")({
   component: HomePage,
   head: () => ({
@@ -129,21 +123,29 @@ function HomePage() {
   const [mode, setMode] = useState<Mode>("intro");
 
   return (
+    <HomeShell>
+      {mode === "intro" && <Intro onChoose={setMode} />}
+      {mode === "create" && <CreateForm onBack={() => setMode("intro")} />}
+      {mode === "join" && <JoinForm onBack={() => setMode("intro")} />}
+    </HomeShell>
+  );
+}
+
+// Centering chrome shared by HomePage and the Storybook stage stories so they
+// match the dev layout (max-w-md, NOS RÔLES header, Chapman footer) exactly.
+// Pure presentation — no state, no behavior.
+export function HomeShell({ children }: { children: React.ReactNode }) {
+  return (
     <main className="min-h-[100dvh] bg-background text-foreground">
       <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-6 py-10">
         <header className="mb-10">
-          <p className="text-xs uppercase tracking-[0.25em] text-primary">
-            Nos Rôles
-          </p>
+          <p className="text-xs uppercase tracking-[0.25em] text-primary">Nos Rôles</p>
         </header>
 
-        {mode === "intro" && <Intro onChoose={setMode} />}
-        {mode === "create" && <CreateForm onBack={() => setMode("intro")} />}
-        {mode === "join" && <JoinForm onBack={() => setMode("intro")} />}
+        {children}
 
         <footer className="mt-auto pt-10 text-xs text-muted-foreground">
-          Inspiré de « Les toilettes ne se nettoient pas toutes seules » — Gary
-          Chapman.
+          Inspiré de « Les toilettes ne se nettoient pas toutes seules » — Gary Chapman.
         </footer>
       </div>
     </main>
@@ -161,8 +163,8 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
           <em className="text-primary">le foyer.</em>
         </h1>
         <p className="text-balance text-base leading-relaxed text-muted-foreground">
-          Un questionnaire à deux pour révéler vos attentes, talents et
-          préférences — avant que les toilettes ne deviennent un sujet.
+          Un questionnaire à deux pour révéler vos attentes, talents et préférences — avant que les
+          toilettes ne deviennent un sujet.
         </p>
         <div className="flex flex-col gap-3 pt-2">
           <Button
@@ -211,11 +213,11 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
           « Les toilettes ne se nettoient pas toutes seules »
         </h2>
         <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-          L'auteur des Langages de l'amour observe que la plupart des conflits
-          de couple ne portent pas sur l'argent ou la famille, mais sur les
-          <em> petites tâches du quotidien</em> que personne n'a jamais
-          explicitement attribuées. Ce questionnaire reprend sa méthode — quatre
-          angles, six domaines — pour vous éviter dix ans de friction.
+          L'auteur des Langages de l'amour observe que la plupart des conflits de couple ne portent
+          pas sur l'argent ou la famille, mais sur les
+          <em> petites tâches du quotidien</em> que personne n'a jamais explicitement attribuées. Ce
+          questionnaire reprend sa méthode — quatre angles, six domaines — pour vous éviter dix ans
+          de friction.
         </p>
         <Link
           to="/foundations"
@@ -227,42 +229,32 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
 
       {/* Experience preview */}
       <section className="flex flex-col gap-4">
-        <p className="text-xs uppercase tracking-[0.25em] text-primary">
-          L'expérience
-        </p>
-        <h2 className="font-serif text-3xl leading-tight">
-          Glisse pour répondre.
-        </h2>
+        <p className="text-xs uppercase tracking-[0.25em] text-primary">L'expérience</p>
+        <h2 className="font-serif text-3xl leading-tight">Glisse pour répondre.</h2>
         <p className="text-[15px] leading-relaxed text-muted-foreground">
-          Chaque question s'incarne en icônes. Tu glisses la carte vers ta
-          réponse — haut, droite, bas, gauche — ou tu tapes. Plus rapide qu'un
-          formulaire, plus parlant qu'une liste.
+          Chaque question s'incarne en icônes. Tu glisses la carte vers ta réponse — haut, droite,
+          bas, gauche — ou tu tapes. Plus rapide qu'un formulaire, plus parlant qu'une liste.
         </p>
         <SwipePreview />
       </section>
 
       {/* Feedback preview */}
       <section className="flex flex-col gap-4">
-        <p className="text-xs uppercase tracking-[0.25em] text-primary">
-          Le retour
-        </p>
+        <p className="text-xs uppercase tracking-[0.25em] text-primary">Le retour</p>
         <h2 className="font-serif text-3xl leading-tight">
           Vos points d'accord, et là où ça frotte.
         </h2>
         <ResultsPreview />
         <p className="text-[15px] leading-relaxed text-muted-foreground">
-          À la fin, vous découvrez vos convergences, vos divergences, et une
-          répartition suggérée basée sur les talents et préférences de chacun —
-          pas sur les habitudes héritées.
+          À la fin, vous découvrez vos convergences, vos divergences, et une répartition suggérée
+          basée sur les talents et préférences de chacun — pas sur les habitudes héritées.
         </p>
       </section>
 
       {/* CTA repeat */}
       <section className="rounded-3xl bg-primary/5 p-6 text-center">
         <Compass className="mx-auto size-6 text-primary" strokeWidth={1.5} />
-        <p className="mt-3 font-serif text-2xl leading-tight">
-          Prêt à mettre des mots dessus ?
-        </p>
+        <p className="mt-3 font-serif text-2xl leading-tight">Prêt à mettre des mots dessus ?</p>
         <Button
           size="lg"
           onClick={() => onChoose("create")}
@@ -313,7 +305,7 @@ function ChildrenChoice({
   );
 }
 
-function CreateForm({ onBack }: { onBack: () => void }) {
+export function CreateForm({ onBack }: { onBack: () => void }) {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [kids, setKids] = useState<ChildrenAnswer | "">("");
@@ -376,7 +368,7 @@ function CreateForm({ onBack }: { onBack: () => void }) {
   );
 }
 
-function JoinForm({ onBack }: { onBack: () => void }) {
+export function JoinForm({ onBack }: { onBack: () => void }) {
   const navigate = useNavigate();
   const [code, setCode] = useState("");
   const [name, setName] = useState("");

@@ -52,10 +52,7 @@ function SessionPage() {
         return;
       }
       setSession(s);
-      const [a, p] = await Promise.all([
-        fetchAnswers(s.id),
-        fetchProgress(s.id),
-      ]);
+      const [a, p] = await Promise.all([fetchAnswers(s.id), fetchProgress(s.id)]);
       if (!mounted) return;
       setAnswers(a);
       setProgress(p);
@@ -116,13 +113,7 @@ function SessionPage() {
 
   // No partner role on this device yet — ask which one they are
   if (!partner) {
-    return (
-      <PickPartner
-        session={session}
-        code={code}
-        onPicked={(p) => setPartner(p)}
-      />
-    );
+    return <PickPartner session={session} code={code} onPicked={(p) => setPartner(p)} />;
   }
 
   // Waiting for second partner to join
@@ -130,16 +121,14 @@ function SessionPage() {
     return <WaitingForJoin session={session} code={code} partner={partner} />;
   }
 
-  const includeChildren =
-    session.has_children_a !== "no" || session.has_children_b !== "no";
+  const includeChildren = session.has_children_a !== "no" || session.has_children_b !== "no";
   const questions = buildQuestionList(includeChildren);
 
   const myAnswers = answers.filter((a) => a.partner === partner);
   const myProgress = progress.find((p) => p.partner === partner);
   const otherProgress = progress.find((p) => p.partner !== partner);
 
-  const completed =
-    myAnswers.length >= questions.length || myProgress?.completed;
+  const completed = myAnswers.length >= questions.length || myProgress?.completed;
   const otherCompleted = otherProgress?.completed;
 
   if (completed && otherCompleted) {
@@ -165,16 +154,23 @@ function SessionPage() {
   }
 
   return (
-    <Questionnaire
-      session={session}
-      partner={partner}
-      questions={questions}
-      answers={myAnswers}
-    />
+    <Questionnaire session={session} partner={partner} questions={questions} answers={myAnswers} />
   );
 }
 
-function Questionnaire({
+// Centering chrome for the questionnaire stage. Lifted out of Questionnaire so
+// Storybook stage stories can render it the same way the route does.
+export function SessionShell({ children }: { children: React.ReactNode }) {
+  return (
+    <main className="min-h-[100dvh] bg-background">
+      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-5 pb-6 pt-[max(env(safe-area-inset-top),1rem)]">
+        {children}
+      </div>
+    </main>
+  );
+}
+
+export function Questionnaire({
   session,
   partner,
   questions,
@@ -185,10 +181,7 @@ function Questionnaire({
   questions: ReturnType<typeof buildQuestionList>;
   answers: AnswerRow[];
 }) {
-  const answeredIds = useMemo(
-    () => new Set(answers.map((a) => a.question_id)),
-    [answers],
-  );
+  const answeredIds = useMemo(() => new Set(answers.map((a) => a.question_id)), [answers]);
   // Start at first unanswered
   const initialIndex = useMemo(() => {
     const idx = questions.findIndex((q) => !answeredIds.has(q.id));
@@ -254,43 +247,39 @@ function Questionnaire({
   const angle = ANGLE_BY_ID[q.angle_id];
 
   return (
-    <main className="min-h-[100dvh] bg-background">
-      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-5 pb-6 pt-[max(env(safe-area-inset-top),1rem)]">
-        {/* progress */}
-        <div className="flex items-center gap-3 pb-6">
-          <button
-            onClick={handlePrev}
-            disabled={index === 0}
-            className="text-sm text-muted-foreground disabled:opacity-30"
-          >
-            ←
-          </button>
-          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
-            <div
-              className="h-full bg-primary transition-all duration-500"
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-          <span className="text-xs tabular-nums text-muted-foreground">
-            {index + 1}/{total}
-          </span>
-        </div>
-
-        <div className="flex flex-1 items-center">
-          <SwipeCard
-            questionLabel={q.label}
-            meta={`${domain.label} · ${angle.label}`}
-            domainId={q.domain_id}
-            answers={q.answers}
-            current={current}
-            onPick={handlePick}
+    <SessionShell>
+      {/* progress */}
+      <div className="flex items-center gap-3 pb-6">
+        <button
+          onClick={handlePrev}
+          disabled={index === 0}
+          className="text-sm text-muted-foreground disabled:opacity-30"
+        >
+          ←
+        </button>
+        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
+          <div
+            className="h-full bg-primary transition-all duration-500"
+            style={{ width: `${pct}%` }}
           />
         </div>
-
-        {pending && (
-          <p className="text-center text-xs text-muted-foreground">envoi…</p>
-        )}
+        <span className="text-xs tabular-nums text-muted-foreground">
+          {index + 1}/{total}
+        </span>
       </div>
-    </main>
+
+      <div className="flex flex-1 items-center">
+        <SwipeCard
+          questionLabel={q.label}
+          meta={`${domain.label} · ${angle.label}`}
+          domainId={q.domain_id}
+          answers={q.answers}
+          current={current}
+          onPick={handlePick}
+        />
+      </div>
+
+      {pending && <p className="text-center text-xs text-muted-foreground">envoi…</p>}
+    </SessionShell>
   );
 }
