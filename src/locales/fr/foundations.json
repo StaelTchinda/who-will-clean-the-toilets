@@ -26,9 +26,18 @@
   },
   "results": {
     "title": "À la fin, vous verrez :",
-    "convergences": "Vos convergences — les sujets où vous êtes déjà alignés, sans le savoir.",
-    "divergences": "Vos divergences — les zones où une vraie conversation est nécessaire.",
-    "suggestion": "Une répartition suggérée — basée sur les talents et préférences de chacun, pas sur les habitudes héritées."
+    "convergences": {
+      "label": "Vos convergences",
+      "detail": "les sujets où vous êtes déjà alignés, sans le savoir."
+    },
+    "divergences": {
+      "label": "Vos divergences",
+      "detail": "les zones où une vraie conversation est nécessaire."
+    },
+    "suggestion": {
+      "label": "Une répartition suggérée",
+      "detail": "basée sur les talents et préférences de chacun, pas sur les habitudes héritées."
+    }
   },
   "cta": "Démarrer le questionnaire"
 }

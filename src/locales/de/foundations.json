@@ -26,9 +26,18 @@
   },
   "results": {
     "title": "Am Ende seht ihr:",
-    "convergences": "Eure Gemeinsamkeiten — Themen, bei denen ihr bereits übereinstimmt, ohne es zu wissen.",
-    "divergences": "Eure Unterschiede — Bereiche, in denen ein echtes Gespräch nötig ist.",
-    "suggestion": "Ein Verteilungsvorschlag — basierend auf den Talenten und Präferenzen jedes Einzelnen, nicht auf ererbten Gewohnheiten."
+    "convergences": {
+      "label": "Eure Gemeinsamkeiten",
+      "detail": "Themen, bei denen ihr bereits übereinstimmt, ohne es zu wissen."
+    },
+    "divergences": {
+      "label": "Eure Unterschiede",
+      "detail": "Bereiche, in denen ein echtes Gespräch nötig ist."
+    },
+    "suggestion": {
+      "label": "Ein Verteilungsvorschlag",
+      "detail": "basierend auf den Talenten und Präferenzen jedes Einzelnen, nicht auf ererbten Gewohnheiten."
+    }
   },
   "cta": "Fragebogen starten"
 }

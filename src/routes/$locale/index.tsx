@@ -25,7 +25,8 @@ import {
   rememberPartner,
   type ChildrenAnswer,
 } from "@/lib/session";
-import i18n, { type Locale, DEFAULT_LOCALE } from "@/i18n";
+import i18n, { type Locale } from "@/i18n";
+import { useLocale } from "@/hooks/use-locale";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const Route = createFileRoute("/$locale/")({
@@ -154,21 +155,20 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
 }
 
 function HomePage() {
-  const { locale } = Route.useParams();
   const [mode, setMode] = useState<Mode>("intro");
 
   return (
     <HomeShell>
-      {mode === "intro" && <Intro onChoose={setMode} locale={locale as Locale} />}
-      {mode === "create" && <CreateForm onBack={() => setMode("intro")} locale={locale as Locale} />}
-      {mode === "join" && <JoinForm onBack={() => setMode("intro")} locale={locale as Locale} />}
+      {mode === "intro" && <Intro onChoose={setMode} />}
+      {mode === "create" && <CreateForm onBack={() => setMode("intro")} />}
+      {mode === "join" && <JoinForm onBack={() => setMode("intro")} />}
     </HomeShell>
   );
 }
 
-export function Intro({ onChoose, locale: localeProp }: { onChoose: (m: Mode) => void; locale?: Locale }) {
+export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
   const { t } = useTranslation("home");
-  const locale = localeProp ?? (i18n.language as Locale) ?? DEFAULT_LOCALE;
+  const locale = useLocale();
   return (
     <div className="flex flex-col gap-10">
       {/* Hero */}
@@ -324,10 +324,10 @@ function ChildrenChoice({
   );
 }
 
-export function CreateForm({ onBack, locale: localeProp }: { onBack: () => void; locale?: Locale }) {
+export function CreateForm({ onBack }: { onBack: () => void }) {
   const { t } = useTranslation("home");
   const navigate = useNavigate();
-  const locale = localeProp ?? (i18n.language as Locale) ?? DEFAULT_LOCALE;
+  const locale = useLocale();
   const [name, setName] = useState("");
   const [kids, setKids] = useState<ChildrenAnswer | "">("");
   const [loading, setLoading] = useState(false);
@@ -389,10 +389,10 @@ export function CreateForm({ onBack, locale: localeProp }: { onBack: () => void;
   );
 }
 
-export function JoinForm({ onBack, locale: localeProp }: { onBack: () => void; locale?: Locale }) {
+export function JoinForm({ onBack }: { onBack: () => void }) {
   const { t } = useTranslation("home");
   const navigate = useNavigate();
-  const locale = localeProp ?? (i18n.language as Locale) ?? DEFAULT_LOCALE;
+  const locale = useLocale();
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [kids, setKids] = useState<ChildrenAnswer | "">("");

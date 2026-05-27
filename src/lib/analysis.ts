@@ -2,7 +2,6 @@ import {
   QUESTIONS,
   DOMAINS,
   TASKS,
-  DOMAIN_BY_ID,
   TASK_BY_ID,
   answerById,
   type Question,

@@ -1,10 +1,11 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { ANGLES, DOMAINS } from "@/lib/dataset";
 import { DOMAIN_ICON } from "@/lib/icon-map";
 import { Compass, Eye, Hand, Heart, BookOpen, ArrowLeft, ArrowRight } from "lucide-react";
-import i18n, { type Locale, DEFAULT_LOCALE } from "@/i18n";
+import i18n, { type Locale } from "@/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useLocale } from "@/hooks/use-locale";
 
 export const Route = createFileRoute("/$locale/foundations")({
   component: FoundationsPage,
@@ -29,10 +30,7 @@ const ANGLE_ICONS: Record<string, typeof Compass> = {
 export function FoundationsPage() {
   const { t } = useTranslation("foundations");
   const { t: tData } = useTranslation("data");
-  // useParams({ strict: false }) is safe in both the app router and Storybook's
-  // minimal router (where /$locale/foundations is not in the route tree).
-  const { locale: localeParam } = useParams({ strict: false });
-  const locale = (localeParam as Locale | undefined) ?? (i18n.language as Locale) ?? DEFAULT_LOCALE;
+  const locale = useLocale();
 
   return (
     <main className="min-h-[100dvh] bg-background text-foreground">
@@ -157,22 +155,25 @@ export function FoundationsPage() {
             <li className="flex gap-3">
               <span className="mt-1 size-1.5 shrink-0 rounded-full bg-converge" />
               <span>
-                <strong className="font-medium">{t("results.convergences").split(" — ")[0]}</strong>
-                {" — "}{t("results.convergences").split(" — ")[1]}
+                <strong className="font-medium">{t("results.convergences.label")}</strong>
+                {" — "}
+                {t("results.convergences.detail")}
               </span>
             </li>
             <li className="flex gap-3">
               <span className="mt-1 size-1.5 shrink-0 rounded-full bg-diverge" />
               <span>
-                <strong className="font-medium">{t("results.divergences").split(" — ")[0]}</strong>
-                {" — "}{t("results.divergences").split(" — ")[1]}
+                <strong className="font-medium">{t("results.divergences.label")}</strong>
+                {" — "}
+                {t("results.divergences.detail")}
               </span>
             </li>
             <li className="flex gap-3">
               <span className="mt-1 size-1.5 shrink-0 rounded-full bg-primary" />
               <span>
-                <strong className="font-medium">{t("results.suggestion").split(" — ")[0]}</strong>
-                {" — "}{t("results.suggestion").split(" — ")[1]}
+                <strong className="font-medium">{t("results.suggestion.label")}</strong>
+                {" — "}
+                {t("results.suggestion.detail")}
               </span>
             </li>
           </ul>

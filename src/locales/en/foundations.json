@@ -26,9 +26,18 @@
   },
   "results": {
     "title": "At the end, you'll see:",
-    "convergences": "Your convergences — topics where you're already aligned, without knowing it.",
-    "divergences": "Your divergences — areas where a real conversation is needed.",
-    "suggestion": "A suggested distribution — based on each person's talents and preferences, not inherited habits."
+    "convergences": {
+      "label": "Your convergences",
+      "detail": "topics where you're already aligned, without knowing it."
+    },
+    "divergences": {
+      "label": "Your divergences",
+      "detail": "areas where a real conversation is needed."
+    },
+    "suggestion": {
+      "label": "A suggested distribution",
+      "detail": "based on each person's talents and preferences, not inherited habits."
+    }
   },
   "cta": "Start the questionnaire"
 }

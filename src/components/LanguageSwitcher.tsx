@@ -1,7 +1,7 @@
 import { useRouterState, useRouter } from "@tanstack/react-router";
-import { useTranslation } from "react-i18next";
 import { ChevronDown } from "lucide-react";
-import { LOCALES, DEFAULT_LOCALE, type Locale } from "@/i18n";
+import { LOCALES, type Locale } from "@/i18n";
+import { useLocale } from "@/hooks/use-locale";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,25 +30,15 @@ export function LanguageSwitcher() {
   const routerState = useRouterState();
   const router = useRouter();
   const currentPath = routerState.location.pathname;
-
-  // Subscribe to i18n language changes so the component re-renders when
-  // LocaleDecorator (Storybook) or the route loader (production) calls
-  // i18n.changeLanguage(). In the real app the URL always contains a
-  // locale segment (/fr/…, /en/…) so pathLocale wins; in Storybook the
-  // minimal router path is "/" and we fall back to the live i18n.language.
-  const { i18n } = useTranslation();
-  const localeMatch = currentPath.match(/^\/([^/]+)(\/.*)?$/);
-  const pathLocale = localeMatch?.[1] as Locale | undefined;
-  const currentLocale =
-    pathLocale && LOCALES.includes(pathLocale)
-      ? pathLocale
-      : (i18n.language as Locale) ?? DEFAULT_LOCALE;
+  const currentLocale = useLocale();
 
   const handleSelect = (locale: Locale) => {
     if (locale === currentLocale) return;
-    const newPath = currentPath.replace(`/${currentLocale}`, `/${locale}`);
-    // Preserve any query string / hash while staying on the same page
-    // searchStr already includes the leading "?"; hash excludes the "#"
+    // Swap only the leading locale segment, anchored at the start so a later
+    // path segment that happens to equal the locale isn't mis-replaced.
+    const newPath = currentPath.replace(new RegExp(`^/${currentLocale}(?=/|$)`), `/${locale}`);
+    // Preserve any query string / hash while staying on the same page.
+    // searchStr already includes the leading "?"; hash excludes the "#".
     const searchStr = routerState.location.searchStr ?? "";
     const hash = routerState.location.hash ? `#${routerState.location.hash}` : "";
     router.history.push(newPath + searchStr + hash);
