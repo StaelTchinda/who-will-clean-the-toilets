@@ -70,26 +70,32 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Nos Rôles — questionnaire de couple" },
+      { name: "theme-color", content: "#C0664A" },
+      { title: "Who Will Clean the Toilets? — couples questionnaire" },
       {
         name: "description",
         content:
           "Un questionnaire pour révéler vos attentes, talents et préférences sur la gestion du foyer.",
       },
-      { property: "og:title", content: "Nos Rôles" },
+      { property: "og:title", content: "Who Will Clean the Toilets?" },
       {
         property: "og:description",
         content:
           "Provoquez une conversation structurée et bienveillante sur la répartition des tâches du foyer.",
       },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { property: "og:image", content: "/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "/og-image.png" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "manifest", href: "/site.webmanifest" },
     ],
   }),
   shellComponent: RootShell,
