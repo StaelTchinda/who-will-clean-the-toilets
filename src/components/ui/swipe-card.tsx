@@ -50,6 +50,7 @@ export interface QuestionHeaderProps {
   domainId: DomainId;
   /** When set, the question was already answered — show a small "modifié" chip. */
   modified?: boolean;
+  compact?: boolean;
 }
 
 export function QuestionHeader({
@@ -57,16 +58,17 @@ export function QuestionHeader({
   meta,
   domainId,
   modified = false,
+  compact = false,
 }: QuestionHeaderProps) {
   const { t } = useTranslation("swipecard");
   const DomainIcon = iconByName(DOMAIN_BY_ID[domainId].icon);
   return (
-    <div className="relative px-1 pb-4 pt-1 text-center">
+    <div className={`relative px-1 pb-4 pt-1 text-center ${compact ? "text-xs" : "text-[10px]"}`}>
       <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-primary">
         <DomainIcon className="size-3.5" strokeWidth={1.7} />
         <span>{meta}</span>
       </div>
-      <h2 className="mt-2 text-balance font-serif text-[22px] leading-[1.15] text-foreground sm:text-2xl">
+      <h2 className={`mt-2 text-balance font-serif text-[22px] leading-[1.15] text-foreground sm:text-2xl ${compact ? "text-lg" : "text-[22px]"}`}>
         {questionLabel}
       </h2>
       {modified && (
@@ -85,6 +87,9 @@ export interface StageProps {
   answers: Answer[]; // exactly 4
   current?: string;
   onPick: (answerId: string) => void | Promise<void>;
+  /** Shrinks the cross for non-interactive previews (e.g. the home page demo). */
+  compact?: boolean;
+  showHint?: boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -103,7 +108,7 @@ export interface StageProps {
 // tests/e2e/helpers/flow.ts.
 // ---------------------------------------------------------------------------
 
-export function SwipeStage({ domainId, answers, current, onPick }: StageProps) {
+export function SwipeStage({ domainId, answers, current, onPick, compact = false, showHint = true }: StageProps) {
   const { t } = useTranslation("swipecard");
   const DomainIcon = iconByName(DOMAIN_BY_ID[domainId].icon);
   const x = useMotionValue(0);
@@ -189,18 +194,24 @@ export function SwipeStage({ domainId, answers, current, onPick }: StageProps) {
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div className="grid min-h-[280px] grid-cols-[1fr_1.15fr_1fr] grid-rows-[auto_1fr_auto] gap-2.5 md:min-h-[360px] md:gap-3">
+      <div
+        className={`grid grid-cols-[1fr_1.15fr_1fr] grid-rows-[auto_1fr_auto] ${
+          compact ? "gap-1" : "min-h-[280px] gap-2.5 md:min-h-[360px] md:gap-3"
+        }`}
+      >
         <SwipeCell
           position="up"
           answer={mapping.up}
           active={hovered === "up" || previewing === "up" || dirForCurrent === "up"}
           onTap={() => commit("up", false)}
+          compact={compact}
         />
         <SwipeCell
           position="left"
           answer={mapping.left}
           active={hovered === "left" || previewing === "left" || dirForCurrent === "left"}
           onTap={() => commit("left", false)}
+          compact={compact}
         />
 
         {/* Centre cell — draggable; mirrors the picked answer. */}
@@ -218,14 +229,15 @@ export function SwipeStage({ domainId, answers, current, onPick }: StageProps) {
               ? t("swipe.previewAria", { label: centerAnswer.label })
               : t("swipe.previewEmptyAria")
           }
-          className={`col-start-2 row-start-2 flex cursor-grab touch-none select-none flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-5 text-center text-[14px] leading-[1.15] transition ${
+          className={`col-start-2 row-start-2 flex cursor-grab touch-none select-none flex-col items-center justify-center gap-2 rounded-2xl border text-center transition ${
             centerFilled
               ? "border-primary bg-primary text-primary-foreground shadow-[0_12px_30px_-12px_rgba(40,20,10,0.35)]"
               : "border-dashed border-border bg-secondary/60 text-muted-foreground"
-          }`}
+          } ${compact ? "px-2 py-3 text-[12px] leading-[1]" : "px-3 py-5 text-[14px] leading-[1.15]"}`
+        }
         >
-          <CenterIcon className="size-7 shrink-0" strokeWidth={1.6} />
-          <span className="px-1 text-[14px]">
+          <CenterIcon className={`${compact ? "size-4" : "size-7"} shrink-0`} strokeWidth={1.6} />
+          <span className={`px-1 ${compact ? "text-[12px]" : "text-[14px]"}`}>
             {centerAnswer ? centerAnswer.label : t("swipe.placeholder")}
           </span>
         </motion.div>
@@ -235,18 +247,22 @@ export function SwipeStage({ domainId, answers, current, onPick }: StageProps) {
           answer={mapping.right}
           active={hovered === "right" || previewing === "right" || dirForCurrent === "right"}
           onTap={() => commit("right", false)}
+          compact={compact}
         />
         <SwipeCell
           position="down"
           answer={mapping.down}
           active={hovered === "down" || previewing === "down" || dirForCurrent === "down"}
           onTap={() => commit("down", false)}
+          compact={compact}
         />
       </div>
 
-      <p className="text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-        {t("swipe.hint")}
-      </p>
+      {showHint && (
+        <p className="text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+          {t("swipe.hint")}
+        </p>
+      )}
     </div>
   );
 }
@@ -256,11 +272,13 @@ function SwipeCell({
   answer,
   active,
   onTap,
+  compact = false,
 }: {
   position: Dir;
   answer: Answer;
   active: boolean;
   onTap: () => void;
+  compact?: boolean;
 }) {
   const Icon = iconByName(answer.icon);
   // Place each outer cell in the 3×3 grid via Tailwind utilities so the
@@ -277,13 +295,13 @@ function SwipeCell({
       onClick={onTap}
       aria-label={answer.label}
       aria-pressed={active}
-      className={`${placement} flex h-full flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-4 text-center text-[14px] leading-[1.15] transition ${
+      className={`${placement} flex h-full flex-col items-center justify-center gap-2 rounded-2xl border text-center  transition ${
         active
           ? "border-primary bg-primary text-primary-foreground"
           : "border-border bg-card text-foreground hover:border-primary/40"
-      }`}
+      }` + (compact ? "px-1 py-2 text-[12px] leading-[1.15]" : "px-3 py-4 text-[14px] leading-[1.15]")}
     >
-      <Icon className="size-5 opacity-85" strokeWidth={1.6} />
+      <Icon className={`${compact ? "size-4" : "size-5"} opacity-85`} strokeWidth={1.6} />
       <span className="px-1">{answer.label}</span>
     </button>
   );

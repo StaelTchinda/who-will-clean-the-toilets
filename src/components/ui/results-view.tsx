@@ -107,11 +107,15 @@ export function AnalysisSection({
   grouped,
   nameA,
   nameB,
+  hideOverview = false,
+  disableGrid = false,
 }: {
   highlights: ReturnType<typeof pickHighlights>;
   grouped: ReturnType<typeof groupByDomain>;
   nameA: string;
   nameB: string;
+  hideOverview?: boolean;
+  disableGrid?: boolean;
 }) {
   const { t } = useTranslation("results");
   const { t: tData } = useTranslation("data");
@@ -133,7 +137,7 @@ export function AnalysisSection({
       <section>
         <h2 className="font-serif text-2xl">{t("analysis.alignedTitle")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t("analysis.alignedSub")}</p>
-        <ul className="mt-4 grid gap-3 md:grid-cols-2">
+        <ul className={`mt-4 grid gap-3 ${disableGrid ? "grid-cols-1" : "md:grid-cols-2"}`}>
           {highlights.aligned.length === 0 && (
             <li className="text-sm text-muted-foreground">{t("analysis.alignedEmpty")}</li>
           )}
@@ -154,7 +158,7 @@ export function AnalysisSection({
       <section>
         <h2 className="font-serif text-2xl">{t("analysis.divergedTitle")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t("analysis.divergedSub")}</p>
-        <ul className="mt-4 grid gap-3 md:grid-cols-2">
+        <ul className={`mt-4 grid gap-3 ${disableGrid ? "grid-cols-1" : "md:grid-cols-2"}`}>
           {highlights.diverged.length === 0 && (
             <li className="text-sm text-muted-foreground">{t("analysis.divergedEmpty")}</li>
           )}
@@ -172,30 +176,32 @@ export function AnalysisSection({
         </ul>
       </section>
 
-      <section>
-        <h2 className="font-serif text-2xl">{t("analysis.overviewTitle")}</h2>
-        <ul className="mt-4 flex flex-col gap-2">
-          {grouped.map((g) => (
-            <li key={g.domain.id} className="flex items-center gap-3 rounded-xl bg-card p-3">
-              <span className="w-32 shrink-0 text-sm">
-                {tData(`domains.${g.domain.id}`, { defaultValue: g.domain.label })}
-              </span>
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-secondary">
-                <div
-                  className="h-full bg-primary"
-                  style={{ width: `${Math.round(g.convergence * 100)}%` }}
-                />
-              </div>
-              <span className="w-10 text-right text-xs tabular-nums text-muted-foreground">
-                {Math.round(g.convergence * 100)}%
-              </span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-2 text-xs text-muted-foreground">
-          {t("analysis.overviewSub", { nameA, nameB })}
-        </p>
-      </section>
+      {!hideOverview && (
+        <section>
+          <h2 className="font-serif text-2xl">{t("analysis.overviewTitle")}</h2>
+          <ul className="mt-4 flex flex-col gap-2">
+            {grouped.map((g) => (
+              <li key={g.domain.id} className="flex items-center gap-3 rounded-xl bg-card p-3">
+                <span className="w-32 shrink-0 text-sm">
+                  {tData(`domains.${g.domain.id}`, { defaultValue: g.domain.label })}
+                </span>
+                <div className="h-2 flex-1 overflow-hidden rounded-full bg-secondary">
+                  <div
+                    className="h-full bg-primary"
+                    style={{ width: `${Math.round(g.convergence * 100)}%` }}
+                  />
+                </div>
+                <span className="w-10 text-right text-xs tabular-nums text-muted-foreground">
+                  {Math.round(g.convergence * 100)}%
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs text-muted-foreground">
+            {t("analysis.overviewSub", { nameA, nameB })}
+          </p>
+        </section>
+      )}
     </div>
   );
 }
