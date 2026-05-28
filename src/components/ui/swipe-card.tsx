@@ -4,6 +4,14 @@ import { useTranslation } from "react-i18next";
 import type { Answer, AnswerPosition, DomainId } from "@/lib/dataset";
 import { DOMAIN_BY_ID } from "@/lib/dataset";
 import { iconByName } from "@/lib/icon-map";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import type { InputMode } from "@/hooks/use-input-mode";
 
 type Dir = AnswerPosition;
 const SWIPE_THRESHOLD = 90;
@@ -315,5 +323,36 @@ export function FormStage({ answers, current, onPick }: Omit<StageProps, "domain
         );
       })}
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// ModeSelect — subtle inline picker that swaps between the swipe and form
+// answer surfaces. No background, no box border, just a solid bottom underline
+// + a small chevron, so it reads as a quiet preference rather than a primary
+// control. Shared by the session route and the home-page experience preview.
+// ---------------------------------------------------------------------------
+
+export function ModeSelect({
+  mode,
+  onChange,
+}: {
+  mode: InputMode;
+  onChange: (m: InputMode) => void;
+}) {
+  const { t } = useTranslation("session");
+  return (
+    <Select value={mode} onValueChange={(value) => onChange(value as InputMode)}>
+      <SelectTrigger
+        aria-label={t("mode.aria")}
+        className="h-6 w-auto gap-1.5 rounded-none border-0 border-b border-solid border-muted-foreground/40 bg-transparent px-0 pb-0.5 text-xs text-muted-foreground shadow-none ring-0 transition hover:text-foreground focus:ring-0 focus-visible:border-foreground/60 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:opacity-50"
+      >
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent align="end">
+        <SelectItem value="swipe">{t("mode.swipe")}</SelectItem>
+        <SelectItem value="form">{t("mode.form")}</SelectItem>
+      </SelectContent>
+    </Select>
   );
 }
