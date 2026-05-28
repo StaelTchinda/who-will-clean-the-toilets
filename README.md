@@ -1,5 +1,9 @@
 # Who Will Clean the Toilets?
 
+<p align="center">
+  <img src="public/og-image.png" alt="Who Will Clean the Toilets logo with text" width="640" />
+</p>
+
 A two-partner web questionnaire that helps couples talk about household roles **before** daily chores become a source of conflict. Inspired by Gary Chapman’s book [_Les toilettes ne se nettoient pas toutes seules_](https://www.garychapman.org/) (and his “four angles, six domains” framework).
 
 Each partner answers **53 swipe-based questions** (~20 minutes) on their phone. When both finish, the app shows **convergences**, **divergences**, and a **suggested task split** based on talents and preferences—not inherited habits.
