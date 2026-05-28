@@ -282,7 +282,7 @@ export function Questionnaire({
           modified={!!current}
         />
 
-        <div className="flex flex-1 items-start pt-2 md:items-center md:pb-12">
+        <div className="flex flex-1 items-start pt-2">
           {mode === "swipe" && (
             // key={q.id} forces a fresh mount per question so SwipeStage's
             // internal `locked`/drag state can never leak across questions —

@@ -52,7 +52,7 @@ export function ResultsView({
         </h1>
         <p className="mt-3 text-sm text-muted-foreground">{t("convergence", { pct: overall })}</p>
 
-        <div className="mt-6 grid grid-cols-3 gap-1 rounded-full bg-secondary p-1 text-sm sm:max-w-md">
+        <div className="mt-6 grid grid-cols-3 gap-1 rounded-full bg-secondary p-1 text-sm">
           {(
             [
               ["analysis", t("tabs.analysis")],
@@ -218,7 +218,7 @@ export function TableSection({
           <h3 className="font-serif text-xl">
             {tData(`domains.${g.domain.id}`, { defaultValue: g.domain.label })}
           </h3>
-          <ul className="mt-3 grid gap-2 lg:grid-cols-2">
+          <ul className="mt-3 flex flex-col gap-2">
             {g.rows.map((r) => {
               const labelA = r.answerA
                 ? tData(`questions.${r.question.id}.answers.${r.answerA}`, {
