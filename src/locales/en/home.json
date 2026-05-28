@@ -33,10 +33,14 @@
     "body": "At the end, you discover your convergences, your divergences, and a suggested distribution based on each person's talents and preferences — not inherited habits."
   },
   "resultPreview": {
-    "eyebrow": "Preview · results",
-    "converge": "Agreement",
-    "diverge": "Discuss",
-    "suggestion": "Plus a suggested distribution based on your combined talents and preferences."
+    "nameA": "Alex",
+    "nameB": "Sam",
+    "sampleQuestionA": "Who handles day-to-day cooking?",
+    "sampleQuestionB": "Who should manage deep cleaning?",
+    "sampleAlignedAnswer": "We share it",
+    "domainHousekeeping": "Housework",
+    "domainCooking": "Cooking",
+    "domainFinances": "Finances"
   },
   "cta": {
     "title": "Ready to put words to it?",
@@ -45,7 +49,7 @@
   },
   "footer": "Inspired by \"Profit from the 5 Love Languages\" — Gary Chapman.",
   "swipePreview": {
-    "eyebrow": "Preview · Housekeeping · Environment",
+    "meta": "Housekeeping · Environment",
     "question": "Growing up, who did the cleaning?",
     "both": "Both",
     "everyone": "Everyone",
