@@ -33,7 +33,6 @@ export const Route = createFileRoute("/$locale/")({
 // flips), but onPick is a no-op so it never navigates.
 function SwipePreview() {
   const { t } = useTranslation("home");
-  const [mode, setMode] = useInputMode("swipe");
   const previewAnswers: Answer[] = [
     { id: "both", label: t("swipePreview.both"), icon: "Users", position: "up" },
     { id: "mother", label: t("swipePreview.maman"), icon: "Venus", position: "left" },
@@ -42,24 +41,15 @@ function SwipePreview() {
   ];
 
   return (
-    <div className="relative rounded-3xl border border-border bg-card p-5">
-      {/* <div className="rounded-2xl border border-border bg-background px-4 pb-4 pt-3"> */}
-      <div>
-        <div className="mb-3 flex justify-end">
-          <ModeSelect mode={mode} onChange={setMode} />
-        </div>
-        <QuestionHeader
-          questionLabel={t("swipePreview.question")}
-          meta={t("swipePreview.meta")}
-          domainId="housekeeping"
-        />
-        <div className="flex items-start pt-2">
-          {mode === "swipe" ? (
-            <SwipeStage domainId="housekeeping" answers={previewAnswers} onPick={() => {}} />
-          ) : (
-            <FormStage answers={previewAnswers} onPick={() => {}} />
-          )}
-        </div>
+    <div className="relative mx-auto w-full rounded-3xl border border-border bg-card p-5">
+      <QuestionHeader
+        questionLabel={t("swipePreview.question")}
+        meta={t("swipePreview.meta")}
+        domainId="housekeeping"
+        compact
+      />
+      <div className="flex items-start">
+        <SwipeStage domainId="housekeeping" answers={previewAnswers} onPick={() => { }} compact showHint={false} />
       </div>
     </div>
   );
@@ -111,38 +101,15 @@ function ResultsPreview() {
   const { highlights, grouped } = useResultsFixture();
 
   return (
-    <div className="relative rounded-3xl border border-border bg-card p-5">
-      <div className="flex items-center justify-between">
-        <p className="text-xs uppercase tracking-[0.25em] text-primary">
-          {tResults("meta.eyebrow")}
-        </p>
-        <Heart className="size-3.5 text-primary" />
-      </div>
-
-      <h3 className="mt-3 font-serif text-2xl leading-tight">
-        {t("resultPreview.nameA")} <span className="text-muted-foreground">&</span>{" "}
-        {t("resultPreview.nameB")}
-      </h3>
-      <p className="mt-2 text-sm text-muted-foreground">{tResults("convergence", { pct: 62 })}</p>
-
-      <div className="mt-5 grid grid-cols-3 gap-1 rounded-full bg-secondary p-1 text-xs">
-        <span className="rounded-full bg-card px-3 py-2 text-center text-foreground shadow-sm">
-          {tResults("tabs.analysis")}
-        </span>
-        <span className="rounded-full px-3 py-2 text-center text-muted-foreground">
-          {tResults("tabs.table")}
-        </span>
-        <span className="rounded-full px-3 py-2 text-center text-muted-foreground">
-          {tResults("tabs.tasks")}
-        </span>
-      </div>
-
-      <div className="pointer-events-none mt-6">
+    <div className="relative mx-auto w-full rounded-3xl border border-border bg-card px-5 pb-5">
+      <div className="pointer-events-none mt-5">
         <AnalysisSection
           highlights={highlights}
           grouped={grouped}
           nameA={t("resultPreview.nameA")}
           nameB={t("resultPreview.nameB")}
+          hideOverview
+          disableGrid
         />
       </div>
     </div>
@@ -162,7 +129,18 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
     <main className="min-h-[100dvh] bg-background text-foreground">
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-md flex-col px-6 py-10 md:max-w-2xl lg:max-w-5xl lg:px-10 lg:py-14">
         <header className="mb-10 flex items-center justify-between lg:mb-16">
-          <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("brand")}</p>
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/favicon.svg"
+              alt={t("brand")}
+              className="size-8 shrink-0 lg:size-9"
+              width={36}
+              height={36}
+            />
+            <span className="hidden text-xs uppercase tracking-[0.25em] text-primary sm:inline">
+              {t("brand")}
+            </span>
+          </div>
           <LanguageSwitcher />
         </header>
         {children}
@@ -258,7 +236,7 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
       </section>
 
       {/* Experience preview — text left, swipe demo right on desktop */}
-      <section className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-16 lg:gap-y-4">
+      <section className="flex flex-col gap-4 lg:grid lg:grid-cols-[2fr_3fr] lg:items-center lg:gap-x-16 lg:gap-y-4">
         <p className="text-xs uppercase tracking-[0.25em] text-primary lg:col-start-1 lg:row-start-1">
           {t("experience.eyebrow")}
         </p>
@@ -268,20 +246,21 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
         <p className="text-[15px] leading-relaxed text-muted-foreground lg:col-start-1 lg:row-start-3 lg:text-base">
           {t("experience.body")}
         </p>
-        <div className="lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:self-center">
+        <div className="lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:self-center mx-auto">
           <SwipePreview />
         </div>
       </section>
 
+
       {/* Feedback preview — results demo left, text right on desktop */}
-      <section className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-16 lg:gap-y-4">
+      <section className="flex flex-col gap-4 lg:grid lg:grid-cols-[3fr_2fr] lg:items-center lg:gap-x-16 lg:gap-y-4">
         <p className="text-xs uppercase tracking-[0.25em] text-primary lg:col-start-2 lg:row-start-1">
           {t("feedback.eyebrow")}
         </p>
         <h2 className="font-serif text-3xl leading-tight lg:col-start-2 lg:row-start-2 lg:text-4xl">
           {t("feedback.title")}
         </h2>
-        <div className="lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:self-center">
+        <div className="lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:self-center lg:max-w-[480px]">
           <ResultsPreview />
         </div>
         <p className="text-[15px] leading-relaxed text-muted-foreground lg:col-start-2 lg:row-start-3 lg:text-base">
@@ -331,11 +310,10 @@ function ChildrenChoice({
           key={o.id}
           type="button"
           onClick={() => onChange(o.id)}
-          className={`rounded-2xl border px-3 py-3 text-sm transition ${
-            value === o.id
+          className={`rounded-2xl border px-3 py-3 text-sm transition ${value === o.id
               ? "border-primary bg-primary text-primary-foreground"
               : "border-border bg-card hover:border-primary/50"
-          }`}
+            }`}
         >
           {t(o.labelKey)}
         </button>
