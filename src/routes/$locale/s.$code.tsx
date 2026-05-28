@@ -250,7 +250,7 @@ export function Questionnaire({
 
   return (
     <main className="min-h-[100dvh] bg-background">
-      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-5 pb-6 pt-[max(env(safe-area-inset-top),1rem)]">
+      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-5 pb-6 pt-[max(env(safe-area-inset-top),1rem)] md:max-w-lg lg:max-w-xl">
         {/* progress */}
         <div className="flex items-center gap-3 pb-6">
           <button

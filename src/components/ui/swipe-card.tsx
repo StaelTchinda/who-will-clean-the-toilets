@@ -189,7 +189,7 @@ export function SwipeStage({ domainId, answers, current, onPick }: StageProps) {
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div className="grid min-h-[280px] grid-cols-[1fr_1.15fr_1fr] grid-rows-[auto_1fr_auto] gap-2.5">
+      <div className="grid min-h-[280px] grid-cols-[1fr_1.15fr_1fr] grid-rows-[auto_1fr_auto] gap-2.5 md:min-h-[360px] md:gap-3">
         <SwipeCell
           position="up"
           answer={mapping.up}
