@@ -45,7 +45,7 @@ export function ResultsView({
 
   return (
     <main className="min-h-[100dvh] bg-background">
-      <div className="mx-auto max-w-2xl px-5 pb-16 pt-[max(env(safe-area-inset-top),1.5rem)]">
+      <div className="mx-auto max-w-2xl px-5 pb-16 pt-[max(env(safe-area-inset-top),1.5rem)] lg:max-w-4xl lg:px-8">
         <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("meta.eyebrow")}</p>
         <h1 className="mt-3 text-balance font-serif text-4xl leading-tight sm:text-5xl">
           {nameA} <span className="text-muted-foreground">&</span> {nameB}
@@ -91,7 +91,7 @@ export function ResultsView({
           <p className="text-xs text-muted-foreground">{t("footer.disclaimer")}</p>
           <Button
             variant="outline"
-            className="rounded-full"
+            className="rounded-full sm:self-start sm:px-8"
             onClick={() => navigate({ to: "/$locale", params: { locale } })}
           >
             {t("footer.newQuestionnaire")}
@@ -102,16 +102,20 @@ export function ResultsView({
   );
 }
 
-function AnalysisSection({
+export function AnalysisSection({
   highlights,
   grouped,
   nameA,
   nameB,
+  hideOverview = false,
+  disableGrid = false,
 }: {
   highlights: ReturnType<typeof pickHighlights>;
   grouped: ReturnType<typeof groupByDomain>;
   nameA: string;
   nameB: string;
+  hideOverview?: boolean;
+  disableGrid?: boolean;
 }) {
   const { t } = useTranslation("results");
   const { t: tData } = useTranslation("data");
@@ -133,7 +137,7 @@ function AnalysisSection({
       <section>
         <h2 className="font-serif text-2xl">{t("analysis.alignedTitle")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t("analysis.alignedSub")}</p>
-        <ul className="mt-4 flex flex-col gap-3">
+        <ul className={`mt-4 grid gap-3 ${disableGrid ? "grid-cols-1" : "md:grid-cols-2"}`}>
           {highlights.aligned.length === 0 && (
             <li className="text-sm text-muted-foreground">{t("analysis.alignedEmpty")}</li>
           )}
@@ -154,7 +158,7 @@ function AnalysisSection({
       <section>
         <h2 className="font-serif text-2xl">{t("analysis.divergedTitle")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t("analysis.divergedSub")}</p>
-        <ul className="mt-4 flex flex-col gap-3">
+        <ul className={`mt-4 grid gap-3 ${disableGrid ? "grid-cols-1" : "md:grid-cols-2"}`}>
           {highlights.diverged.length === 0 && (
             <li className="text-sm text-muted-foreground">{t("analysis.divergedEmpty")}</li>
           )}
@@ -172,35 +176,37 @@ function AnalysisSection({
         </ul>
       </section>
 
-      <section>
-        <h2 className="font-serif text-2xl">{t("analysis.overviewTitle")}</h2>
-        <ul className="mt-4 flex flex-col gap-2">
-          {grouped.map((g) => (
-            <li key={g.domain.id} className="flex items-center gap-3 rounded-xl bg-card p-3">
-              <span className="w-32 shrink-0 text-sm">
-                {tData(`domains.${g.domain.id}`, { defaultValue: g.domain.label })}
-              </span>
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-secondary">
-                <div
-                  className="h-full bg-primary"
-                  style={{ width: `${Math.round(g.convergence * 100)}%` }}
-                />
-              </div>
-              <span className="w-10 text-right text-xs tabular-nums text-muted-foreground">
-                {Math.round(g.convergence * 100)}%
-              </span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-2 text-xs text-muted-foreground">
-          {t("analysis.overviewSub", { nameA, nameB })}
-        </p>
-      </section>
+      {!hideOverview && (
+        <section>
+          <h2 className="font-serif text-2xl">{t("analysis.overviewTitle")}</h2>
+          <ul className="mt-4 flex flex-col gap-2">
+            {grouped.map((g) => (
+              <li key={g.domain.id} className="flex items-center gap-3 rounded-xl bg-card p-3">
+                <span className="w-32 shrink-0 text-sm">
+                  {tData(`domains.${g.domain.id}`, { defaultValue: g.domain.label })}
+                </span>
+                <div className="h-2 flex-1 overflow-hidden rounded-full bg-secondary">
+                  <div
+                    className="h-full bg-primary"
+                    style={{ width: `${Math.round(g.convergence * 100)}%` }}
+                  />
+                </div>
+                <span className="w-10 text-right text-xs tabular-nums text-muted-foreground">
+                  {Math.round(g.convergence * 100)}%
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs text-muted-foreground">
+            {t("analysis.overviewSub", { nameA, nameB })}
+          </p>
+        </section>
+      )}
     </div>
   );
 }
 
-function TableSection({
+export function TableSection({
   grouped,
   nameA,
   nameB,
@@ -269,7 +275,7 @@ function TableSection({
   );
 }
 
-function TasksSection({
+export function TasksSection({
   suggestions,
   nameA,
   nameB,
@@ -301,7 +307,7 @@ function TasksSection({
             <h3 className="font-serif text-xl">
               {tData(`domains.${dId}`, { defaultValue: domainObj?.label ?? dId })}
             </h3>
-            <ul className="mt-3 flex flex-col gap-2">
+            <ul className="mt-3 grid gap-2 lg:grid-cols-2">
               {items.map((s) => {
                 const taskLabel = tData(`tasks.${s.taskId}`, { defaultValue: s.taskLabel });
                 const rationale = t(s.rationaleKey, s.rationaleValues);

@@ -1,0 +1,14 @@
+{
+  "name": "Who Will Clean the Toilets?",
+  "short_name": "Who Cleans?",
+  "description": "A couples questionnaire on sharing the housework.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF7EF",
+  "theme_color": "#C0664A",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}

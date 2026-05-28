@@ -13,6 +13,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // (tailwind, supabase mock alias, etc.) live in viteFinal below.
 const config: StorybookConfig = {
   stories: ["../src/**/*.stories.@(ts|tsx)"],
+  // Serve /public at the root so app references like <img src="/favicon.svg" />
+  // (the header logo) resolve inside stories the same way they do in the app.
+  staticDirs: ["../public"],
   // @storybook/addon-vitest runs stories AS Vitest browser tests, which gives
   // us coverage natively through Vitest (`vitest run --coverage`). No
   // test-runner, no separate istanbul wiring, no merge step needed — Vitest's

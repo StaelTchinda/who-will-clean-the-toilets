@@ -1,4 +1,8 @@
-# Nos Rôles
+# Who Will Clean the Toilets?
+
+<p align="center">
+  <img src="public/og-image.png" alt="Who Will Clean the Toilets logo with text" width="640" />
+</p>
 
 A two-partner web questionnaire that helps couples talk about household roles **before** daily chores become a source of conflict. Inspired by Gary Chapman’s book [_Les toilettes ne se nettoient pas toutes seules_](https://www.garychapman.org/) (and his “four angles, six domains” framework).
 
@@ -12,6 +16,12 @@ Each partner answers **53 swipe-based questions** (~20 minutes) on their phone. 
 - **Six domains** — Housekeeping, cooking, finances, logistics, children, values (`src/data/domains.json`).
 - **Live sync** — Progress and answers sync via Supabase Realtime while both partners answer.
 - **Results** — Per-question alignment, grouped by domain, plus task assignment suggestions (`src/lib/analysis.ts`).
+
+## Screenshots
+
+| Landing | Swipe questionnaire | Results |
+| :-----: | :-----------------: | :-----: |
+| <img src="docs/screenshots/home.png" alt="Landing page" width="240" /> | <img src="docs/screenshots/swipe.png" alt="Swipe questionnaire" width="240" /> | <img src="docs/screenshots/results.png" alt="Results screen" width="240" /> |
 
 ## Tech stack
 
@@ -36,7 +46,7 @@ Each partner answers **53 swipe-based questions** (~20 minutes) on their phone. 
 
 ```bash
 git clone <your-repo-url>
-cd nos-roles
+cd who-will-clean-the-toilets
 bun install
 ```
 
@@ -138,9 +148,9 @@ The app deploys as a Cloudflare Worker via `@cloudflare/vite-plugin` + `wrangler
 
 ```bash
 # Create the D1 database — note the printed database_id.
-bunx wrangler d1 create nos-roles
+bunx wrangler d1 create who-will-clean-the-toilets
 # Apply the schema (use --remote for the real DB; omit for a local one).
-bunx wrangler d1 execute nos-roles --remote --file=./src/integrations/cloudflare/schema.sql
+bunx wrangler d1 execute who-will-clean-the-toilets --remote --file=./src/integrations/cloudflare/schema.sql
 ```
 
 Add these secrets in **GitHub → Settings → Secrets and variables → Actions**:

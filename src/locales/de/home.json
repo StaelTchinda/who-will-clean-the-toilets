@@ -1,9 +1,9 @@
 {
   "meta": {
-    "title": "Unsere Rollen — Paarbefragung",
+    "title": "Wer putzt die Toilette? — Paarbefragung",
     "description": "Ein gemeinsamer Fragebogen, um eure Erwartungen, Talente und Präferenzen im Haushalt zu entdecken."
   },
-  "brand": "Unsere Rollen",
+  "brand": "Wer putzt die Toilette?",
   "hero": {
     "heading1": "Eure Rollen",
     "heading2": "im Haushalt.",
@@ -33,10 +33,14 @@
     "body": "Am Ende entdeckt ihr eure Gemeinsamkeiten, eure Unterschiede und einen Vorschlag zur Aufgabenverteilung basierend auf den Talenten und Präferenzen jedes Einzelnen — nicht auf ererbten Gewohnheiten."
   },
   "resultPreview": {
-    "eyebrow": "Vorschau · Ergebnisse",
-    "converge": "Einigkeit",
-    "diverge": "Besprechen",
-    "suggestion": "Plus ein Verteilungsvorschlag basierend auf euren kombinierten Talenten und Präferenzen."
+    "nameA": "Alex",
+    "nameB": "Sam",
+    "sampleQuestionA": "Wer übernimmt das tägliche Kochen?",
+    "sampleQuestionB": "Wer sollte die Grundreinigung übernehmen?",
+    "sampleAlignedAnswer": "Wir teilen es uns",
+    "domainHousekeeping": "Haushalt",
+    "domainCooking": "Kochen",
+    "domainFinances": "Finanzen"
   },
   "cta": {
     "title": "Bereit, es in Worte zu fassen?",
@@ -45,7 +49,7 @@
   },
   "footer": "Inspiriert von Gary Chapmans Werk über die Sprachen der Liebe.",
   "swipePreview": {
-    "eyebrow": "Vorschau · Haushalt · Umfeld",
+    "meta": "Haushalt · Umfeld",
     "question": "Wer hat bei dir aufgeräumt, als du aufgewachsen bist?",
     "both": "Beide",
     "everyone": "Alle",

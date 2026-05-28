@@ -31,7 +31,7 @@ export function FoundationsPage() {
 
   return (
     <main className="min-h-[100dvh] bg-background text-foreground">
-      <div className="mx-auto max-w-md px-6 pb-16 pt-[max(env(safe-area-inset-top),1.5rem)]">
+      <div className="mx-auto w-full max-w-md px-6 pb-16 pt-[max(env(safe-area-inset-top),1.5rem)] md:max-w-2xl lg:max-w-5xl lg:px-10">
         <div className="flex items-center justify-between">
           <Link
             to="/$locale"
@@ -43,13 +43,15 @@ export function FoundationsPage() {
           <LanguageSwitcher />
         </div>
 
-        <p className="mt-8 text-xs uppercase tracking-[0.25em] text-primary">{t("eyebrow")}</p>
-        <h1 className="mt-3 text-pretty font-serif text-4xl leading-[1.05]">
+        <p className="mt-8 text-xs uppercase tracking-[0.25em] text-primary lg:mt-12">
+          {t("eyebrow")}
+        </p>
+        <h1 className="mt-3 text-pretty font-serif text-4xl leading-[1.05] lg:max-w-3xl lg:text-5xl">
           {t("title1")} <em className="text-primary">{t("titleEm")}</em> {t("title2")}
         </h1>
 
         {/* Origin */}
-        <section className="mt-10 rounded-3xl border border-border bg-card p-6">
+        <section className="mt-10 rounded-3xl border border-border bg-card p-6 lg:p-8">
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
               <BookOpen className="size-5" strokeWidth={1.6} />
@@ -75,7 +77,7 @@ export function FoundationsPage() {
             {t("angles.body")}
           </p>
 
-          <ul className="mt-6 flex flex-col gap-3">
+          <ul className="mt-6 grid gap-3 md:grid-cols-2">
             {ANGLES.map((a, i) => {
               const Icon = ANGLE_ICONS[a.id];
               return (
@@ -105,7 +107,7 @@ export function FoundationsPage() {
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
             {t("domains.body")}
           </p>
-          <ul className="mt-6 grid grid-cols-2 gap-3">
+          <ul className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-3">
             {DOMAINS.map((d) => {
               const Icon = iconByName(d.icon);
               return (
@@ -159,7 +161,7 @@ export function FoundationsPage() {
         <Link
           to="/$locale"
           params={{ locale: locale as Locale }}
-          className="mt-10 inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-primary text-base text-primary-foreground"
+          className="mt-10 flex h-14 w-full items-center justify-center gap-2 rounded-full bg-primary text-base text-primary-foreground lg:mx-auto lg:max-w-md"
         >
           {t("cta")}
           <ArrowRight className="size-4" />

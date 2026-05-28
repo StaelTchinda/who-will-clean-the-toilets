@@ -3,22 +3,14 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
+import { FormStage, ModeSelect, QuestionHeader, SwipeStage } from "@/components/ui/swipe-card";
+import { AnalysisSection } from "@/components/ui/results-view";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  ArrowRight,
-  ArrowUp,
-  ArrowDown,
-  ArrowLeft,
-  Sparkles,
-  Heart,
-  Users,
-  PersonStanding,
-  User,
-  UsersRound,
-  BookOpen,
-  Compass,
-} from "lucide-react";
+import type { Answer, DomainId } from "@/lib/dataset";
+import type { Highlight } from "@/lib/analysis";
+import { useInputMode } from "@/hooks/use-input-mode";
+import { ArrowRight, Heart, BookOpen, Compass } from "lucide-react";
 import { createSession, joinSession, rememberPartner, type ChildrenAnswer } from "@/lib/session";
 import i18n, { type Locale } from "@/i18n";
 import { useLocale } from "@/hooks/use-locale";
@@ -34,102 +26,91 @@ export const Route = createFileRoute("/$locale/")({
   },
 });
 
+// Live, scaled-down replica of the real questionnaire surface: the same
+// QuestionHeader, the same ModeSelect, and the same SwipeStage / FormStage —
+// fed a single sample question so the home page always mirrors what the
+// session screen actually renders. Interactive (the puck morphs, the toggle
+// flips), but onPick is a no-op so it never navigates.
 function SwipePreview() {
   const { t } = useTranslation("home");
+  const previewAnswers: Answer[] = [
+    { id: "both", label: t("swipePreview.both"), icon: "Users", position: "up" },
+    { id: "mother", label: t("swipePreview.maman"), icon: "Venus", position: "left" },
+    { id: "father", label: t("swipePreview.papa"), icon: "Mars", position: "right" },
+    { id: "everyone", label: t("swipePreview.everyone"), icon: "UsersRound", position: "down" },
+  ];
+
   return (
-    <div className="relative rounded-3xl border border-border bg-card p-5">
-      <p className="text-[10px] uppercase tracking-[0.22em] text-primary">
-        {t("swipePreview.eyebrow")}
-      </p>
-      <div className="mx-auto mt-4 grid max-w-[300px] grid-cols-3 grid-rows-3 items-center gap-2">
-        {/* top */}
-        <div className="col-start-2 row-start-1 flex flex-col items-center gap-0.5 rounded-2xl border border-border bg-background px-2 py-2 text-[10px]">
-          <ArrowUp className="size-3 opacity-60" />
-          <Users className="size-4" strokeWidth={1.6} />
-          <span>{t("swipePreview.both")}</span>
-        </div>
-        {/* left */}
-        <div className="col-start-1 row-start-2 flex flex-col items-center gap-0.5 rounded-2xl border border-border bg-background px-1.5 py-2 text-[10px]">
-          <ArrowLeft className="size-3 opacity-60" />
-          <UsersRound className="size-4" strokeWidth={1.6} />
-          <span>{t("swipePreview.everyone")}</span>
-        </div>
-        {/* card */}
-        <div className="col-start-2 row-start-2 aspect-[3/4] flex flex-col items-center justify-center rounded-2xl border border-border bg-secondary/40 p-3 shadow-sm">
-          <Sparkles className="size-6 text-primary" strokeWidth={1.4} />
-          <p className="mt-2 text-center font-serif text-[13px] leading-tight text-foreground">
-            {t("swipePreview.question")}
-          </p>
-        </div>
-        {/* right */}
-        <div className="col-start-3 row-start-2 flex flex-col items-center gap-0.5 rounded-2xl border-2 border-primary bg-primary px-1.5 py-2 text-[10px] text-primary-foreground">
-          <ArrowRight className="size-3 opacity-80" />
-          <User className="size-4" strokeWidth={1.6} />
-          <span>{t("swipePreview.papa")}</span>
-        </div>
-        {/* bottom */}
-        <div className="col-start-2 row-start-3 flex flex-col items-center gap-0.5 rounded-2xl border border-border bg-background px-2 py-2 text-[10px]">
-          <ArrowDown className="size-3 opacity-60" />
-          <PersonStanding className="size-4" strokeWidth={1.6} />
-          <span>{t("swipePreview.maman")}</span>
-        </div>
+    <div className="relative mx-auto w-full rounded-3xl border border-border bg-card p-5">
+      <QuestionHeader
+        questionLabel={t("swipePreview.question")}
+        meta={t("swipePreview.meta")}
+        domainId="housekeeping"
+        compact
+      />
+      <div className="flex items-start">
+        <SwipeStage domainId="housekeeping" answers={previewAnswers} onPick={() => { }} compact showHint={false} />
       </div>
     </div>
   );
 }
 
+// Sample data shaped exactly like the real analysis props. Domain/question ids
+// don't exist in the `data` namespace, so the section falls back to these
+// labels via tData(..., { defaultValue }) — keeping the preview faithful to
+// the real AnalysisSection without re-implementing its cards or bars.
+function useResultsFixture() {
+  const { t } = useTranslation("home");
+
+  const aligned: Highlight[] = [
+    {
+      domainId: "cooking",
+      questionId: "preview-cooking",
+      questionLabel: t("resultPreview.sampleQuestionA"),
+      detailKey: "analysis.alignedDetail",
+      answerAId: "preview-both",
+      answerALabel: t("resultPreview.sampleAlignedAnswer"),
+    },
+  ];
+  const diverged: Highlight[] = [
+    {
+      domainId: "housekeeping",
+      questionId: "preview-housekeeping",
+      questionLabel: t("resultPreview.sampleQuestionB"),
+      detailKey: "analysis.divergedDetail",
+    },
+  ];
+
+  const bar = (id: DomainId, label: string, convergence: number) => ({
+    domain: { id, label },
+    rows: [],
+    convergence,
+  });
+  const grouped = [
+    bar("housekeeping", t("resultPreview.domainHousekeeping"), 0.62),
+    bar("cooking", t("resultPreview.domainCooking"), 0.83),
+    bar("finances", t("resultPreview.domainFinances"), 0.41),
+  ];
+
+  return { highlights: { aligned, diverged }, grouped };
+}
+
 function ResultsPreview() {
   const { t } = useTranslation("home");
-  const { t: tData } = useTranslation("data");
-  const rows = [
-    {
-      label: tData("tasks.cooking_daily", { defaultValue: "Cuisine quotidienne" }),
-      tone: "converge",
-      text: t("resultPreview.converge"),
-    },
-    {
-      label: tData("tasks.sanitizing", { defaultValue: "Sanitaires" }),
-      tone: "diverge",
-      text: t("resultPreview.diverge"),
-    },
-    {
-      label: tData("tasks.budget", { defaultValue: "Budget courses" }),
-      tone: "converge",
-      text: t("resultPreview.converge"),
-    },
-    {
-      label: tData("tasks.meal_planning", { defaultValue: "Planifier les menus" }),
-      tone: "diverge",
-      text: t("resultPreview.diverge"),
-    },
-  ] as const;
+  const { t: tResults } = useTranslation("results");
+  const { highlights, grouped } = useResultsFixture();
+
   return (
-    <div className="rounded-3xl border border-border bg-card p-5">
-      <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-        <span>{t("resultPreview.eyebrow")}</span>
-        <Heart className="size-3.5 text-primary" />
-      </div>
-      <ul className="mt-4 flex flex-col divide-y divide-border/60">
-        {rows.map((r, i) => (
-          <li key={i} className="flex items-center justify-between py-2.5 text-sm">
-            <span className="font-serif text-[15px]">{r.label}</span>
-            <span
-              className={`flex items-center gap-1.5 text-[11px] uppercase tracking-wider ${
-                r.tone === "converge" ? "text-converge" : "text-diverge"
-              }`}
-            >
-              <span
-                className={`size-1.5 rounded-full ${
-                  r.tone === "converge" ? "bg-converge" : "bg-diverge"
-                }`}
-              />
-              {r.text}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-4 rounded-2xl bg-secondary/50 p-3 text-xs leading-relaxed text-muted-foreground">
-        {t("resultPreview.suggestion")}
+    <div className="relative mx-auto w-full rounded-3xl border border-border bg-card px-5 pb-5">
+      <div className="pointer-events-none mt-5">
+        <AnalysisSection
+          highlights={highlights}
+          grouped={grouped}
+          nameA={t("resultPreview.nameA")}
+          nameB={t("resultPreview.nameB")}
+          hideOverview
+          disableGrid
+        />
       </div>
     </div>
   );
@@ -146,13 +127,26 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation("home");
   return (
     <main className="min-h-[100dvh] bg-background text-foreground">
-      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-6 py-10">
-        <header className="mb-10 flex items-center justify-between">
-          <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("brand")}</p>
+      <div className="mx-auto flex min-h-[100dvh] w-full max-w-md flex-col px-6 py-10 md:max-w-2xl lg:max-w-5xl lg:px-10 lg:py-14">
+        <header className="mb-10 flex items-center justify-between lg:mb-16">
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/favicon.svg"
+              alt={t("brand")}
+              className="size-8 shrink-0 lg:size-9"
+              width={36}
+              height={36}
+            />
+            <span className="hidden text-xs uppercase tracking-[0.25em] text-primary sm:inline">
+              {t("brand")}
+            </span>
+          </div>
           <LanguageSwitcher />
         </header>
         {children}
-        <footer className="mt-auto pt-10 text-xs text-muted-foreground">{t("footer")}</footer>
+        <footer className="mt-auto pt-10 text-xs text-muted-foreground lg:pt-16">
+          {t("footer")}
+        </footer>
       </div>
     </main>
   );
@@ -174,21 +168,21 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
   const { t } = useTranslation("home");
   const locale = useLocale();
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 lg:gap-24">
       {/* Hero */}
-      <div className="flex flex-col gap-6">
-        <h1 className="text-pretty text-5xl leading-[1.02] text-foreground">
+      <div className="flex flex-col gap-6 md:mx-auto md:max-w-2xl md:items-center md:text-center">
+        <h1 className="text-pretty text-5xl leading-[1.02] text-foreground lg:text-6xl">
           {t("hero.heading1")}
           <br />
           <em className="text-primary">{t("hero.heading2")}</em>
         </h1>
-        <p className="text-balance text-base leading-relaxed text-muted-foreground">
+        <p className="text-balance text-base leading-relaxed text-muted-foreground lg:text-lg">
           {t("hero.subtext")}
         </p>
-        <div className="flex flex-col gap-3 pt-2">
+        <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-center">
           <Button
             size="lg"
-            className="h-14 rounded-full text-base"
+            className="h-14 rounded-full text-base sm:px-10"
             onClick={() => onChoose("create")}
           >
             {t("hero.ctaCreate")}
@@ -196,13 +190,13 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
           <Button
             size="lg"
             variant="ghost"
-            className="h-14 rounded-full text-base"
+            className="h-14 rounded-full text-base sm:px-10"
             onClick={() => onChoose("join")}
           >
             {t("hero.ctaJoin")}
           </Button>
         </div>
-        <ul className="grid grid-cols-3 gap-3 pt-2 text-xs text-muted-foreground">
+        <ul className="grid grid-cols-3 gap-3 pt-2 text-xs text-muted-foreground md:w-full md:max-w-md">
           <li className="rounded-2xl bg-secondary/60 p-3 text-center">
             <span className="block font-serif text-2xl text-foreground">53</span>
             {t("stats.questions")}
@@ -219,7 +213,7 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
       </div>
 
       {/* Origin / book */}
-      <section className="rounded-3xl border border-border bg-card p-6">
+      <section className="rounded-3xl border border-border bg-card p-6 md:mx-auto md:max-w-2xl lg:w-full lg:p-10">
         <div className="flex items-center gap-3">
           <div className="flex size-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <BookOpen className="size-5" strokeWidth={1.6} />
@@ -228,8 +222,10 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
             {t("book.eyebrow")}
           </p>
         </div>
-        <h2 className="mt-4 font-serif text-2xl leading-tight">{t("book.title")}</h2>
-        <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{t("book.body")}</p>
+        <h2 className="mt-4 font-serif text-2xl leading-tight lg:text-3xl">{t("book.title")}</h2>
+        <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground lg:text-base">
+          {t("book.body")}
+        </p>
         <Link
           to="/$locale/foundations"
           params={{ locale }}
@@ -239,32 +235,47 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
         </Link>
       </section>
 
-      {/* Experience preview */}
-      <section className="flex flex-col gap-4">
-        <p className="text-xs uppercase tracking-[0.25em] text-primary">
+      {/* Experience preview — text left, swipe demo right on desktop */}
+      <section className="flex flex-col gap-4 lg:grid lg:grid-cols-[2fr_3fr] lg:items-center lg:gap-x-16 lg:gap-y-4">
+        <p className="text-xs uppercase tracking-[0.25em] text-primary lg:col-start-1 lg:row-start-1">
           {t("experience.eyebrow")}
         </p>
-        <h2 className="font-serif text-3xl leading-tight">{t("experience.title")}</h2>
-        <p className="text-[15px] leading-relaxed text-muted-foreground">{t("experience.body")}</p>
-        <SwipePreview />
+        <h2 className="font-serif text-3xl leading-tight lg:col-start-1 lg:row-start-2 lg:text-4xl">
+          {t("experience.title")}
+        </h2>
+        <p className="text-[15px] leading-relaxed text-muted-foreground lg:col-start-1 lg:row-start-3 lg:text-base">
+          {t("experience.body")}
+        </p>
+        <div className="lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:self-center mx-auto">
+          <SwipePreview />
+        </div>
       </section>
 
-      {/* Feedback preview */}
-      <section className="flex flex-col gap-4">
-        <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("feedback.eyebrow")}</p>
-        <h2 className="font-serif text-3xl leading-tight">{t("feedback.title")}</h2>
-        <ResultsPreview />
-        <p className="text-[15px] leading-relaxed text-muted-foreground">{t("feedback.body")}</p>
+
+      {/* Feedback preview — results demo left, text right on desktop */}
+      <section className="flex flex-col gap-4 lg:grid lg:grid-cols-[3fr_2fr] lg:items-center lg:gap-x-16 lg:gap-y-4">
+        <p className="text-xs uppercase tracking-[0.25em] text-primary lg:col-start-2 lg:row-start-1">
+          {t("feedback.eyebrow")}
+        </p>
+        <h2 className="font-serif text-3xl leading-tight lg:col-start-2 lg:row-start-2 lg:text-4xl">
+          {t("feedback.title")}
+        </h2>
+        <div className="lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:self-center lg:max-w-[480px]">
+          <ResultsPreview />
+        </div>
+        <p className="text-[15px] leading-relaxed text-muted-foreground lg:col-start-2 lg:row-start-3 lg:text-base">
+          {t("feedback.body")}
+        </p>
       </section>
 
       {/* CTA repeat */}
-      <section className="rounded-3xl bg-primary/5 p-6 text-center">
+      <section className="rounded-3xl bg-primary/5 p-6 text-center md:mx-auto md:max-w-xl lg:w-full lg:p-10">
         <Compass className="mx-auto size-6 text-primary" strokeWidth={1.5} />
-        <p className="mt-3 font-serif text-2xl leading-tight">{t("cta.title")}</p>
+        <p className="mt-3 font-serif text-2xl leading-tight lg:text-3xl">{t("cta.title")}</p>
         <Button
           size="lg"
           onClick={() => onChoose("create")}
-          className="mt-5 h-14 w-full rounded-full text-base"
+          className="mt-5 h-14 w-full rounded-full text-base sm:mx-auto sm:w-auto sm:px-12"
         >
           {t("cta.start")}
         </Button>
@@ -299,11 +310,10 @@ function ChildrenChoice({
           key={o.id}
           type="button"
           onClick={() => onChange(o.id)}
-          className={`rounded-2xl border px-3 py-3 text-sm transition ${
-            value === o.id
+          className={`rounded-2xl border px-3 py-3 text-sm transition ${value === o.id
               ? "border-primary bg-primary text-primary-foreground"
               : "border-border bg-card hover:border-primary/50"
-          }`}
+            }`}
         >
           {t(o.labelKey)}
         </button>
@@ -337,7 +347,7 @@ export function CreateForm({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-6">
+    <form onSubmit={submit} className="mx-auto flex w-full max-w-md flex-col gap-6">
       <button
         type="button"
         onClick={onBack}
@@ -407,7 +417,7 @@ export function JoinForm({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-6">
+    <form onSubmit={submit} className="mx-auto flex w-full max-w-md flex-col gap-6">
       <button
         type="button"
         onClick={onBack}
