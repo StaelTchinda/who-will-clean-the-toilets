@@ -95,10 +95,14 @@ test.describe("two partners", () => {
         }),
       ]);
 
-      // Both should land on ResultsView. The "Nos Rôles · résultats" header
+      // Both should land on ResultsView. The "Qui nettoiera les toilettes ? · résultats" header
       // is unique to that component.
-      await expect(pageA.getByText("Nos Rôles · résultats")).toBeVisible({ timeout: 15_000 });
-      await expect(pageB.getByText("Nos Rôles · résultats")).toBeVisible({ timeout: 15_000 });
+      await expect(pageA.getByText("Qui nettoiera les toilettes ? · résultats")).toBeVisible({
+        timeout: 15_000,
+      });
+      await expect(pageB.getByText("Qui nettoiera les toilettes ? · résultats")).toBeVisible({
+        timeout: 15_000,
+      });
 
       // Both partners' names show up in the title.
       await expect(pageA.getByRole("heading", { name: /Alice.*Bob/ })).toBeVisible();
@@ -147,7 +151,9 @@ test.describe("two partners", () => {
       });
 
       // A's screen should flip to ResultsView via realtime — no reload.
-      await expect(pageA.getByText("Nos Rôles · résultats")).toBeVisible({ timeout: 15_000 });
+      await expect(pageA.getByText("Qui nettoiera les toilettes ? · résultats")).toBeVisible({
+        timeout: 15_000,
+      });
     } finally {
       await cleanup();
     }

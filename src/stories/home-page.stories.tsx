@@ -3,7 +3,7 @@ import { fn } from "storybook/test";
 import { CreateForm, HomeShell, Intro, JoinForm } from "@/routes/$locale/index";
 
 // Stage-level stories for the home route. Each story renders the same chrome
-// the live `HomePage` uses (`HomeShell` — max-w-md centering, "Nos Rôles"
+// the live `HomePage` uses (`HomeShell` — max-w-md centering, "Who Will Clean the Toilets?"
 // header, Chapman footer) so width and surrounding context match the dev app
 // exactly. The legacy component-only Intro story is folded into the `Intro`
 // stage below.

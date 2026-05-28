@@ -107,7 +107,9 @@ export async function answerAllQuestions(
           // On the last question, the questionnaire unmounts entirely — we
           // land on WaitingForFinish or ResultsView. Either heading is fine.
           await expect(
-            page.getByText(/On attend que .* finisse|Nos Rôles · résultats|Envoi de tes/),
+            page.getByText(
+              /On attend que .* finisse|Qui nettoiera les toilettes \? · résultats|Envoi de tes/,
+            ),
           ).toBeVisible({ timeout: 3000 });
         } else {
           await expect(page.getByText(`${i + 2}/${total}`, { exact: true })).toBeVisible({
