@@ -3,22 +3,14 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
+import { FormStage, ModeSelect, QuestionHeader, SwipeStage } from "@/components/ui/swipe-card";
+import { AnalysisSection } from "@/components/ui/results-view";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  ArrowRight,
-  ArrowUp,
-  ArrowDown,
-  ArrowLeft,
-  Sparkles,
-  Heart,
-  Users,
-  PersonStanding,
-  User,
-  UsersRound,
-  BookOpen,
-  Compass,
-} from "lucide-react";
+import type { Answer, DomainId } from "@/lib/dataset";
+import type { Highlight } from "@/lib/analysis";
+import { useInputMode } from "@/hooks/use-input-mode";
+import { ArrowRight, Heart, BookOpen, Compass } from "lucide-react";
 import { createSession, joinSession, rememberPartner, type ChildrenAnswer } from "@/lib/session";
 import i18n, { type Locale } from "@/i18n";
 import { useLocale } from "@/hooks/use-locale";
@@ -34,102 +26,124 @@ export const Route = createFileRoute("/$locale/")({
   },
 });
 
+// Live, scaled-down replica of the real questionnaire surface: the same
+// QuestionHeader, the same ModeSelect, and the same SwipeStage / FormStage —
+// fed a single sample question so the home page always mirrors what the
+// session screen actually renders. Interactive (the puck morphs, the toggle
+// flips), but onPick is a no-op so it never navigates.
 function SwipePreview() {
   const { t } = useTranslation("home");
+  const [mode, setMode] = useInputMode("swipe");
+  const previewAnswers: Answer[] = [
+    { id: "both", label: t("swipePreview.both"), icon: "Users", position: "up" },
+    { id: "mother", label: t("swipePreview.maman"), icon: "Venus", position: "left" },
+    { id: "father", label: t("swipePreview.papa"), icon: "Mars", position: "right" },
+    { id: "everyone", label: t("swipePreview.everyone"), icon: "UsersRound", position: "down" },
+  ];
+
   return (
     <div className="relative rounded-3xl border border-border bg-card p-5">
-      <p className="text-[10px] uppercase tracking-[0.22em] text-primary">
-        {t("swipePreview.eyebrow")}
-      </p>
-      <div className="mx-auto mt-4 grid max-w-[300px] grid-cols-3 grid-rows-3 items-center gap-2">
-        {/* top */}
-        <div className="col-start-2 row-start-1 flex flex-col items-center gap-0.5 rounded-2xl border border-border bg-background px-2 py-2 text-[10px]">
-          <ArrowUp className="size-3 opacity-60" />
-          <Users className="size-4" strokeWidth={1.6} />
-          <span>{t("swipePreview.both")}</span>
+      {/* <div className="rounded-2xl border border-border bg-background px-4 pb-4 pt-3"> */}
+      <div>
+        <div className="mb-3 flex justify-end">
+          <ModeSelect mode={mode} onChange={setMode} />
         </div>
-        {/* left */}
-        <div className="col-start-1 row-start-2 flex flex-col items-center gap-0.5 rounded-2xl border border-border bg-background px-1.5 py-2 text-[10px]">
-          <ArrowLeft className="size-3 opacity-60" />
-          <UsersRound className="size-4" strokeWidth={1.6} />
-          <span>{t("swipePreview.everyone")}</span>
-        </div>
-        {/* card */}
-        <div className="col-start-2 row-start-2 aspect-[3/4] flex flex-col items-center justify-center rounded-2xl border border-border bg-secondary/40 p-3 shadow-sm">
-          <Sparkles className="size-6 text-primary" strokeWidth={1.4} />
-          <p className="mt-2 text-center font-serif text-[13px] leading-tight text-foreground">
-            {t("swipePreview.question")}
-          </p>
-        </div>
-        {/* right */}
-        <div className="col-start-3 row-start-2 flex flex-col items-center gap-0.5 rounded-2xl border-2 border-primary bg-primary px-1.5 py-2 text-[10px] text-primary-foreground">
-          <ArrowRight className="size-3 opacity-80" />
-          <User className="size-4" strokeWidth={1.6} />
-          <span>{t("swipePreview.papa")}</span>
-        </div>
-        {/* bottom */}
-        <div className="col-start-2 row-start-3 flex flex-col items-center gap-0.5 rounded-2xl border border-border bg-background px-2 py-2 text-[10px]">
-          <ArrowDown className="size-3 opacity-60" />
-          <PersonStanding className="size-4" strokeWidth={1.6} />
-          <span>{t("swipePreview.maman")}</span>
+        <QuestionHeader
+          questionLabel={t("swipePreview.question")}
+          meta={t("swipePreview.meta")}
+          domainId="housekeeping"
+        />
+        <div className="flex items-start pt-2">
+          {mode === "swipe" ? (
+            <SwipeStage domainId="housekeeping" answers={previewAnswers} onPick={() => {}} />
+          ) : (
+            <FormStage answers={previewAnswers} onPick={() => {}} />
+          )}
         </div>
       </div>
     </div>
   );
 }
 
+// Sample data shaped exactly like the real analysis props. Domain/question ids
+// don't exist in the `data` namespace, so the section falls back to these
+// labels via tData(..., { defaultValue }) — keeping the preview faithful to
+// the real AnalysisSection without re-implementing its cards or bars.
+function useResultsFixture() {
+  const { t } = useTranslation("home");
+
+  const aligned: Highlight[] = [
+    {
+      domainId: "cooking",
+      questionId: "preview-cooking",
+      questionLabel: t("resultPreview.sampleQuestionA"),
+      detailKey: "analysis.alignedDetail",
+      answerAId: "preview-both",
+      answerALabel: t("resultPreview.sampleAlignedAnswer"),
+    },
+  ];
+  const diverged: Highlight[] = [
+    {
+      domainId: "housekeeping",
+      questionId: "preview-housekeeping",
+      questionLabel: t("resultPreview.sampleQuestionB"),
+      detailKey: "analysis.divergedDetail",
+    },
+  ];
+
+  const bar = (id: DomainId, label: string, convergence: number) => ({
+    domain: { id, label },
+    rows: [],
+    convergence,
+  });
+  const grouped = [
+    bar("housekeeping", t("resultPreview.domainHousekeeping"), 0.62),
+    bar("cooking", t("resultPreview.domainCooking"), 0.83),
+    bar("finances", t("resultPreview.domainFinances"), 0.41),
+  ];
+
+  return { highlights: { aligned, diverged }, grouped };
+}
+
 function ResultsPreview() {
   const { t } = useTranslation("home");
-  const { t: tData } = useTranslation("data");
-  const rows = [
-    {
-      label: tData("tasks.cooking_daily", { defaultValue: "Cuisine quotidienne" }),
-      tone: "converge",
-      text: t("resultPreview.converge"),
-    },
-    {
-      label: tData("tasks.sanitizing", { defaultValue: "Sanitaires" }),
-      tone: "diverge",
-      text: t("resultPreview.diverge"),
-    },
-    {
-      label: tData("tasks.budget", { defaultValue: "Budget courses" }),
-      tone: "converge",
-      text: t("resultPreview.converge"),
-    },
-    {
-      label: tData("tasks.meal_planning", { defaultValue: "Planifier les menus" }),
-      tone: "diverge",
-      text: t("resultPreview.diverge"),
-    },
-  ] as const;
+  const { t: tResults } = useTranslation("results");
+  const { highlights, grouped } = useResultsFixture();
+
   return (
-    <div className="rounded-3xl border border-border bg-card p-5">
-      <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-        <span>{t("resultPreview.eyebrow")}</span>
+    <div className="relative rounded-3xl border border-border bg-card p-5">
+      <div className="flex items-center justify-between">
+        <p className="text-xs uppercase tracking-[0.25em] text-primary">
+          {tResults("meta.eyebrow")}
+        </p>
         <Heart className="size-3.5 text-primary" />
       </div>
-      <ul className="mt-4 flex flex-col divide-y divide-border/60">
-        {rows.map((r, i) => (
-          <li key={i} className="flex items-center justify-between py-2.5 text-sm">
-            <span className="font-serif text-[15px]">{r.label}</span>
-            <span
-              className={`flex items-center gap-1.5 text-[11px] uppercase tracking-wider ${
-                r.tone === "converge" ? "text-converge" : "text-diverge"
-              }`}
-            >
-              <span
-                className={`size-1.5 rounded-full ${
-                  r.tone === "converge" ? "bg-converge" : "bg-diverge"
-                }`}
-              />
-              {r.text}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-4 rounded-2xl bg-secondary/50 p-3 text-xs leading-relaxed text-muted-foreground">
-        {t("resultPreview.suggestion")}
+
+      <h3 className="mt-3 font-serif text-2xl leading-tight">
+        {t("resultPreview.nameA")} <span className="text-muted-foreground">&</span>{" "}
+        {t("resultPreview.nameB")}
+      </h3>
+      <p className="mt-2 text-sm text-muted-foreground">{tResults("convergence", { pct: 62 })}</p>
+
+      <div className="mt-5 grid grid-cols-3 gap-1 rounded-full bg-secondary p-1 text-xs">
+        <span className="rounded-full bg-card px-3 py-2 text-center text-foreground shadow-sm">
+          {tResults("tabs.analysis")}
+        </span>
+        <span className="rounded-full px-3 py-2 text-center text-muted-foreground">
+          {tResults("tabs.table")}
+        </span>
+        <span className="rounded-full px-3 py-2 text-center text-muted-foreground">
+          {tResults("tabs.tasks")}
+        </span>
+      </div>
+
+      <div className="pointer-events-none mt-6">
+        <AnalysisSection
+          highlights={highlights}
+          grouped={grouped}
+          nameA={t("resultPreview.nameA")}
+          nameB={t("resultPreview.nameB")}
+        />
       </div>
     </div>
   );

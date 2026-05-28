@@ -102,7 +102,7 @@ export function ResultsView({
   );
 }
 
-function AnalysisSection({
+export function AnalysisSection({
   highlights,
   grouped,
   nameA,
@@ -200,7 +200,7 @@ function AnalysisSection({
   );
 }
 
-function TableSection({
+export function TableSection({
   grouped,
   nameA,
   nameB,
@@ -269,7 +269,7 @@ function TableSection({
   );
 }
 
-function TasksSection({
+export function TasksSection({
   suggestions,
   nameA,
   nameB,

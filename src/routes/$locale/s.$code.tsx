@@ -17,15 +17,8 @@ import {
 } from "@/lib/session";
 import { buildQuestionList, ANGLE_BY_ID, DOMAIN_BY_ID } from "@/lib/dataset";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ResultsView } from "@/components/ui/results-view";
-import { FormStage, QuestionHeader, SwipeStage } from "@/components/ui/swipe-card";
+import { FormStage, ModeSelect, QuestionHeader, SwipeStage } from "@/components/ui/swipe-card";
 import { useInputMode, type InputMode } from "@/hooks/use-input-mode";
 import { Centered } from "@/components/session/centered";
 import { PickPartner } from "@/components/session/pick-partner";
@@ -311,26 +304,5 @@ export function Questionnaire({
         {pending && <p className="text-center text-xs text-muted-foreground">{t("sending")}</p>}
       </div>
     </main>
-  );
-}
-
-// Subtle inline picker — no background, no box border, just a solid bottom
-// underline + a small chevron. Right-aligned under the progress bar so it
-// reads as a quiet preference, not a primary control.
-function ModeSelect({ mode, onChange }: { mode: InputMode; onChange: (m: InputMode) => void }) {
-  const { t } = useTranslation("session");
-  return (
-    <Select value={mode} onValueChange={(value) => onChange(value as InputMode)}>
-      <SelectTrigger
-        aria-label={t("mode.aria")}
-        className="h-6 w-auto gap-1.5 rounded-none border-0 border-b border-solid border-muted-foreground/40 bg-transparent px-0 pb-0.5 text-xs text-muted-foreground shadow-none ring-0 transition hover:text-foreground focus:ring-0 focus-visible:border-foreground/60 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:opacity-50"
-      >
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent align="end">
-        <SelectItem value="swipe">{t("mode.swipe")}</SelectItem>
-        <SelectItem value="form">{t("mode.form")}</SelectItem>
-      </SelectContent>
-    </Select>
   );
 }

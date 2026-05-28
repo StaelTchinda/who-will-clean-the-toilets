@@ -33,10 +33,14 @@
     "body": "À la fin, vous découvrez vos convergences, vos divergences, et une répartition suggérée basée sur les talents et préférences de chacun — pas sur les habitudes héritées."
   },
   "resultPreview": {
-    "eyebrow": "Aperçu · résultats",
-    "converge": "Accord",
-    "diverge": "À discuter",
-    "suggestion": "Et une répartition suggérée selon vos talents et préférences combinés."
+    "nameA": "Alex",
+    "nameB": "Sam",
+    "sampleQuestionA": "Qui gère la cuisine au quotidien ?",
+    "sampleQuestionB": "Qui devrait gérer le grand ménage ?",
+    "sampleAlignedAnswer": "On partage",
+    "domainHousekeeping": "Ménage",
+    "domainCooking": "Cuisine",
+    "domainFinances": "Finances"
   },
   "cta": {
     "title": "Prêt à mettre des mots dessus ?",
@@ -45,7 +49,7 @@
   },
   "footer": "Inspiré de « Les toilettes ne se nettoient pas toutes seules » — Gary Chapman.",
   "swipePreview": {
-    "eyebrow": "Aperçu · Ménage · Environnement",
+    "meta": "Ménage · Environnement",
     "question": "Le ménage, chez toi en grandissant ?",
     "both": "Les deux",
     "everyone": "Tous",
