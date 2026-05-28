@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Who Will Clean the Toilets?">
+  <rect width="512" height="512" fill="#C0664A"/>
+  <g fill="#FBF7EF">
+    <rect x="150" y="372" width="150" height="26" rx="13"/>
+    <rect x="182" y="318" width="86" height="68" rx="10"/>
+    <path d="M128 214 L322 214 L302 304 Q292 338 250 344 L200 344 Q158 338 148 304 Z"/>
+    <rect x="300" y="150" width="62" height="104" rx="14"/>
+    <ellipse cx="217" cy="214" rx="100" ry="32"/>
+  </g>
+  <ellipse cx="217" cy="214" rx="60" ry="17" fill="#C0664A"/>
+</svg>
