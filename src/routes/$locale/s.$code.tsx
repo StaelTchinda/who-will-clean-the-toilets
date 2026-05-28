@@ -257,7 +257,7 @@ export function Questionnaire({
 
   return (
     <main className="min-h-[100dvh] bg-background">
-      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-5 pb-6 pt-[max(env(safe-area-inset-top),1rem)]">
+      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-5 pb-6 pt-[max(env(safe-area-inset-top),1rem)] md:max-w-lg lg:max-w-xl">
         {/* progress */}
         <div className="flex items-center gap-3 pb-6">
           <button
@@ -289,7 +289,7 @@ export function Questionnaire({
           modified={!!current}
         />
 
-        <div className="flex flex-1 items-start pt-2">
+        <div className="flex flex-1 items-start pt-2 md:items-center md:pb-12">
           {mode === "swipe" && (
             // key={q.id} forces a fresh mount per question so SwipeStage's
             // internal `locked`/drag state can never leak across questions —

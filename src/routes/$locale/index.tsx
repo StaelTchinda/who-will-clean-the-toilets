@@ -146,13 +146,15 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation("home");
   return (
     <main className="min-h-[100dvh] bg-background text-foreground">
-      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col px-6 py-10">
-        <header className="mb-10 flex items-center justify-between">
+      <div className="mx-auto flex min-h-[100dvh] w-full max-w-md flex-col px-6 py-10 md:max-w-2xl lg:max-w-5xl lg:px-10 lg:py-14">
+        <header className="mb-10 flex items-center justify-between lg:mb-16">
           <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("brand")}</p>
           <LanguageSwitcher />
         </header>
         {children}
-        <footer className="mt-auto pt-10 text-xs text-muted-foreground">{t("footer")}</footer>
+        <footer className="mt-auto pt-10 text-xs text-muted-foreground lg:pt-16">
+          {t("footer")}
+        </footer>
       </div>
     </main>
   );
@@ -174,21 +176,21 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
   const { t } = useTranslation("home");
   const locale = useLocale();
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 lg:gap-24">
       {/* Hero */}
-      <div className="flex flex-col gap-6">
-        <h1 className="text-pretty text-5xl leading-[1.02] text-foreground">
+      <div className="flex flex-col gap-6 md:mx-auto md:max-w-2xl md:items-center md:text-center">
+        <h1 className="text-pretty text-5xl leading-[1.02] text-foreground lg:text-6xl">
           {t("hero.heading1")}
           <br />
           <em className="text-primary">{t("hero.heading2")}</em>
         </h1>
-        <p className="text-balance text-base leading-relaxed text-muted-foreground">
+        <p className="text-balance text-base leading-relaxed text-muted-foreground lg:text-lg">
           {t("hero.subtext")}
         </p>
-        <div className="flex flex-col gap-3 pt-2">
+        <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-center">
           <Button
             size="lg"
-            className="h-14 rounded-full text-base"
+            className="h-14 rounded-full text-base sm:px-10"
             onClick={() => onChoose("create")}
           >
             {t("hero.ctaCreate")}
@@ -196,13 +198,13 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
           <Button
             size="lg"
             variant="ghost"
-            className="h-14 rounded-full text-base"
+            className="h-14 rounded-full text-base sm:px-10"
             onClick={() => onChoose("join")}
           >
             {t("hero.ctaJoin")}
           </Button>
         </div>
-        <ul className="grid grid-cols-3 gap-3 pt-2 text-xs text-muted-foreground">
+        <ul className="grid grid-cols-3 gap-3 pt-2 text-xs text-muted-foreground md:w-full md:max-w-md">
           <li className="rounded-2xl bg-secondary/60 p-3 text-center">
             <span className="block font-serif text-2xl text-foreground">53</span>
             {t("stats.questions")}
@@ -219,7 +221,7 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
       </div>
 
       {/* Origin / book */}
-      <section className="rounded-3xl border border-border bg-card p-6">
+      <section className="rounded-3xl border border-border bg-card p-6 md:mx-auto md:max-w-2xl lg:w-full lg:p-10">
         <div className="flex items-center gap-3">
           <div className="flex size-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <BookOpen className="size-5" strokeWidth={1.6} />
@@ -228,8 +230,10 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
             {t("book.eyebrow")}
           </p>
         </div>
-        <h2 className="mt-4 font-serif text-2xl leading-tight">{t("book.title")}</h2>
-        <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{t("book.body")}</p>
+        <h2 className="mt-4 font-serif text-2xl leading-tight lg:text-3xl">{t("book.title")}</h2>
+        <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground lg:text-base">
+          {t("book.body")}
+        </p>
         <Link
           to="/$locale/foundations"
           params={{ locale }}
@@ -239,32 +243,46 @@ export function Intro({ onChoose }: { onChoose: (m: Mode) => void }) {
         </Link>
       </section>
 
-      {/* Experience preview */}
-      <section className="flex flex-col gap-4">
-        <p className="text-xs uppercase tracking-[0.25em] text-primary">
+      {/* Experience preview — text left, swipe demo right on desktop */}
+      <section className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-16 lg:gap-y-4">
+        <p className="text-xs uppercase tracking-[0.25em] text-primary lg:col-start-1 lg:row-start-1">
           {t("experience.eyebrow")}
         </p>
-        <h2 className="font-serif text-3xl leading-tight">{t("experience.title")}</h2>
-        <p className="text-[15px] leading-relaxed text-muted-foreground">{t("experience.body")}</p>
-        <SwipePreview />
+        <h2 className="font-serif text-3xl leading-tight lg:col-start-1 lg:row-start-2 lg:text-4xl">
+          {t("experience.title")}
+        </h2>
+        <p className="text-[15px] leading-relaxed text-muted-foreground lg:col-start-1 lg:row-start-3 lg:text-base">
+          {t("experience.body")}
+        </p>
+        <div className="lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:self-center">
+          <SwipePreview />
+        </div>
       </section>
 
-      {/* Feedback preview */}
-      <section className="flex flex-col gap-4">
-        <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("feedback.eyebrow")}</p>
-        <h2 className="font-serif text-3xl leading-tight">{t("feedback.title")}</h2>
-        <ResultsPreview />
-        <p className="text-[15px] leading-relaxed text-muted-foreground">{t("feedback.body")}</p>
+      {/* Feedback preview — results demo left, text right on desktop */}
+      <section className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:items-center lg:gap-x-16 lg:gap-y-4">
+        <p className="text-xs uppercase tracking-[0.25em] text-primary lg:col-start-2 lg:row-start-1">
+          {t("feedback.eyebrow")}
+        </p>
+        <h2 className="font-serif text-3xl leading-tight lg:col-start-2 lg:row-start-2 lg:text-4xl">
+          {t("feedback.title")}
+        </h2>
+        <div className="lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:self-center">
+          <ResultsPreview />
+        </div>
+        <p className="text-[15px] leading-relaxed text-muted-foreground lg:col-start-2 lg:row-start-3 lg:text-base">
+          {t("feedback.body")}
+        </p>
       </section>
 
       {/* CTA repeat */}
-      <section className="rounded-3xl bg-primary/5 p-6 text-center">
+      <section className="rounded-3xl bg-primary/5 p-6 text-center md:mx-auto md:max-w-xl lg:w-full lg:p-10">
         <Compass className="mx-auto size-6 text-primary" strokeWidth={1.5} />
-        <p className="mt-3 font-serif text-2xl leading-tight">{t("cta.title")}</p>
+        <p className="mt-3 font-serif text-2xl leading-tight lg:text-3xl">{t("cta.title")}</p>
         <Button
           size="lg"
           onClick={() => onChoose("create")}
-          className="mt-5 h-14 w-full rounded-full text-base"
+          className="mt-5 h-14 w-full rounded-full text-base sm:mx-auto sm:w-auto sm:px-12"
         >
           {t("cta.start")}
         </Button>
@@ -337,7 +355,7 @@ export function CreateForm({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-6">
+    <form onSubmit={submit} className="mx-auto flex w-full max-w-md flex-col gap-6">
       <button
         type="button"
         onClick={onBack}
@@ -407,7 +425,7 @@ export function JoinForm({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-6">
+    <form onSubmit={submit} className="mx-auto flex w-full max-w-md flex-col gap-6">
       <button
         type="button"
         onClick={onBack}

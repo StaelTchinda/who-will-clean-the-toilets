@@ -45,14 +45,14 @@ export function ResultsView({
 
   return (
     <main className="min-h-[100dvh] bg-background">
-      <div className="mx-auto max-w-2xl px-5 pb-16 pt-[max(env(safe-area-inset-top),1.5rem)]">
+      <div className="mx-auto max-w-2xl px-5 pb-16 pt-[max(env(safe-area-inset-top),1.5rem)] lg:max-w-4xl lg:px-8">
         <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("meta.eyebrow")}</p>
         <h1 className="mt-3 text-balance font-serif text-4xl leading-tight sm:text-5xl">
           {nameA} <span className="text-muted-foreground">&</span> {nameB}
         </h1>
         <p className="mt-3 text-sm text-muted-foreground">{t("convergence", { pct: overall })}</p>
 
-        <div className="mt-6 grid grid-cols-3 gap-1 rounded-full bg-secondary p-1 text-sm">
+        <div className="mt-6 grid grid-cols-3 gap-1 rounded-full bg-secondary p-1 text-sm sm:max-w-md">
           {(
             [
               ["analysis", t("tabs.analysis")],
@@ -91,7 +91,7 @@ export function ResultsView({
           <p className="text-xs text-muted-foreground">{t("footer.disclaimer")}</p>
           <Button
             variant="outline"
-            className="rounded-full"
+            className="rounded-full sm:self-start sm:px-8"
             onClick={() => navigate({ to: "/$locale", params: { locale } })}
           >
             {t("footer.newQuestionnaire")}
@@ -133,7 +133,7 @@ function AnalysisSection({
       <section>
         <h2 className="font-serif text-2xl">{t("analysis.alignedTitle")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t("analysis.alignedSub")}</p>
-        <ul className="mt-4 flex flex-col gap-3">
+        <ul className="mt-4 grid gap-3 md:grid-cols-2">
           {highlights.aligned.length === 0 && (
             <li className="text-sm text-muted-foreground">{t("analysis.alignedEmpty")}</li>
           )}
@@ -154,7 +154,7 @@ function AnalysisSection({
       <section>
         <h2 className="font-serif text-2xl">{t("analysis.divergedTitle")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t("analysis.divergedSub")}</p>
-        <ul className="mt-4 flex flex-col gap-3">
+        <ul className="mt-4 grid gap-3 md:grid-cols-2">
           {highlights.diverged.length === 0 && (
             <li className="text-sm text-muted-foreground">{t("analysis.divergedEmpty")}</li>
           )}
@@ -218,7 +218,7 @@ function TableSection({
           <h3 className="font-serif text-xl">
             {tData(`domains.${g.domain.id}`, { defaultValue: g.domain.label })}
           </h3>
-          <ul className="mt-3 flex flex-col gap-2">
+          <ul className="mt-3 grid gap-2 lg:grid-cols-2">
             {g.rows.map((r) => {
               const labelA = r.answerA
                 ? tData(`questions.${r.question.id}.answers.${r.answerA}`, {
@@ -301,7 +301,7 @@ function TasksSection({
             <h3 className="font-serif text-xl">
               {tData(`domains.${dId}`, { defaultValue: domainObj?.label ?? dId })}
             </h3>
-            <ul className="mt-3 flex flex-col gap-2">
+            <ul className="mt-3 grid gap-2 lg:grid-cols-2">
               {items.map((s) => {
                 const taskLabel = tData(`tasks.${s.taskId}`, { defaultValue: s.taskLabel });
                 const rationale = t(s.rationaleKey, s.rationaleValues);
