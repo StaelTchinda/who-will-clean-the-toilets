@@ -137,13 +137,14 @@ function ResultsPreview() {
         </span>
       </div>
 
-      <div className="pointer-events-none mt-6">
+      <div className="pointer-events-none relative mt-6 lg:max-h-[330px] lg:overflow-hidden">
         <AnalysisSection
           highlights={highlights}
           grouped={grouped}
           nameA={t("resultPreview.nameA")}
           nameB={t("resultPreview.nameB")}
         />
+        <div className="absolute inset-x-0 bottom-0 hidden h-28 bg-gradient-to-t from-card to-transparent lg:block" />
       </div>
     </div>
   );
@@ -162,7 +163,18 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
     <main className="min-h-[100dvh] bg-background text-foreground">
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-md flex-col px-6 py-10 md:max-w-2xl lg:max-w-5xl lg:px-10 lg:py-14">
         <header className="mb-10 flex items-center justify-between lg:mb-16">
-          <p className="text-xs uppercase tracking-[0.25em] text-primary">{t("brand")}</p>
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/favicon.svg"
+              alt={t("brand")}
+              className="size-8 shrink-0 lg:size-9"
+              width={36}
+              height={36}
+            />
+            <span className="hidden text-xs uppercase tracking-[0.25em] text-primary sm:inline">
+              {t("brand")}
+            </span>
+          </div>
           <LanguageSwitcher />
         </header>
         {children}

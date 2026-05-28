@@ -17,6 +17,12 @@ Each partner answers **53 swipe-based questions** (~20 minutes) on their phone. 
 - **Live sync** — Progress and answers sync via Supabase Realtime while both partners answer.
 - **Results** — Per-question alignment, grouped by domain, plus task assignment suggestions (`src/lib/analysis.ts`).
 
+## Screenshots
+
+| Landing | Swipe questionnaire | Results |
+| :-----: | :-----------------: | :-----: |
+| <img src="docs/screenshots/home.png" alt="Landing page" width="240" /> | <img src="docs/screenshots/swipe.png" alt="Swipe questionnaire" width="240" /> | <img src="docs/screenshots/results.png" alt="Results screen" width="240" /> |
+
 ## Tech stack
 
 | Layer           | Choice                                                                                        |
